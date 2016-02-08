@@ -1,0 +1,5 @@
+typedef struct {
+  char *titre;
+  char *auteur;
+  int num;
+}livre;

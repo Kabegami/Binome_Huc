@@ -1,0 +1,9 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include "livre.h"
+
+int main(){
+  livre l1 = init_livre("Toto a la plage","Raoul",1);
+  printf("fichier bliblio.c : \n");
+  printf("titre = %s \n",l1.titre);
+  return 0;
