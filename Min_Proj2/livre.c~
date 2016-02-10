@@ -1,0 +1,76 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include "livre.h"
+#include "entree_sortie.h"
+
+s_livre init_livre(char *titre, char *auteur, int num)
+{
+  s_livre l;
+  l.titre = titre;
+  l.auteur = auteur;
+  l.num = num;
+  return l;
+}
+
+
+void lecture(int n){
+
+  FILE *f = fopen("GdeBiblio.txt", "r");
+
+  int i;
+  int num;
+  char *auteur;
+  char *titre;
+
+  for(i = 0; i <= n; i++){
+    num = GetEntier(f);
+
+    auteur = (char*)malloc(25*sizeof(char));
+    GetChaine(f, 25, auteur);
+
+    titre = (char*)malloc(25*sizeof(char));
+    GetChaine(f, 25, titre);
+
+    SkipLine(f);
+
+    printf("%d %s %s\n", num, auteur, titre);
+  }
+}
+
+/* lecture avec fscanf */
+void lecture2(int n){
+
+  FILE *f = fopen("GdeBiblio.txt", "r");
+ 
+  int i;
+  int num;
+  char *titre[25]; /* sans le [25] on a quelque chose de bizarre */
+  char *auteur[25];
+  
+  for (i = 0;  i <= n; i++){
+    fscanf(f, "%d %s %s ", &num, &auteur, &titre);
+    printf("%d %s %s\n", num, &auteur, &titre);
+    
+  }
+}
+
+/* lit une ligne du fichier et l'insère dans un livre */
+s_livre lecture3(){
+
+  FILE *f = fopen("GdeBiblio.txt", "r");
+
+  int i;
+  int num;
+  char *titre;
+  char *auteur;
+  s_livre l;
+
+  fscanf(f, "%d %s %s ", &num, &auteur, &titre);
+  // printf("%d %s %s\n", num, &auteur, &titre);
+
+  l = init_livre(titre, auteur, num);
+  printf("%d %s %s\n", l.num, l.auteur, l.titre);
+  return l;
+
+  
+}
