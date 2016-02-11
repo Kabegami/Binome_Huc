@@ -26,7 +26,6 @@ int est_vide(Liste b)
     return 0;
 }
 
-/* Comme il s'agit d'une liste simple, notre objet stoquant notre bibliotèque est un pointeur de Cellule */
 
 Cellule* creer_cellule(s_livre livre)
 {
@@ -67,6 +66,16 @@ void afficher_livre(Cellule c)
     printf("numero = %d \n",(c.livre).num);
 }
 
+void afficher_biblio(Liste biblio)
+{
+  Cellule *actu;
+  actu = biblio.debut;
+  while (actu != NULL){
+    afficher_livre(*actu);
+    actu = actu->suivant;
+  }
+}
+
 Cellule* rechercher_numero(Liste b, int n)
 {
   Cellule *cour = b.debut;
@@ -89,6 +98,19 @@ Cellule* rechercher_titre(Liste b, char *titre)
     cour = cour->suivant;
   }
   return NULL;
+}
+
+int rechercher_nombre_titre(Liste b, char *titre)
+{
+  int cpt = 0;
+  Cellule *cour = b.debut;
+  while (cour != NULL){
+    if (cour->livre.titre == titre){
+      cpt ++;
+    }
+    cour = cour->suivant;
+  }
+  return cpt;
 }
 
 Liste rechercher_livres_auteur(Liste b, char *auteur)
@@ -140,21 +162,21 @@ void suppression(Liste *b, char *titre)
 
 Liste doublon(Liste b)
 {
+  int cpt;
   Liste doublon;
   init_liste(&doublon);
   Cellule *cour = b.debut;
   while(cour != NULL){ 
-    suppression(&b, cour->livre.titre);
-    if (rechercher_titre(b,cour->livre.titre) != NULL){
-      printf("doublon : %s \n ",cour->livre.titre);
-      inserer_debut(&doublon,(rechercher_titre(b,cour->livre.titre))->livre);
+    cpt = rechercher_nombre_titre(b,cour->livre.titre);
+    if (cpt > 1){
+      inserer_debut(&doublon,cour->livre);
     }
     cour = cour->suivant;
   }
   return doublon;
 }
 
-
+/*
 int main(){
   s_livre l = init_livre("Toto a la plage","Raoul",1);
   s_livre l2 = init_livre("Billy travaille dans l'administration françaaaaaaaise","Raoul",2);
@@ -168,11 +190,12 @@ int main(){
   inserer_debut(&b,l);
   inserer_debut(&b,l2);
   c = rechercher_numero(b,1);
-  /*livres_auteur = rechercher_livres_auteur(b,"Raoul");
+  livres_auteur = rechercher_livres_auteur(b,"Raoul");
   suppression(&b,"Toto a la plage");
-  insertion_avant(&b, l, "Billy travaille dans l'administration françaaaaaaaise");*/
+  insertion_avant(&b, l, "Billy travaille dans l'administration françaaaaaaaise");
   inserer_debut(&b,l3);
   d = doublon(b);
-  afficher_prem_livre(d);
+  afficher_biblio(d);
   return 0;
 }
+*/
