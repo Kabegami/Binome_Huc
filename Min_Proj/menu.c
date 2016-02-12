@@ -18,7 +18,7 @@ void remplir_livre(s_livre l)
   l = init_livre(chaine1,chaine2,nb);
 }
 
-
+/*
 int main(){
   s_livre l;
   remplir_livre(l);
@@ -27,3 +27,4 @@ int main(){
   printf("numero = %d \n",l.num);
   return 0;
 }
+*/

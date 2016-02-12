@@ -1,0 +1,9 @@
+struct cellule;
+struct liste;
+
+typedef struct cellule Cellule;
+typedef struct liste Liste;
+
+
+
+  

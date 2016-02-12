@@ -1,0 +1,11 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include "livre.h"
+
+
+typedef struct cell{
+  int clef;
+  s_livre *data;
+  struct cell *suivant;
+}Cellule;
+
