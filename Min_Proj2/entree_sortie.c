@@ -30,12 +30,12 @@ void SkipLine(FILE *f){
   do
     c = getc(f) ;
   while ((c!=EOF)&&(c!='\n')) ;
-
+  
 }
 
 /* LECTURE DE CHAINE DE CARACTERES JUSQU'A UN ESPACE, LA FIN DE LA LIGNE OU LA FIN DE FICHIER */
 
-void GetChaine(FILE *f, int taille_max, char *s)
+void GetChaine(FILE *f,int taille_max,char *s)
   {
   char c ;
   int i;

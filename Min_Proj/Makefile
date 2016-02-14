@@ -13,8 +13,8 @@ entree_sortie.o : entree_sortie.c entree_sortie.h
 menu.o : menu.c livre.h biblio.h entree_sortie.h
 	gcc -c menu.c
 
-table_hachage.o : table_hachage.c livre.h liste.h
+table_hachage.o : table_hachage.c table_hachage.h livre.h liste.h
 	gcc -c table_hachage.c
 
-liste.o : liste.c livre.h liste.h
+liste.o : liste.c livre.h liste.h table_hachage.h
 	gcc -c liste.c

@@ -1,14 +1,10 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include "liste.h"
-#include <math.h>
-
-
-typedef struct {
+struct t_hg {
   int nbElem;
   int taille;
   cell_t **T; /* table de hachage avec resolution des collisions par chainage */
-}tableHachage;
+};
+
+typedef struct t_hg tableHachage
 
 
 tableHachage* initTableHachage(int n)
@@ -45,9 +41,7 @@ void insertion_table(tableHachage *t, s_livre *livre)
 {
   cell_t *cel = creer_cellule_l(livre);
   int case_table = fonctionHachage(cel->clef,t->taille);
-  printf("case numero : %d \n",case_table);
-  inserer_debut_l((t->T)[case_table],livre);
-  afficher_liste_l(t->T[case_table]);
+  inserer_debut_l(t->T[case_table],livre);
 }
 
 void afficher_table(tableHachage t)
@@ -55,25 +49,15 @@ void afficher_table(tableHachage t)
   int i;
   cell_t *actu = t.T[0];
   for(i = 0; i < t.taille;i++){
-    if (t.T[i] == NULL){
-      printf("Case numero : %d", i);
-      printf("est vide \n");
-    }
-    else{ 
-    printf("toto \n");
     afficher_liste_l(t.T[i]);
-    }
   }
 }
 
 int main(){
   tableHachage *t = initTableHachage(10);
   int i = fonctionClef("toto");
+  int f = fonctionHachage(i, 10);
   s_livre l = init_livre("smdkqsopk","dmsksopkdpsk",3);
-  int f = fonctionHachage(fonctionClef("smdkqsopk"),10);
-  cell_t *liste = NULL;
-  inserer_debut_l(liste,&l);
-  afficher_liste_l(liste);
   insertion_table(t, &l);
   afficher_table(*t);
   printf("%d %d \n", i, f);

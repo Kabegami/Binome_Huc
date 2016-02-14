@@ -1,4 +1,6 @@
-#include "table_hachage.h"
+#include <stdio.h>
+#include <stdlib.h>
+#include "liste.h"
 
 cell_t init(){
   cell_t c;
@@ -8,21 +10,26 @@ cell_t init(){
   return c;
 }
 
-cell_t* creer_cellule_l(s_livre *livre)
+cell_t* creer_cellule_l(s_livre *livre, int c)
 {
   cell_t *new = (cell_t *)malloc(sizeof(cell_t));
   new->data = livre;
   new->suivant = NULL;
-  new->clef = fonctionClef(livre->auteur);
+  new->clef = c;
   return new;
 }
 
 /* on veut modifier notre biblio, par consequent on entre un pointeur */
-void inserer_debut_l(cell_t *b, s_livre *livre)
+void inserer_debut_l(cell_t *b, s_livre *livre,int c)
 {     
-  cell_t *new = creer_cellule_l(livre);
+  cell_t *new = creer_cellule_l(livre,c);
+  if (b == NULL){
+    b = new;
+  }
+  else{
     new->suivant = b;
     b = new;
+  }
 }
 
 void afficher_prem_livre_l(cell_t *l)

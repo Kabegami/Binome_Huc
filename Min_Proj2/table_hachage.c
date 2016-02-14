@@ -41,13 +41,16 @@ int fonctionHachage(int clef, int m)
 }
 
 
-void insertion_table(tableHachage *t, s_livre *livre)
+void insertion_table(tableHachage *t, cell_t *c)
 {
-  cell_t *cel = creer_cellule_l(livre);
-  int case_table = fonctionHachage(cel->clef,t->taille);
-  printf("case numero : %d \n",case_table);
-  inserer_debut_l((t->T)[case_table],livre);
-  afficher_liste_l(t->T[case_table]);
+  if (c != NULL){
+    int my_clef = fonctionClef(c->data->auteur);
+    int clef = fonctionHachage(fonctionClef(c->data->auteur),100);
+    inserer_debut_l(t->T[clef], c->data, my_clef);
+  }
+  else{
+    printf("Erreur \n");
+  }
 }
 
 void afficher_table(tableHachage t)
@@ -55,27 +58,19 @@ void afficher_table(tableHachage t)
   int i;
   cell_t *actu = t.T[0];
   for(i = 0; i < t.taille;i++){
-    if (t.T[i] == NULL){
-      printf("Case numero : %d", i);
-      printf("est vide \n");
-    }
-    else{ 
-    printf("toto \n");
     afficher_liste_l(t.T[i]);
-    }
   }
 }
 
+/*
 int main(){
   tableHachage *t = initTableHachage(10);
   int i = fonctionClef("toto");
+  int f = fonctionHachage(i, 100);
   s_livre l = init_livre("smdkqsopk","dmsksopkdpsk",3);
-  int f = fonctionHachage(fonctionClef("smdkqsopk"),10);
-  cell_t *liste = NULL;
-  inserer_debut_l(liste,&l);
-  afficher_liste_l(liste);
-  insertion_table(t, &l);
+  insertion_table(t, creer_cellule_l(&l,fonctionClef("smdkqsopk")));
   afficher_table(*t);
   printf("%d %d \n", i, f);
   return 0;
-}
+  }
+*/

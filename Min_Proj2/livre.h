@@ -1,4 +1,3 @@
-
 /*typedef struct livre;*/
 
 struct i_livre{

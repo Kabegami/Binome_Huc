@@ -12,10 +12,10 @@ typedef struct cell cell_t;
 
 cell_t init();
 
-cell_t* creer_cellule_l(s_livre *livre);
+cell_t* creer_cellule_l(s_livre *livre, int clef);
 
 /* on veut modifier notre biblio, par consequent on entre un pointeur */
-void inserer_debut_l(cell_t *b, s_livre *livre);
+void inserer_debut_l(cell_t *b, s_livre *livre,int clef);
 
 void afficher_prem_livre_l(cell_t *l);
 
