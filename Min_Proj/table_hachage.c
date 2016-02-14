@@ -43,8 +43,8 @@ int fonctionHachage(int clef, int m)
 
 void insertion_table(tableHachage *t, s_livre *livre)
 {
-  cell_t *cel = creer_cellule_l(livre);
-  int case_table = fonctionHachage(cel->clef,t->taille);
+  cell_t cel = creer_cellule_l(livre);
+  int case_table = fonctionHachage(cel.clef,t->taille);
   printf("case numero : %d \n",case_table);
   inserer_debut_l((t->T)[case_table],livre);
   afficher_liste_l(t->T[case_table]);

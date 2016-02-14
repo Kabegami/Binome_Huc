@@ -8,21 +8,21 @@ cell_t init(){
   return c;
 }
 
-cell_t* creer_cellule_l(s_livre *livre)
+cell_t creer_cellule_l(s_livre *livre)
 {
-  cell_t *new = (cell_t *)malloc(sizeof(cell_t));
-  new->data = livre;
-  new->suivant = NULL;
-  new->clef = fonctionClef(livre->auteur);
+  cell_t new;
+  new.data = livre;
+  new.suivant = NULL;
+  new.clef = fonctionClef(livre->auteur);
   return new;
 }
 
 /* on veut modifier notre biblio, par consequent on entre un pointeur */
 void inserer_debut_l(cell_t *b, s_livre *livre)
 {     
-  cell_t *new = creer_cellule_l(livre);
-    new->suivant = b;
-    b = new;
+  cell_t new = creer_cellule_l(livre);
+  new.suivant = b;
+  b = &new;
 }
 
 void afficher_prem_livre_l(cell_t *l)
