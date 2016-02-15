@@ -31,7 +31,6 @@ void suppression_l(cell_t **liste, char *titre, int numero)
   cell_t *prec;
   actu = *liste;
   /* cas particulier premier elem de la liste */
-  /* c'est le if qui provoque une erreur de segmentation */
   if (actu->data->titre == titre || actu->data->num == numero){
     *liste = actu->suivant;
     free(actu);
