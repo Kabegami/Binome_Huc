@@ -11,15 +11,15 @@ typedef struct {
 }tableHachage;
 
 
-tableHachage* initTableHachage(int n)
+tableHachage initTableHachage(int n)
 {
-  tableHachage *t = (tableHachage *)malloc(sizeof(tableHachage)); 
+  tableHachage t;
   int i;
-  t->T = (cell_t **)malloc(n*sizeof(cell_t *));
-  t->taille = n;
-  t->nbElem = 0;
+  t.T = (cell_t **)malloc(n*sizeof(cell_t *));
+  t.taille = n;
+  t.nbElem = 0;
   for(i = 0; i < n; i++){
-    t->T[i] = NULL;
+    t.T[i] = NULL;
   }
   return t;
 }
@@ -43,11 +43,9 @@ int fonctionHachage(int clef, int m)
 
 void insertion_table(tableHachage *t, s_livre *livre)
 {
-  cell_t cel = creer_cellule_l(livre);
-  int case_table = fonctionHachage(cel.clef,t->taille);
-  printf("case numero : %d \n",case_table);
-  inserer_debut_l((t->T)[case_table],livre);
-  afficher_liste_l(t->T[case_table]);
+  cell_t *cel = creer_cellule_l(livre);
+  int case_table = fonctionHachage(cel->clef,t->taille);
+  inserer_debut_l(&((t->T)[case_table]),livre);
 }
 
 void afficher_table(tableHachage t)
@@ -59,23 +57,65 @@ void afficher_table(tableHachage t)
       printf("Case numero : %d", i);
       printf("est vide \n");
     }
-    else{ 
-    printf("toto \n");
+    else{
+    printf("Case numero : %d \n", i);
+    printf("\n");
     afficher_liste_l(t.T[i]);
     }
+    printf("---------------------------\n");
   }
 }
 
+cell_t* recherche_num(tableHachage t, int numero)
+{
+  int i;
+  cell_t *cell;
+  for(i = 0; i < t.taille;i++){
+    cell = recherche_num_l(t.T[i],numero);
+    if (cell != NULL)
+      return cell;
+  }
+}
+
+
+cell_t* recherche_titre(tableHachage t, char *titre)
+{
+  int i;
+  cell_t *cell;
+  for(i = 0; i < t.taille;i++){
+    cell = recherche_titre_l(t.T[i],titre);
+    if (cell != NULL)
+      return cell;
+  }
+}
+
+
+cell_t* livre_meme_auteur(tableHachage t, char *auteur)
+{
+  int clef = fonctionClef(auteur);
+  int case_tab = fonctionHachage(clef,t.taille);
+  return t.T[case_tab];
+}
+
+void suppression_t(tableHachage *t,s_livre *livre)
+{
+  int clef = fonctionClef(livre->auteur);
+  int case_tab = fonctionHachage(clef,t->taille);
+  suppression_l(&(t->T[case_tab]),livre->titre,livre->num);
+}
+
 int main(){
-  tableHachage *t = initTableHachage(10);
+  tableHachage t = initTableHachage(10);
   int i = fonctionClef("toto");
-  s_livre l = init_livre("smdkqsopk","dmsksopkdpsk",3);
-  int f = fonctionHachage(fonctionClef("smdkqsopk"),10);
-  cell_t *liste = NULL;
-  inserer_debut_l(liste,&l);
-  afficher_liste_l(liste);
-  insertion_table(t, &l);
-  afficher_table(*t);
+  s_livre l = init_livre("toto","Raoul",3);
+  s_livre l2 = init_livre("billy","Raoul",4);
+  int f = fonctionHachage(fonctionClef("toto"),10);
+  cell_t *cel;
+  insertion_table(&t, &l);
+  insertion_table(&t, &l2);
+  afficher_table(t);
+  suppression_t(&t,&l);
+  afficher_table(t);
   printf("%d %d \n", i, f);
   return 0;
 }
