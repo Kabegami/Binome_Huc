@@ -97,6 +97,16 @@ cell_t* livre_meme_auteur(tableHachage t, char *auteur)
   return t.T[case_tab];
 }
 
+cell_t* recherche_doublon(tableHachage t)
+{
+  cell_t *liste = NULL;
+  int i;
+  for(i = 0; i < t.taille;i++) {
+    recherche_doublon_l(t.T[i],&liste);
+    }
+  return liste;
+}
+
 void suppression_t(tableHachage *t,s_livre *livre)
 {
   int clef = fonctionClef(livre->auteur);
@@ -109,13 +119,15 @@ int main(){
   int i = fonctionClef("toto");
   s_livre l = init_livre("toto","Raoul",3);
   s_livre l2 = init_livre("billy","Raoul",4);
+  s_livre l3 = init_livre("toto","Raoul",5);
   int f = fonctionHachage(fonctionClef("toto"),10);
-  cell_t *cel;
+  cell_t *liste;
   insertion_table(&t, &l);
   insertion_table(&t, &l2);
+  insertion_table(&t, &l3);
   afficher_table(t);
-  suppression_t(&t,&l);
-  afficher_table(t);
-  printf("%d %d \n", i, f);
+  printf("recherche doublon : \n");
+  liste = recherche_doublon(t);
+  afficher_liste_l(liste);
   return 0;
 }

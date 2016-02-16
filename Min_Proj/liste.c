@@ -49,7 +49,7 @@ void suppression_l(cell_t **liste, char *titre, int numero)
 }
 cell_t* recherche_num_l(cell_t *b, int numero)
 {
-  cell_t * actu;
+  cell_t *actu;
   actu = b;
   while(actu != NULL){
     if (actu->data->num == numero)
@@ -61,7 +61,7 @@ cell_t* recherche_num_l(cell_t *b, int numero)
 
 cell_t* recherche_titre_l(cell_t *b, char *t)
 {
-  cell_t * actu;
+  cell_t *actu;
   actu = b;
   while(actu != NULL){
     if (actu->data->titre == t)
@@ -69,6 +69,30 @@ cell_t* recherche_titre_l(cell_t *b, char *t)
     actu = actu->suivant;
   }
   return NULL;
+}
+
+int recherche_nb_titre_l(cell_t *b, char *t)
+{
+  int cpt = 0;
+  cell_t *actu;
+  actu = b;
+  while(actu != NULL){
+    if (actu->data->titre == t)
+      cpt++;
+    actu = actu->suivant;
+  }
+  return cpt;
+}
+
+void* recherche_doublon_l(cell_t *biblio,cell_t **liste_doublon)
+{
+  cell_t *actu;
+  actu = biblio;
+  while(actu != NULL){
+    if (recherche_nb_titre_l(biblio,actu->data->titre) > 1)
+      inserer_debut_l(liste_doublon,actu->data);
+    actu = actu->suivant;
+  }
 }
 
 void afficher_prem_livre_l(cell_t *l)
