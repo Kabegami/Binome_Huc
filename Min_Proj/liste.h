@@ -28,3 +28,7 @@ cell_t* recherche_num_l(cell_t *b, int numero);
 cell_t* recherche_titre_l(cell_t *b, char *t);
 
 void suppression_l(cell_t **liste, char *titre,int numero);
+
+int recherche_nb_titre_l(cell_t *b, char *t);
+
+void* recherche_doublon_l(cell_t *biblio,cell_t **liste_doublon);

@@ -21,3 +21,14 @@ int fonctionHachage(int clef, int m);
 void insertion_table(tableHachage *t, s_livre *livre);
 
 void afficher_table(tableHachage t);
+
+cell_t* recherche_doublon(tableHachage t);
+
+void suppression_t(tableHachage *t,s_livre *livre);
+
+cell_t* livre_meme_auteur(tableHachage t, char *auteur);
+
+cell_t* recherche_num(tableHachage t, int numero);
+
+cell_t* recherche_titre(tableHachage t, char *titre);
+
