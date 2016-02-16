@@ -34,3 +34,4 @@ void suppression(Liste *b, char *titre);
 
 Liste doublon(Liste b);
 
+void inserer_fin(Liste *b, s_livre livre);
