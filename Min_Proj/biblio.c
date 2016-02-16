@@ -41,11 +41,30 @@ void inserer_debut(Liste *b, s_livre livre)
 {     
   Cellule *new = creer_cellule(livre);
   new->suivant = b->debut;
+  /* cas general */
   if (b->debut != NULL)
     b->debut->prec = new;
-  else
-    b->fin = new;
+  /* liste vide */
+  else{
+  b->fin = new;
   b->debut = new;
+  }
+}
+
+void inserer_fin(Liste *b, s_livre livre)
+{
+  Cellule *new = creer_cellule(livre);
+  new->prec = b->fin;
+  /* cas general */
+  if(b->fin != NULL){
+    b->fin->suivant = new;
+  }
+  /* liste vide */
+  else
+    {
+    b->fin = new;
+    b->debut = new;
+    }
 }
 
 void afficher_prem_livre(Liste biblio)
