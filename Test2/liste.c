@@ -1,4 +1,5 @@
 #include "table_hachage.h"
+#include <strings.h>
 
 cell_t init()
 {

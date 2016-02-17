@@ -1,0 +1,14 @@
+int fonctionHachage(int clef, int m)
+{
+  double  a = (sqrt(5)-1)/2;
+  return (int)(m*(clef*a-(int)(clef*a)));
+}
+
+int main()
+{
+  int i;
+  for (i = 0; i < 100 ; i++)
+    {
+      printf("pour la clef 1 : %d " i);
+      printf("%d \n",fonctionHachage(i,10));
+    }

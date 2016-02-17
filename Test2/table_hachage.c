@@ -37,7 +37,18 @@ cell_t ** copy_T(tableHachage t, int taille)
 
 void augmenter_taille(tableHachage *t)
 {
+  int i;
+  int a_t;
   cell_t **temp = copy_T(*t,t->taille *2);
+  /* Lors de la creation de temp on affecte aux anciens auteurs leurs nouvelles clef associée et on supprime leur ancienne clef */ 
+  a_t = t->taille;
+  for(i = 0; i < t->taille;)
+    {
+      if (t->T[i] != NULL)
+	{
+	  t->T[i] 
+         }
+    }
   free(t->T);
   t->taille = t->taille *2;
   t->T = temp;
@@ -59,37 +70,25 @@ int fonctionHachage(int clef, int m)
   return (int)(m*(clef*a-(int)(clef*a)));
 }
 
-
 void insertion_table(tableHachage *t, s_livre *livre)
-{
-  cell_t *cel = creer_cellule_l(livre);
-  int case_table = fonctionHachage(cel->clef,t->taille);
-  inserer_debut_l(&((t->T)[case_table]),livre);
-  t->nbElem++;
-}
-
-void insertion_table2(tableHachage *t, cell_t *cel)
 {
   
 /* Ici, nous faisons le choix de contenir que les livre d'un unique auteur dans une case de notre table. Ce choix nous permet d'avoir une recherche des livres d'un auteur et  une recherche d'un livre avec le paramètre (auteur,titre) très rapide.
        De plus, on peut considérer qu'en moyenne les auteur redigent un nombre de livre plus ou moins comparable ainsi notre table seras remplis de manirère relativement homogène */
-  
-  int case_table = fonctionHachage(cel->clef,t->taille);
-  /* on augmente la taille de notre table */
-  if (t->nbElem == t->taille)
-    augmenter_taille(t);
+
+  int clef = fonctionClef(livre->auteur);
+  int case_table = fonctionHachage(clef,t->taille);
   
   if ((t->T)[case_table] == NULL){
-    inserer_debut_l(&((t->T)[case_table]),cel->data);
+    inserer_debut_l(&((t->T)[case_table]),livre);
     t->nbElem++;
   }
   else{
-    if ((t->T)[case_table]->data->auteur == cel->data->auteur)
-      inserer_debut_l(&((t->T)[case_table]),cel->data);
+    if ((t->T)[case_table]->data->auteur == livre->auteur)
+      inserer_debut_l(&((t->T)[case_table]),livre);
     else{
-	/* comme on a vérifier qu'il existait au moins une case de libre notre fonction recursive s'arrete forcement */
-	cel->clef++;
-	insertion_table2(t,cel);
+      augmenter_taille(t);
+      insertion_table(t,livre);
       }
   }
 }
@@ -104,7 +103,6 @@ void lecture_hachage(tableHachage *t, int n)
   char *auteur;
   char *titre;
   s_livre *livre;
-  cell_t *cell;
   
   
   for(i = 0; i < n; i++){
@@ -120,8 +118,7 @@ void lecture_hachage(tableHachage *t, int n)
 
     livre = (s_livre*)malloc(sizeof(s_livre));
     *livre = init_livre(titre,auteur,num);
-    cell = creer_cellule_l(livre);
-    insertion_table2(t, cell);
+    insertion_table(t, livre);
   }
   fclose(f);
 }
@@ -193,7 +190,7 @@ void suppression_t(tableHachage *t,s_livre *livre)
   int case_tab = fonctionHachage(clef,t->taille);
   suppression_l(&(t->T[case_tab]),livre->titre,livre->num);
 }
-
+/*
 int main(){
   tableHachage t = initTableHachage(10);
   int i = fonctionClef("toto");
@@ -201,7 +198,6 @@ int main(){
   s_livre l2 = init_livre("billy","Raoul",4);
   int f = fonctionHachage(fonctionClef("toto"),10);
   cell_t *cel =creer_cellule_l(&l);
-  insertion_table2(&t,cel);
   afficher_table(t);
   suppression_t(&t,&l);
   afficher_table(t);
@@ -212,3 +208,4 @@ int main(){
   return 0;
 }
 
+*/
