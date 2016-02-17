@@ -1,0 +1,9 @@
+plot "01_rec_num.txt" using 1:2 with lines
+replot "01_rec_titre.txt" using 1:2 with lines
+replot "01_rec_auteur.txt" using 1:2 with lines
+set term png
+set output "01_courbes_vitesse.png"
+set size 0.7, 0.7
+set xlabel ' Nombre de livres '
+set ylabel ' Temps '
+replot
