@@ -43,25 +43,22 @@ void suppression_l(cell_t **liste, char *ti, char *a)
     while( ((strcmp(actu->data->titre,ti) + strcasecmp(actu->data->auteur,a)) != 0) && actu->suivant != NULL && actu->suivant->suivant != NULL){
       actu = actu->suivant;
     }
-     printf("sortie de la boucle \n");
-    if (actu->suivant != NULL) {
-      /* si on est entre 2 case */
-      if ((strcmp(actu->data->titre,ti) + strcasecmp(actu->data->auteur,a)) == 0){
-      cell = actu->suivant;
-      actu->suivant = cell->suivant;
-      free(cell);
-      }
-    printf("2 em if \n");
-    
+     if (actu->suivant != NULL) {
+       /* si on est entre 2 case */
+       if ((strcmp(actu->data->titre,ti) + strcasecmp(actu->data->auteur,a)) == 0){
+	 cell = actu->suivant;
+	 actu->suivant = cell->suivant;
+	 free(cell);
+       }
     /* si on est l'avant dernière case */
-    if(actu->suivant->suivant == NULL){
-      if ((strcmp(actu->suivant->data->titre,ti) + strcasecmp(actu->suivant->data->auteur,a)) == 0){
-       free(actu->suivant);
-       actu->suivant = NULL;
-      }
-    }
+       if(actu->suivant->suivant == NULL){
+	 if ((strcmp(actu->suivant->data->titre,ti) + strcasecmp(actu->suivant->data->auteur,a)) == 0){
+	   free(actu->suivant);
+	   actu->suivant = NULL;
+	 }
+       }
+     }
   }
-}
 }
 cell_t* recherche_num_l(cell_t *b, int numero)
 {
