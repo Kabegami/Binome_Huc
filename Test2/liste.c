@@ -28,18 +28,19 @@ void inserer_debut_l(cell_t **b, s_livre *livre)
   *b = new;
 }
 
-void suppression_l(cell_t **liste, char *titre, int numero)
+void suppression_l(cell_t **liste, char *titre, char *auteur)
 {
   cell_t *actu;
   cell_t *prec;
   actu = *liste;
   /* cas particulier premier elem de la liste */
-  if (actu->data->titre == titre || actu->data->num == numero){
+  if (actu->data->titre == titre || actu->data->auteur == auteur){
     *liste = actu->suivant;
     free(actu);
   }
   else{
-    while((actu->suivant->data->titre != titre ||actu->suivant->data->num != numero) && actu->suivant != NULL ){
+    /* cherche la première occurence du couple (titre,auteur) */
+    while((actu->suivant->data->titre != titre ||actu->suivant->data->auteur != auteur) && actu->suivant != NULL ){
       actu = actu->suivant;
     }
   /* le if ne fait pas partie du while car sinon notre fonction supprimerait tous les ouvrages portant le titre donné et non pas un seul ouvrage */
@@ -62,28 +63,52 @@ cell_t* recherche_num_l(cell_t *b, int numero)
   return NULL;
 }
 
-int recherche_nb_titre_l(cell_t *b, char *t)
+void recherche_auteur_l(cell_t **liste_auteur,cell_t *b, char *auteur)
+{
+  cell_t *actu;
+  actu = b;
+  if (actu != NULL){
+  while(actu->suivant != NULL){
+    if(actu->data->auteur == auteur)
+      inserer_debut_l(liste_auteur,actu->data);
+    actu = actu->suivant;
+  }
+  if(actu->data->auteur == auteur)
+      inserer_debut_l(liste_auteur,actu->data);
+  }
+}
+
+int recherche_nb_titre_l(cell_t *b, char *t,char *auteur)
 {
   int cpt = 0;
   cell_t *actu;
   actu = b;
   while(actu != NULL){
-    if (actu->data->titre == t)
+    if (actu->data->titre == t && actu->data->auteur == auteur)
       cpt++;
     actu = actu->suivant;
   }
   return cpt;
 }
 
-void* recherche_doublon_l(cell_t *biblio,cell_t **liste_doublon)
+void recherche_doublon_l(cell_t *biblio,cell_t **liste_doublon)
 {
   cell_t *actu;
   actu = biblio;
   while(actu != NULL){
-    if (recherche_nb_titre_l(biblio,actu->data->titre) > 1)
+    if (recherche_nb_titre_l(biblio,actu->data->titre,actu->data->auteur) > 1)
       inserer_debut_l(liste_doublon,actu->data);
     actu = actu->suivant;
   }
+}
+
+void suppression_liste_totale(cell_t **liste)
+{
+  cell_t *actu = *liste;
+  while (liste != NULL)
+    {
+      suppression_l(liste,actu->data->titre, actu->data->auteur);
+    }
 }
 
 cell_t* recherche_titre_l(cell_t *b, char *t)

@@ -35,25 +35,6 @@ cell_t ** copy_T(tableHachage t, int taille)
   return new;
 }
 
-void augmenter_taille(tableHachage *t)
-{
-  int i;
-  int a_t;
-  cell_t **temp = copy_T(*t,t->taille *2);
-  /* Lors de la creation de temp on affecte aux anciens auteurs leurs nouvelles clef associée et on supprime leur ancienne clef */ 
-  a_t = t->taille;
-  for(i = 0; i < t->taille;)
-    {
-      if (t->T[i] != NULL)
-	{
-	  t->T[i] 
-         }
-    }
-  free(t->T);
-  t->taille = t->taille *2;
-  t->T = temp;
-}
-
 int fonctionClef(char *nom)
 {
   int clef = 0;
@@ -70,27 +51,51 @@ int fonctionHachage(int clef, int m)
   return (int)(m*(clef*a-(int)(clef*a)));
 }
 
+void augmenter_taille(tableHachage *t)
+{
+  int i;
+  int new_taille;
+  int c;
+  cell_t **temp = copy_T(*t,t->taille *2);
+  s_livre *livre;
+  
+  /* Lors du changement de taille,comme la fonction Hachage depend de la taille de notre table, si on change celle ci les clefs associees aux auteurs vont changer, il faut donc changer de cases nos anciens livres */
+  printf("debut augmenter_taille");
+  new_taille = t->taille * 2;
+  for(i = 0; i < t->taille;)
+    {
+      if (t->T[i] != NULL)
+	{
+	  while(t->T[i]->suivant != NULL){
+	    livre = t->T[i]->data;
+	    c = fonctionHachage(fonctionClef(livre->auteur),new_taille);
+	    inserer_debut_l(&temp[i],livre);
+	    t->T[i] = t->T[i]->suivant;
+         }
+	  livre = t->T[i]->data;
+	  c = fonctionHachage(fonctionClef(livre->auteur),new_taille);
+	  inserer_debut_l(&temp[i],livre);
+	}
+      suppression_liste_totale(t->T[i]);
+    }
+  
+  free(t->T);
+  t->taille = t->taille *2;
+  t->T = temp;
+  printf("fin insertion taille");
+}
+
 void insertion_table(tableHachage *t, s_livre *livre)
 {
-  
-/* Ici, nous faisons le choix de contenir que les livre d'un unique auteur dans une case de notre table. Ce choix nous permet d'avoir une recherche des livres d'un auteur et  une recherche d'un livre avec le paramètre (auteur,titre) très rapide.
-       De plus, on peut considérer qu'en moyenne les auteur redigent un nombre de livre plus ou moins comparable ainsi notre table seras remplis de manirère relativement homogène */
 
   int clef = fonctionClef(livre->auteur);
   int case_table = fonctionHachage(clef,t->taille);
-  
-  if ((t->T)[case_table] == NULL){
-    inserer_debut_l(&((t->T)[case_table]),livre);
-    t->nbElem++;
-  }
-  else{
-    if ((t->T)[case_table]->data->auteur == livre->auteur)
-      inserer_debut_l(&((t->T)[case_table]),livre);
-    else{
-      augmenter_taille(t);
-      insertion_table(t,livre);
-      }
-  }
+  /* Ici, on considère que les auteurs ecrivent de maniere plus ou moins equivalente, ainsi on augmente la taille du tableau quand en moyenne les listes de livre contiennent 10 livre pour eviter les collision */
+  if (t->nbElem > t->taille * 10)
+    augmenter_taille(t);
+  inserer_debut_l(&((t->T)[case_table]),livre);
+  t->nbElem++;
+ 
 }
 
 /* lit n entrees et les insere dans la bibliotheque */
@@ -171,7 +176,9 @@ cell_t* livre_meme_auteur_t(tableHachage t, char *auteur)
 {
   int clef = fonctionClef(auteur);
   int case_tab = fonctionHachage(clef,t.taille);
-  return t.T[case_tab];
+  cell_t *liste_auteur = NULL;
+  recherche_auteur_l(&liste_auteur,t.T[case_tab],auteur);
+  return liste_auteur;
 }
 
 cell_t* recherche_doublon_t(tableHachage t)
@@ -188,7 +195,7 @@ void suppression_t(tableHachage *t,s_livre *livre)
 {
   int clef = fonctionClef(livre->auteur);
   int case_tab = fonctionHachage(clef,t->taille);
-  suppression_l(&(t->T[case_tab]),livre->titre,livre->num);
+  suppression_l(&(t->T[case_tab]),livre->titre,livre->auteur);
 }
 /*
 int main(){
