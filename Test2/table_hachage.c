@@ -24,13 +24,8 @@ cell_t ** copy_T(tableHachage t, int taille)
   cell_t **new;
   int i;
   new = (cell_t **)malloc(taille*sizeof(cell_t *));
-  for(i = 0; i < t.taille;i++){
-    if (t.T[i] == NULL)
+  for(i = 0; i < taille;i++){
       new[i] = NULL;
-    else
-      {
-	new[i] = t.T[i];
-      }
   }
   return new;
 }
@@ -58,28 +53,31 @@ void augmenter_taille(tableHachage *t)
   int c;
   cell_t **temp = copy_T(*t,t->taille *2);
   s_livre *livre;
+  cell_t *actu;
+  cell_t *cel;
   
   /* Lors du changement de taille,comme la fonction Hachage depend de la taille de notre table, si on change celle ci les clefs associees aux auteurs vont changer, il faut donc changer de cases nos anciens livres */
   printf("debut augmenter_taille");
   new_taille = t->taille * 2;
   for(i = 0; i < t->taille;)
     {
-      if (t->T[i] != NULL)
+      actu = t->T[i];
+      if (actu != NULL)
 	{
-	  while(t->T[i]->suivant != NULL){
+	  while(actu->suivant != NULL){
 	    livre = t->T[i]->data;
 	    c = fonctionHachage(fonctionClef(livre->auteur),new_taille);
-	    inserer_debut_l(&temp[i],livre);
-	    t->T[i] = t->T[i]->suivant;
+	    inserer_debut_l(&temp[c],livre);
+	    cel = actu->suivant;
+	    actu = cel;
+	    suppression_l(&t->T[i],livre->titre,livre->auteur);
          }
 	  livre = t->T[i]->data;
 	  c = fonctionHachage(fonctionClef(livre->auteur),new_taille);
 	  inserer_debut_l(&temp[i],livre);
+	  suppression_l(&t->T[i],livre->titre,livre->auteur);
 	}
-      suppression_liste_totale(t->T[i]);
     }
-  
-  free(t->T);
   t->taille = t->taille *2;
   t->T = temp;
   printf("fin insertion taille");
