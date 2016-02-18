@@ -28,6 +28,7 @@ int main(){
   Cellule *c;
   char *saisie;
   int numero;
+  int i;
   saisie = (char*)malloc(sizeof(char)*25);
   	
   char *titre;	
@@ -254,6 +255,7 @@ int main(){
       tableHachage t;
       t = initTableHachage(10);
       cell_t *cell;
+      int i;
       
       choix = 0;
       printf("Insérer combien de livres dans la bibliotheque ? ");
@@ -341,7 +343,8 @@ int main(){
 	  case 3:
 	    printf("Veuillez entrer le nom de l'auteur a rechercher : ");
 	    GetChaine(stdin, 25, saisie);
-
+	    for(i = 0; saisie[i] != '\0'; i++)
+	      saisie[i] = toupper(saisie[i]);
 	    /* FILE *f23 = fopen("02_rec_auteur.txt", "a+");
 
 	    // temps calcul et l'écrit dans un fichier
@@ -381,7 +384,6 @@ int main(){
 	    GetChaine(stdin, 25, auteur);
 
 	    /* convertit le nom de l'auteur en majuscules */
-	    int i;
 	    for(i = 0; auteur[i] != '\0'; i++)
 	      auteur[i] = toupper(auteur[i]);
 
@@ -404,8 +406,9 @@ int main(){
 	    GetChaine(stdin, 25, titre);
 	    printf("Veuillez saisir l'auteur de l'ouvrage a supprimer : ");
 	    GetChaine(stdin, 25, auteur);
+	    for(i = 0; auteur[i] != '\0'; i++)
+	      auteur[i] = toupper(auteur[i]);
 	    suppression_t(&t, titre,auteur);
-	    
 	    printf("\n");
 	    break;
 

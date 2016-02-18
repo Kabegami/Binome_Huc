@@ -194,6 +194,7 @@ void suppression_t(tableHachage *t,char *titre, char *auteur)
   int clef = fonctionClef(auteur);
   int case_tab = fonctionHachage(clef,t->taille);
   suppression_l(&(t->T[case_tab]),titre,auteur);
+  t->nbElem--;
 }
 /*
 int main(){
