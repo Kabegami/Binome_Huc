@@ -117,11 +117,11 @@ Cellule* rechercher_numero(Liste b, int n)
   return NULL;
 }
 
-Cellule* rechercher_titre(Liste b, char *chaine)
+Cellule* rechercher_titre(Liste b, char *chaine, char *auteur)
 {
   Cellule *cour = b.debut;
   while(cour != NULL){
-    if(strcasecmp(cour->livre.titre, chaine) == 0){
+    if((strcasecmp(cour->livre.titre, chaine) +strcasecmp(cour->livre.titre, chaine)) == 0){
       return cour;
     }
     cour = cour->suivant;

@@ -31,7 +31,7 @@ void afficher_biblio(Liste biblio);
 
 Cellule* rechercher_numero(Liste b, int n);
 
-Cellule* rechercher_titre(Liste b, char *chaine);
+Cellule* rechercher_titre(Liste b, char *chaine, char *auteur);
 
 int rechercher_nombre_titre(Liste b, char *titre, char *auteur);
 

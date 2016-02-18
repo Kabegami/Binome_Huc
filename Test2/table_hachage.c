@@ -48,6 +48,7 @@ int fonctionHachage(int clef, int m)
 
 void augmenter_taille(tableHachage *t)
 {
+  /* Cette fonction ne marche pas et n'est pas utilise, car je n ai pas pu la finir a temps. Elle etait supposee gerer le changement de taille en transferant le contenu de notre ancienne table de hachage dans la nouvelle avec la fonction de Hachage (clef, nouvelle_taille),  mais dans l'etat actuelle elle provoque une erreur de segmentation. Cette demarche avait pour but de permetre a l utilisateurs de choisir entre une table couteuse en memoire et rapide et vice versa */
   int i;
   int new_taille;
   int c;
