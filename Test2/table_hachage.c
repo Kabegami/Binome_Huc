@@ -89,8 +89,8 @@ void insertion_table(tableHachage *t, s_livre *livre)
   int clef = fonctionClef(livre->auteur);
   int case_table = fonctionHachage(clef,t->taille);
   /* Ici, on considère que les auteurs ecrivent de maniere plus ou moins equivalente, ainsi on augmente la taille du tableau quand en moyenne les listes de livre contiennent 10 livre pour eviter les collision */
-  if (t->nbElem > t->taille * 10)
-    augmenter_taille(t);
+  /*if (t->nbElem > t->taille * 10)
+    augmenter_taille(t); */
   inserer_debut_l(&((t->T)[case_table]),livre);
   t->nbElem++;
  
@@ -189,11 +189,11 @@ cell_t* recherche_doublon_t(tableHachage t)
   return liste;
 }
 
-void suppression_t(tableHachage *t,s_livre *livre)
+void suppression_t(tableHachage *t,char *titre, char *auteur)
 {
-  int clef = fonctionClef(livre->auteur);
+  int clef = fonctionClef(auteur);
   int case_tab = fonctionHachage(clef,t->taille);
-  suppression_l(&(t->T[case_tab]),livre->titre,livre->auteur);
+  suppression_l(&(t->T[case_tab]),titre,auteur);
 }
 /*
 int main(){

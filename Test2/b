@@ -1,0 +1,912 @@
+[lucas@lucas-linux Test2]$ make
+gcc -c table_hachage.c
+gcc -c liste.c
+liste.c: Dans la fonction ‘suppression_l’:
+liste.c:39:5: attention : implicit declaration of function ‘printft’ [-Wimplicit-function-declaration]
+     printft("test \n");
+     ^
+gcc -o menu livre.o biblio.o menu.o entree_sortie.o table_hachage.o liste.o
+liste.o: dans la fonction « suppression_l »:
+liste.c:(.text+0x124): référence indéfinie vers « printft »
+collect2: erreur: ld a retourné 1 code d'état d'exécution
+Makefile:2 : la recette pour la cible « all » a échouée
+make: *** [all] Erreur 1
+[lucas@lucas-linux Test2]$ make
+gcc -c liste.c
+gcc -o menu livre.o biblio.o menu.o entree_sortie.o table_hachage.o liste.o
+[lucas@lucas-linux Test2]$ ./munu
+bash: ./munu: Aucun fichier ou dossier de ce type
+[lucas@lucas-linux Test2]$ ./menu
+
+==============Choix de la structure=============
+1 - Liste chainee
+2 - Table de hachage
+2
+Insérer combien de livres dans la bibliotheque ? 10
+Nombre de livres dans la bibliotheque : 10
+RAPPEL : les livres sont numerotes a partir de 0.
+
+-----------------------Menu-----------------------
+1 - Recherche d'un ouvrage par son numero
+2 - Recherche d'un ouvrage par son titre
+3 - Recherche de tous les livres d'un meme auteur
+4 - Insertion d'un nouvel ouvrage
+5 - Suppression d'un ouvrage
+6 - Recherche des ouvrages au moins en double
+0 - Quitter
+Choisissez une fonction : 4
+Saisir le titre du livre (sans espaces) : toto
+Saisir le nom de l'auteur (sans espaces) : tata
+Livre ajoute avec succes.
+
+Nombre de livres dans la bibliotheque : 11
+RAPPEL : les livres sont numerotes a partir de 0.
+
+-----------------------Menu-----------------------
+1 - Recherche d'un ouvrage par son numero
+2 - Recherche d'un ouvrage par son titre
+3 - Recherche de tous les livres d'un meme auteur
+4 - Insertion d'un nouvel ouvrage
+5 - Suppression d'un ouvrage
+6 - Recherche des ouvrages au moins en double
+0 - Quitter
+Choisissez une fonction : 5
+Veuillez saisir le titre de l'ouvrage a supprimer : toto
+Veuillez saisir l'auteur de l'ouvrage a supprimer : tata
+toto 
+Erreur de segmentation (core dumped)
+[lucas@lucas-linux Test2]$ make
+gcc -c liste.c
+gcc -o menu livre.o biblio.o menu.o entree_sortie.o table_hachage.o liste.o
+[lucas@lucas-linux Test2]$ ./menu
+
+==============Choix de la structure=============
+1 - Liste chainee
+2 - Table de hachage
+2
+Insérer combien de livres dans la bibliotheque ? 10
+Nombre de livres dans la bibliotheque : 10
+RAPPEL : les livres sont numerotes a partir de 0.
+
+-----------------------Menu-----------------------
+1 - Recherche d'un ouvrage par son numero
+2 - Recherche d'un ouvrage par son titre
+3 - Recherche de tous les livres d'un meme auteur
+4 - Insertion d'un nouvel ouvrage
+5 - Suppression d'un ouvrage
+6 - Recherche des ouvrages au moins en double
+0 - Quitter
+Choisissez une fonction : 4
+Saisir le titre du livre (sans espaces) : toto
+Saisir le nom de l'auteur (sans espaces) : tata
+Livre ajoute avec succes.
+
+Nombre de livres dans la bibliotheque : 11
+RAPPEL : les livres sont numerotes a partir de 0.
+
+-----------------------Menu-----------------------
+1 - Recherche d'un ouvrage par son numero
+2 - Recherche d'un ouvrage par son titre
+3 - Recherche de tous les livres d'un meme auteur
+4 - Insertion d'un nouvel ouvrage
+5 - Suppression d'un ouvrage
+6 - Recherche des ouvrages au moins en double
+0 - Quitter
+Choisissez une fonction : 5
+Veuillez saisir le titre de l'ouvrage a supprimer : toto
+Veuillez saisir l'auteur de l'ouvrage a supprimer : tata
+toto 
+Erreur de segmentation (core dumped)
+[lucas@lucas-linux Test2]$ make
+gcc -c liste.c
+gcc -o menu livre.o biblio.o menu.o entree_sortie.o table_hachage.o liste.o
+[lucas@lucas-linux Test2]$ ./menu
+
+==============Choix de la structure=============
+1 - Liste chainee
+2 - Table de hachage
+2
+Insérer combien de livres dans la bibliotheque ? 10
+Nombre de livres dans la bibliotheque : 10
+RAPPEL : les livres sont numerotes a partir de 0.
+
+-----------------------Menu-----------------------
+1 - Recherche d'un ouvrage par son numero
+2 - Recherche d'un ouvrage par son titre
+3 - Recherche de tous les livres d'un meme auteur
+4 - Insertion d'un nouvel ouvrage
+5 - Suppression d'un ouvrage
+6 - Recherche des ouvrages au moins en double
+0 - Quitter
+Choisissez une fonction : 4
+Saisir le titre du livre (sans espaces) : toto
+Saisir le nom de l'auteur (sans espaces) : tata
+Livre ajoute avec succes.
+
+Nombre de livres dans la bibliotheque : 11
+RAPPEL : les livres sont numerotes a partir de 0.
+
+-----------------------Menu-----------------------
+1 - Recherche d'un ouvrage par son numero
+2 - Recherche d'un ouvrage par son titre
+3 - Recherche de tous les livres d'un meme auteur
+4 - Insertion d'un nouvel ouvrage
+5 - Suppression d'un ouvrage
+6 - Recherche des ouvrages au moins en double
+0 - Quitter
+Choisissez une fonction : 5
+Veuillez saisir le titre de l'ouvrage a supprimer : toto
+Veuillez saisir l'auteur de l'ouvrage a supprimer : tata
+toto 
+actu->data->titre 
+Erreur de segmentation (core dumped)
+[lucas@lucas-linux Test2]$ make
+gcc -c liste.c
+gcc -o menu livre.o biblio.o menu.o entree_sortie.o table_hachage.o liste.o
+[lucas@lucas-linux Test2]$ ./menu
+
+==============Choix de la structure=============
+1 - Liste chainee
+2 - Table de hachage
+2
+Insérer combien de livres dans la bibliotheque ? 10
+Nombre de livres dans la bibliotheque : 10
+RAPPEL : les livres sont numerotes a partir de 0.
+
+-----------------------Menu-----------------------
+1 - Recherche d'un ouvrage par son numero
+2 - Recherche d'un ouvrage par son titre
+3 - Recherche de tous les livres d'un meme auteur
+4 - Insertion d'un nouvel ouvrage
+5 - Suppression d'un ouvrage
+6 - Recherche des ouvrages au moins en double
+0 - Quitter
+Choisissez une fonction : 4
+Saisir le titre du livre (sans espaces) : toto
+Saisir le nom de l'auteur (sans espaces) : tata
+Livre ajoute avec succes.
+
+Nombre de livres dans la bibliotheque : 11
+RAPPEL : les livres sont numerotes a partir de 0.
+
+-----------------------Menu-----------------------
+1 - Recherche d'un ouvrage par son numero
+2 - Recherche d'un ouvrage par son titre
+3 - Recherche de tous les livres d'un meme auteur
+4 - Insertion d'un nouvel ouvrage
+5 - Suppression d'un ouvrage
+6 - Recherche des ouvrages au moins en double
+0 - Quitter
+Choisissez une fonction : 5
+Veuillez saisir le titre de l'ouvrage a supprimer : toto
+Veuillez saisir l'auteur de l'ouvrage a supprimer : tata
+toto 
+adrr 
+Erreur de segmentation (core dumped)
+[lucas@lucas-linux Test2]$ 
+[lucas@lucas-linux Test2]$ make
+gcc -c liste.c
+gcc -o menu livre.o biblio.o menu.o entree_sortie.o table_hachage.o liste.o
+[lucas@lucas-linux Test2]$ ./menu
+
+==============Choix de la structure=============
+1 - Liste chainee
+2 - Table de hachage
+2
+Insérer combien de livres dans la bibliotheque ? 10
+Nombre de livres dans la bibliotheque : 10
+RAPPEL : les livres sont numerotes a partir de 0.
+
+-----------------------Menu-----------------------
+1 - Recherche d'un ouvrage par son numero
+2 - Recherche d'un ouvrage par son titre
+3 - Recherche de tous les livres d'un meme auteur
+4 - Insertion d'un nouvel ouvrage
+5 - Suppression d'un ouvrage
+6 - Recherche des ouvrages au moins en double
+0 - Quitter
+Choisissez une fonction : 4
+Saisir le titre du livre (sans espaces) : toto
+Saisir le nom de l'auteur (sans espaces) : tata
+Livre ajoute avec succes.
+
+Nombre de livres dans la bibliotheque : 11
+RAPPEL : les livres sont numerotes a partir de 0.
+
+-----------------------Menu-----------------------
+1 - Recherche d'un ouvrage par son numero
+2 - Recherche d'un ouvrage par son titre
+3 - Recherche de tous les livres d'un meme auteur
+4 - Insertion d'un nouvel ouvrage
+5 - Suppression d'un ouvrage
+6 - Recherche des ouvrages au moins en double
+0 - Quitter
+Choisissez une fonction : 5
+Veuillez saisir le titre de l'ouvrage a supprimer : toto
+Veuillez saisir l'auteur de l'ouvrage a supprimer : tata
+toto 
+adrr 
+LJPTNSNFWZQFJMA 
+Erreur de segmentation (core dumped)
+[lucas@lucas-linux Test2]$ make
+gcc -c liste.c
+gcc -o menu livre.o biblio.o menu.o entree_sortie.o table_hachage.o liste.o
+[lucas@lucas-linux Test2]$ ./menu
+
+==============Choix de la structure=============
+1 - Liste chainee
+2 - Table de hachage
+2
+Insérer combien de livres dans la bibliotheque ? 10
+Nombre de livres dans la bibliotheque : 10
+RAPPEL : les livres sont numerotes a partir de 0.
+
+-----------------------Menu-----------------------
+1 - Recherche d'un ouvrage par son numero
+2 - Recherche d'un ouvrage par son titre
+3 - Recherche de tous les livres d'un meme auteur
+4 - Insertion d'un nouvel ouvrage
+5 - Suppression d'un ouvrage
+6 - Recherche des ouvrages au moins en double
+0 - Quitter
+Choisissez une fonction : 4
+Saisir le titre du livre (sans espaces) : toto
+Saisir le nom de l'auteur (sans espaces) : tata
+Livre ajoute avec succes.
+
+Nombre de livres dans la bibliotheque : 11
+RAPPEL : les livres sont numerotes a partir de 0.
+
+-----------------------Menu-----------------------
+1 - Recherche d'un ouvrage par son numero
+2 - Recherche d'un ouvrage par son titre
+3 - Recherche de tous les livres d'un meme auteur
+4 - Insertion d'un nouvel ouvrage
+5 - Suppression d'un ouvrage
+6 - Recherche des ouvrages au moins en double
+0 - Quitter
+Choisissez une fonction : 1
+Veuillez entrer le numero du livre a rechercher : 0
+Titre : yhidd 
+Auteur : WLRBBMQBHCDARZOWK 
+Numero : 0 
+
+Nombre de livres dans la bibliotheque : 11
+RAPPEL : les livres sont numerotes a partir de 0.
+
+-----------------------Menu-----------------------
+1 - Recherche d'un ouvrage par son numero
+2 - Recherche d'un ouvrage par son titre
+3 - Recherche de tous les livres d'un meme auteur
+4 - Insertion d'un nouvel ouvrage
+5 - Suppression d'un ouvrage
+6 - Recherche des ouvrages au moins en double
+0 - Quitter
+Choisissez une fonction : 5
+Veuillez saisir le titre de l'ouvrage a supprimer : toto
+Veuillez saisir l'auteur de l'ouvrage a supprimer : tata
+adrr 
+LJPTNSNFWZQFJMA 
+Erreur de segmentation (core dumped)
+[lucas@lucas-linux Test2]$ make
+gcc -c liste.c
+gcc -o menu livre.o biblio.o menu.o entree_sortie.o table_hachage.o liste.o
+[lucas@lucas-linux Test2]$ ./menu
+
+==============Choix de la structure=============
+1 - Liste chainee
+2 - Table de hachage
+2
+Insérer combien de livres dans la bibliotheque ? 10
+Nombre de livres dans la bibliotheque : 10
+RAPPEL : les livres sont numerotes a partir de 0.
+
+-----------------------Menu-----------------------
+1 - Recherche d'un ouvrage par son numero
+2 - Recherche d'un ouvrage par son titre
+3 - Recherche de tous les livres d'un meme auteur
+4 - Insertion d'un nouvel ouvrage
+5 - Suppression d'un ouvrage
+6 - Recherche des ouvrages au moins en double
+0 - Quitter
+Choisissez une fonction : 4
+Saisir le titre du livre (sans espaces) : toto
+Saisir le nom de l'auteur (sans espaces) : tata
+Livre ajoute avec succes.
+
+Nombre de livres dans la bibliotheque : 11
+RAPPEL : les livres sont numerotes a partir de 0.
+
+-----------------------Menu-----------------------
+1 - Recherche d'un ouvrage par son numero
+2 - Recherche d'un ouvrage par son titre
+3 - Recherche de tous les livres d'un meme auteur
+4 - Insertion d'un nouvel ouvrage
+5 - Suppression d'un ouvrage
+6 - Recherche des ouvrages au moins en double
+0 - Quitter
+Choisissez une fonction : 5
+Veuillez saisir le titre de l'ouvrage a supprimer : toto
+Veuillez saisir l'auteur de l'ouvrage a supprimer : tata
+adrr 
+LJPTNSNFWZQFJMA 
+Erreur de segmentation (core dumped)
+[lucas@lucas-linux Test2]$ make
+gcc -c liste.c
+gcc -o menu livre.o biblio.o menu.o entree_sortie.o table_hachage.o liste.o
+[lucas@lucas-linux Test2]$ ./menu
+
+==============Choix de la structure=============
+1 - Liste chainee
+2 - Table de hachage
+2
+Insérer combien de livres dans la bibliotheque ? 10
+Nombre de livres dans la bibliotheque : 10
+RAPPEL : les livres sont numerotes a partir de 0.
+
+-----------------------Menu-----------------------
+1 - Recherche d'un ouvrage par son numero
+2 - Recherche d'un ouvrage par son titre
+3 - Recherche de tous les livres d'un meme auteur
+4 - Insertion d'un nouvel ouvrage
+5 - Suppression d'un ouvrage
+6 - Recherche des ouvrages au moins en double
+0 - Quitter
+Choisissez une fonction : 4
+Saisir le titre du livre (sans espaces) : toto
+Saisir le nom de l'auteur (sans espaces) : tata
+Livre ajoute avec succes.
+
+Nombre de livres dans la bibliotheque : 11
+RAPPEL : les livres sont numerotes a partir de 0.
+
+-----------------------Menu-----------------------
+1 - Recherche d'un ouvrage par son numero
+2 - Recherche d'un ouvrage par son titre
+3 - Recherche de tous les livres d'un meme auteur
+4 - Insertion d'un nouvel ouvrage
+5 - Suppression d'un ouvrage
+6 - Recherche des ouvrages au moins en double
+0 - Quitter
+Choisissez une fonction : 5
+Veuillez saisir le titre de l'ouvrage a supprimer : toto
+Veuillez saisir l'auteur de l'ouvrage a supprimer : tata
+adrr 
+adrr 
+LJPTNSNFWZQFJMA 
+Erreur de segmentation (core dumped)
+[lucas@lucas-linux Test2]$ make
+gcc -c liste.c
+gcc -o menu livre.o biblio.o menu.o entree_sortie.o table_hachage.o liste.o
+[lucas@lucas-linux Test2]$ ./menu
+
+==============Choix de la structure=============
+1 - Liste chainee
+2 - Table de hachage
+2
+Insérer combien de livres dans la bibliotheque ? 10
+Nombre de livres dans la bibliotheque : 10
+RAPPEL : les livres sont numerotes a partir de 0.
+
+-----------------------Menu-----------------------
+1 - Recherche d'un ouvrage par son numero
+2 - Recherche d'un ouvrage par son titre
+3 - Recherche de tous les livres d'un meme auteur
+4 - Insertion d'un nouvel ouvrage
+5 - Suppression d'un ouvrage
+6 - Recherche des ouvrages au moins en double
+0 - Quitter
+Choisissez une fonction : 4
+Saisir le titre du livre (sans espaces) : toto
+Saisir le nom de l'auteur (sans espaces) : tata
+Livre ajoute avec succes.
+
+Nombre de livres dans la bibliotheque : 11
+RAPPEL : les livres sont numerotes a partir de 0.
+
+-----------------------Menu-----------------------
+1 - Recherche d'un ouvrage par son numero
+2 - Recherche d'un ouvrage par son titre
+3 - Recherche de tous les livres d'un meme auteur
+4 - Insertion d'un nouvel ouvrage
+5 - Suppression d'un ouvrage
+6 - Recherche des ouvrages au moins en double
+0 - Quitter
+Choisissez une fonction : 5
+Veuillez saisir le titre de l'ouvrage a supprimer : toto
+Veuillez saisir l'auteur de l'ouvrage a supprimer : tata
+adrr 
+adrr 
+LJPTNSNFWZQFJMA 
+Erreur de segmentation (core dumped)
+[lucas@lucas-linux Test2]$ make
+gcc -c liste.c
+liste.c: Dans la fonction ‘suppression_l’:
+liste.c:37:33: erreur: expected ‘,’ or ‘;’ before ‘)’ token
+   char *test = actu->data->titre);
+                                 ^
+liste.c:41:6: attention : implicit declaration of function ‘strcmp’ [-Wimplicit-function-declaration]
+ if ((strcmp(actu->data->titre,ti) +strcmp(actu->data->auteur,a) == 0){
+      ^
+liste.c:41:70: erreur: expected ‘)’ before ‘{’ token
+ if ((strcmp(actu->data->titre,ti) +strcmp(actu->data->auteur,a) == 0){
+                                                                      ^
+liste.c:157:1: erreur: expected declaration or statement at end of input
+ }
+ ^
+Makefile:20 : la recette pour la cible « liste.o » a échouée
+make: *** [liste.o] Erreur 1
+[lucas@lucas-linux Test2]$ make
+gcc -c liste.c
+liste.c: Dans la fonction ‘suppression_l’:
+liste.c:38:9: attention : implicit declaration of function ‘strcmp’ [-Wimplicit-function-declaration]
+    if ((strcmp(actu->data->titre,ti) +strcmp(actu->data->auteur,a) == 0){
+         ^
+liste.c:38:73: erreur: expected ‘)’ before ‘{’ token
+    if ((strcmp(actu->data->titre,ti) +strcmp(actu->data->auteur,a) == 0){
+                                                                         ^
+liste.c:154:1: erreur: expected declaration or statement at end of input
+ }
+ ^
+Makefile:20 : la recette pour la cible « liste.o » a échouée
+make: *** [liste.o] Erreur 1
+[lucas@lucas-linux Test2]$ make
+gcc -c liste.c
+liste.c: Dans la fonction ‘suppression_l’:
+liste.c:38:9: attention : implicit declaration of function ‘strcmp’ [-Wimplicit-function-declaration]
+    if ((strcmp(actu->data->titre,ti) + strcmp(actu->data->auteur,a) == 0){
+         ^
+liste.c:38:74: erreur: expected ‘)’ before ‘{’ token
+    if ((strcmp(actu->data->titre,ti) + strcmp(actu->data->auteur,a) == 0){
+                                                                          ^
+liste.c:154:1: erreur: expected declaration or statement at end of input
+ }
+ ^
+Makefile:20 : la recette pour la cible « liste.o » a échouée
+make: *** [liste.o] Erreur 1
+[lucas@lucas-linux Test2]$ make
+gcc -c liste.c
+liste.c: Dans la fonction ‘suppression_l’:
+liste.c:38:9: attention : implicit declaration of function ‘strcmp’ [-Wimplicit-function-declaration]
+    if ((strcmp(actu->data->titre,ti) + strcmp(actu->data->auteur,a)) == 0){
+         ^
+liste.c:46:106: erreur: expected ‘)’ before ‘{’ token
+     while( ((strcmp(actu->data->titre,ti) + strcmp(actu->data->auteur,a) != 0) && actu->suivant != NULL ){
+                                                                                                          ^
+liste.c:55:3: erreur: expected expression before ‘}’ token
+   }
+   ^
+Makefile:20 : la recette pour la cible « liste.o » a échouée
+make: *** [liste.o] Erreur 1
+[lucas@lucas-linux Test2]$ make
+gcc -c liste.c
+liste.c: Dans la fonction ‘suppression_l’:
+liste.c:38:9: attention : implicit declaration of function ‘strcmp’ [-Wimplicit-function-declaration]
+    if ((strcmp(actu->data->titre,ti) + strcmp(actu->data->auteur,a)) == 0){
+         ^
+gcc -o menu livre.o biblio.o menu.o entree_sortie.o table_hachage.o liste.o
+[lucas@lucas-linux Test2]$ make
+gcc -c liste.c
+liste.c: Dans la fonction ‘suppression_l’:
+liste.c:40:9: attention : implicit declaration of function ‘strcmp’ [-Wimplicit-function-declaration]
+    if ((strcmp(livre,ti) + strcmp(auteur,a)) == 0){
+         ^
+gcc -o menu livre.o biblio.o menu.o entree_sortie.o table_hachage.o liste.o
+[lucas@lucas-linux Test2]$ make
+gcc -c table_hachage.c
+gcc -c liste.c
+gcc -o menu livre.o biblio.o menu.o entree_sortie.o table_hachage.o liste.o
+[lucas@lucas-linux Test2]$ ./menu
+
+==============Choix de la structure=============
+1 - Liste chainee
+2 - Table de hachage
+2
+Insérer combien de livres dans la bibliotheque ? 10
+Nombre de livres dans la bibliotheque : 10
+RAPPEL : les livres sont numerotes a partir de 0.
+
+-----------------------Menu-----------------------
+1 - Recherche d'un ouvrage par son numero
+2 - Recherche d'un ouvrage par son titre
+3 - Recherche de tous les livres d'un meme auteur
+4 - Insertion d'un nouvel ouvrage
+5 - Suppression d'un ouvrage
+6 - Recherche des ouvrages au moins en double
+0 - Quitter
+Choisissez une fonction : 4
+Saisir le titre du livre (sans espaces) : toto
+Saisir le nom de l'auteur (sans espaces) : tata
+Livre ajoute avec succes.
+
+Nombre de livres dans la bibliotheque : 11
+RAPPEL : les livres sont numerotes a partir de 0.
+
+-----------------------Menu-----------------------
+1 - Recherche d'un ouvrage par son numero
+2 - Recherche d'un ouvrage par son titre
+3 - Recherche de tous les livres d'un meme auteur
+4 - Insertion d'un nouvel ouvrage
+5 - Suppression d'un ouvrage
+6 - Recherche des ouvrages au moins en double
+0 - Quitter
+Choisissez une fonction : 5
+Veuillez saisir le titre de l'ouvrage a supprimer : toto
+Veuillez saisir l'auteur de l'ouvrage a supprimer : tata
+LJPTNSNFWZQFJMA 
+Premier element passé
+Nombre de livres dans la bibliotheque : 11
+RAPPEL : les livres sont numerotes a partir de 0.
+
+-----------------------Menu-----------------------
+1 - Recherche d'un ouvrage par son numero
+2 - Recherche d'un ouvrage par son titre
+3 - Recherche de tous les livres d'un meme auteur
+4 - Insertion d'un nouvel ouvrage
+5 - Suppression d'un ouvrage
+6 - Recherche des ouvrages au moins en double
+0 - Quitter
+Choisissez une fonction : 2
+Veuillez entrer le titre du livre a rechercher : toto
+Titre : toto 
+Auteur : TATA 
+Numero : 10 
+
+Nombre de livres dans la bibliotheque : 11
+RAPPEL : les livres sont numerotes a partir de 0.
+
+-----------------------Menu-----------------------
+1 - Recherche d'un ouvrage par son numero
+2 - Recherche d'un ouvrage par son titre
+3 - Recherche de tous les livres d'un meme auteur
+4 - Insertion d'un nouvel ouvrage
+5 - Suppression d'un ouvrage
+6 - Recherche des ouvrages au moins en double
+0 - Quitter
+Choisissez une fonction : 0
+Fin du programme
+
+[lucas@lucas-linux Test2]$ make
+gcc -c liste.c
+liste.c: Dans la fonction ‘suppression_l’:
+liste.c:53:12: erreur: incompatible type for argument 1 of ‘free’
+       free(*cell);
+            ^
+In file included from table_hachage.h:2:0,
+                 from liste.c:1:
+/usr/include/stdlib.h:483:13: note: expected ‘void *’ but argument is of type ‘cell_t {alias struct cell}’
+ extern void free (void *__ptr) __THROW;
+             ^
+Makefile:20 : la recette pour la cible « liste.o » a échouée
+make: *** [liste.o] Erreur 1
+[lucas@lucas-linux Test2]$ make
+gcc -c liste.c
+gcc -o menu livre.o biblio.o menu.o entree_sortie.o table_hachage.o liste.o
+[lucas@lucas-linux Test2]$ ./menu
+
+==============Choix de la structure=============
+1 - Liste chainee
+2 - Table de hachage
+2
+Insérer combien de livres dans la bibliotheque ? 10
+Nombre de livres dans la bibliotheque : 10
+RAPPEL : les livres sont numerotes a partir de 0.
+
+-----------------------Menu-----------------------
+1 - Recherche d'un ouvrage par son numero
+2 - Recherche d'un ouvrage par son titre
+3 - Recherche de tous les livres d'un meme auteur
+4 - Insertion d'un nouvel ouvrage
+5 - Suppression d'un ouvrage
+6 - Recherche des ouvrages au moins en double
+0 - Quitter
+Choisissez une fonction : 4
+Saisir le titre du livre (sans espaces) : toto
+Saisir le nom de l'auteur (sans espaces) : tata
+Livre ajoute avec succes.
+
+Nombre de livres dans la bibliotheque : 11
+RAPPEL : les livres sont numerotes a partir de 0.
+
+-----------------------Menu-----------------------
+1 - Recherche d'un ouvrage par son numero
+2 - Recherche d'un ouvrage par son titre
+3 - Recherche de tous les livres d'un meme auteur
+4 - Insertion d'un nouvel ouvrage
+5 - Suppression d'un ouvrage
+6 - Recherche des ouvrages au moins en double
+0 - Quitter
+Choisissez une fonction : 5
+Veuillez saisir le titre de l'ouvrage a supprimer : toto
+Veuillez saisir l'auteur de l'ouvrage a supprimer : tata
+LJPTNSNFWZQFJMA 
+Premier element passé
+Nombre de livres dans la bibliotheque : 11
+RAPPEL : les livres sont numerotes a partir de 0.
+
+-----------------------Menu-----------------------
+1 - Recherche d'un ouvrage par son numero
+2 - Recherche d'un ouvrage par son titre
+3 - Recherche de tous les livres d'un meme auteur
+4 - Insertion d'un nouvel ouvrage
+5 - Suppression d'un ouvrage
+6 - Recherche des ouvrages au moins en double
+0 - Quitter
+Choisissez une fonction : 2
+Veuillez entrer le titre du livre a rechercher : toto
+Titre : toto 
+Auteur : TATA 
+Numero : 10 
+
+Nombre de livres dans la bibliotheque : 11
+RAPPEL : les livres sont numerotes a partir de 0.
+
+-----------------------Menu-----------------------
+1 - Recherche d'un ouvrage par son numero
+2 - Recherche d'un ouvrage par son titre
+3 - Recherche de tous les livres d'un meme auteur
+4 - Insertion d'un nouvel ouvrage
+5 - Suppression d'un ouvrage
+6 - Recherche des ouvrages au moins en double
+0 - Quitter
+Choisissez une fonction : 0
+Fin du programme
+
+[lucas@lucas-linux Test2]$ make
+gcc -c liste.c
+gcc -o menu livre.o biblio.o menu.o entree_sortie.o table_hachage.o liste.o
+[lucas@lucas-linux Test2]$ ./menu
+
+==============Choix de la structure=============
+1 - Liste chainee
+2 - Table de hachage
+2
+Insérer combien de livres dans la bibliotheque ? 10
+Nombre de livres dans la bibliotheque : 10
+RAPPEL : les livres sont numerotes a partir de 0.
+
+-----------------------Menu-----------------------
+1 - Recherche d'un ouvrage par son numero
+2 - Recherche d'un ouvrage par son titre
+3 - Recherche de tous les livres d'un meme auteur
+4 - Insertion d'un nouvel ouvrage
+5 - Suppression d'un ouvrage
+6 - Recherche des ouvrages au moins en double
+0 - Quitter
+Choisissez une fonction : 4
+Saisir le titre du livre (sans espaces) : toto
+Saisir le nom de l'auteur (sans espaces) : tata
+Livre ajoute avec succes.
+
+Nombre de livres dans la bibliotheque : 11
+RAPPEL : les livres sont numerotes a partir de 0.
+
+-----------------------Menu-----------------------
+1 - Recherche d'un ouvrage par son numero
+2 - Recherche d'un ouvrage par son titre
+3 - Recherche de tous les livres d'un meme auteur
+4 - Insertion d'un nouvel ouvrage
+5 - Suppression d'un ouvrage
+6 - Recherche des ouvrages au moins en double
+0 - Quitter
+Choisissez une fonction : 4
+Saisir le titre du livre (sans espaces) : titi
+Saisir le nom de l'auteur (sans espaces) : tata
+Livre ajoute avec succes.
+
+Nombre de livres dans la bibliotheque : 12
+RAPPEL : les livres sont numerotes a partir de 0.
+
+-----------------------Menu-----------------------
+1 - Recherche d'un ouvrage par son numero
+2 - Recherche d'un ouvrage par son titre
+3 - Recherche de tous les livres d'un meme auteur
+4 - Insertion d'un nouvel ouvrage
+5 - Suppression d'un ouvrage
+6 - Recherche des ouvrages au moins en double
+0 - Quitter
+Choisissez une fonction : 3
+Veuillez entrer le nom de l'auteur a rechercher : tata
+Livre non trouve
+
+Nombre de livres dans la bibliotheque : 12
+RAPPEL : les livres sont numerotes a partir de 0.
+
+-----------------------Menu-----------------------
+1 - Recherche d'un ouvrage par son numero
+2 - Recherche d'un ouvrage par son titre
+3 - Recherche de tous les livres d'un meme auteur
+4 - Insertion d'un nouvel ouvrage
+5 - Suppression d'un ouvrage
+6 - Recherche des ouvrages au moins en double
+0 - Quitter
+Choisissez une fonction : 3
+Veuillez entrer le nom de l'auteur a rechercher : TATA
+Titre : toto 
+Auteur : TATA 
+Numero : 10 
+Titre : titi 
+Auteur : TATA 
+Numero : 11 
+
+Nombre de livres dans la bibliotheque : 12
+RAPPEL : les livres sont numerotes a partir de 0.
+
+-----------------------Menu-----------------------
+1 - Recherche d'un ouvrage par son numero
+2 - Recherche d'un ouvrage par son titre
+3 - Recherche de tous les livres d'un meme auteur
+4 - Insertion d'un nouvel ouvrage
+5 - Suppression d'un ouvrage
+6 - Recherche des ouvrages au moins en double
+0 - Quitter
+Choisissez une fonction : 0
+Fin du programme
+
+[lucas@lucas-linux Test2]$ maje
+bash: maje : commande introuvable
+[lucas@lucas-linux Test2]$ make
+gcc -c liste.c
+gcc -o menu livre.o biblio.o menu.o entree_sortie.o table_hachage.o liste.o
+[lucas@lucas-linux Test2]$ ./menu
+
+==============Choix de la structure=============
+1 - Liste chainee
+2 - Table de hachage
+2
+Insérer combien de livres dans la bibliotheque ? 10
+Nombre de livres dans la bibliotheque : 10
+RAPPEL : les livres sont numerotes a partir de 0.
+
+-----------------------Menu-----------------------
+1 - Recherche d'un ouvrage par son numero
+2 - Recherche d'un ouvrage par son titre
+3 - Recherche de tous les livres d'un meme auteur
+4 - Insertion d'un nouvel ouvrage
+5 - Suppression d'un ouvrage
+6 - Recherche des ouvrages au moins en double
+0 - Quitter
+Choisissez une fonction : 4
+Saisir le titre du livre (sans espaces) : toto
+Saisir le nom de l'auteur (sans espaces) : tata
+Livre ajoute avec succes.
+
+Nombre de livres dans la bibliotheque : 11
+RAPPEL : les livres sont numerotes a partir de 0.
+
+-----------------------Menu-----------------------
+1 - Recherche d'un ouvrage par son numero
+2 - Recherche d'un ouvrage par son titre
+3 - Recherche de tous les livres d'un meme auteur
+4 - Insertion d'un nouvel ouvrage
+5 - Suppression d'un ouvrage
+6 - Recherche des ouvrages au moins en double
+0 - Quitter
+Choisissez une fonction : 4
+Saisir le titre du livre (sans espaces) : titi
+Saisir le nom de l'auteur (sans espaces) : tata
+Livre ajoute avec succes.
+
+Nombre de livres dans la bibliotheque : 12
+RAPPEL : les livres sont numerotes a partir de 0.
+
+-----------------------Menu-----------------------
+1 - Recherche d'un ouvrage par son numero
+2 - Recherche d'un ouvrage par son titre
+3 - Recherche de tous les livres d'un meme auteur
+4 - Insertion d'un nouvel ouvrage
+5 - Suppression d'un ouvrage
+6 - Recherche des ouvrages au moins en double
+0 - Quitter
+Choisissez une fonction : 3
+Veuillez entrer le nom de l'auteur a rechercher : tata
+Livre non trouve
+
+Nombre de livres dans la bibliotheque : 12
+RAPPEL : les livres sont numerotes a partir de 0.
+
+-----------------------Menu-----------------------
+1 - Recherche d'un ouvrage par son numero
+2 - Recherche d'un ouvrage par son titre
+3 - Recherche de tous les livres d'un meme auteur
+4 - Insertion d'un nouvel ouvrage
+5 - Suppression d'un ouvrage
+6 - Recherche des ouvrages au moins en double
+0 - Quitter
+Choisissez une fonction : 3
+Veuillez entrer le nom de l'auteur a rechercher : TATA
+Titre : toto 
+Auteur : TATA 
+Numero : 10 
+Titre : titi 
+Auteur : TATA 
+Numero : 11 
+
+Nombre de livres dans la bibliotheque : 12
+RAPPEL : les livres sont numerotes a partir de 0.
+
+-----------------------Menu-----------------------
+1 - Recherche d'un ouvrage par son numero
+2 - Recherche d'un ouvrage par son titre
+3 - Recherche de tous les livres d'un meme auteur
+4 - Insertion d'un nouvel ouvrage
+5 - Suppression d'un ouvrage
+6 - Recherche des ouvrages au moins en double
+0 - Quitter
+Choisissez une fonction : 0
+Fin du programme
+
+[lucas@lucas-linux Test2]$ make
+gcc -c liste.c
+gcc -o menu livre.o biblio.o menu.o entree_sortie.o table_hachage.o liste.o
+[lucas@lucas-linux Test2]$ ./menu
+
+==============Choix de la structure=============
+1 - Liste chainee
+2 - Table de hachage
+2
+Insérer combien de livres dans la bibliotheque ? 10
+Nombre de livres dans la bibliotheque : 10
+RAPPEL : les livres sont numerotes a partir de 0.
+
+-----------------------Menu-----------------------
+1 - Recherche d'un ouvrage par son numero
+2 - Recherche d'un ouvrage par son titre
+3 - Recherche de tous les livres d'un meme auteur
+4 - Insertion d'un nouvel ouvrage
+5 - Suppression d'un ouvrage
+6 - Recherche des ouvrages au moins en double
+0 - Quitter
+Choisissez une fonction : 4
+Saisir le titre du livre (sans espaces) : toto
+Saisir le nom de l'auteur (sans espaces) : tata
+Livre ajoute avec succes.
+
+Nombre de livres dans la bibliotheque : 11
+RAPPEL : les livres sont numerotes a partir de 0.
+
+-----------------------Menu-----------------------
+1 - Recherche d'un ouvrage par son numero
+2 - Recherche d'un ouvrage par son titre
+3 - Recherche de tous les livres d'un meme auteur
+4 - Insertion d'un nouvel ouvrage
+5 - Suppression d'un ouvrage
+6 - Recherche des ouvrages au moins en double
+0 - Quitter
+Choisissez une fonction : 5
+Veuillez saisir le titre de l'ouvrage a supprimer : toto
+Veuillez saisir l'auteur de l'ouvrage a supprimer : tata
+LJPTNSNFWZQFJMA 
+Premier element passé
+Nombre de livres dans la bibliotheque : 11
+RAPPEL : les livres sont numerotes a partir de 0.
+
+-----------------------Menu-----------------------
+1 - Recherche d'un ouvrage par son numero
+2 - Recherche d'un ouvrage par son titre
+3 - Recherche de tous les livres d'un meme auteur
+4 - Insertion d'un nouvel ouvrage
+5 - Suppression d'un ouvrage
+6 - Recherche des ouvrages au moins en double
+0 - Quitter
+Choisissez une fonction : 1
+Veuillez entrer le numero du livre a rechercher : 10
+Titre : toto 
+Auteur : TATA 
+Numero : 10 
+
+Nombre de livres dans la bibliotheque : 11
+RAPPEL : les livres sont numerotes a partir de 0.
+
+-----------------------Menu-----------------------
+1 - Recherche d'un ouvrage par son numero
+2 - Recherche d'un ouvrage par son titre
+3 - Recherche de tous les livres d'un meme auteur
+4 - Insertion d'un nouvel ouvrage
+5 - Suppression d'un ouvrage
+6 - Recherche des ouvrages au moins en double
+0 - Quitter
+Choisissez une fonction : 0
+Fin du programme
+
+[lucas@lucas-linux Test2]$ 

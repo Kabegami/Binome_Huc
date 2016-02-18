@@ -1,3 +1,4 @@
+#include <string.h>
 #include <stdio.h>
 #include <stdlib.h>
 #ifndef _LISTEH_
@@ -34,5 +35,7 @@ void suppression_l(cell_t **liste, char *titre,char *auteur);
 int recherche_nb_titre_l(cell_t *b, char *t,char *auteur);
 
 void recherche_doublon_l(cell_t *biblio,cell_t **liste_doublon);
+
+void recherche_auteur_l(cell_t **liste_auteur,cell_t *b, char *auteur);
 
 #endif

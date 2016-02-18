@@ -397,9 +397,14 @@ int main(){
 	    // A REVOIR //
 	    /* supprimer un ouvrage */
 	  case 5:
+	    titre = (char*)malloc(25*sizeof(char));
+	    auteur = (char*)malloc(25*sizeof(char));
+	    
 	    printf("Veuillez saisir le titre de l'ouvrage a supprimer : ");
-	    GetChaine(stdin, 25, saisie);
-	    //suppression_t(t, saisie);
+	    GetChaine(stdin, 25, titre);
+	    printf("Veuillez saisir l'auteur de l'ouvrage a supprimer : ");
+	    GetChaine(stdin, 25, auteur);
+	    suppression_t(&t, titre,auteur);
 	    
 	    printf("\n");
 	    break;

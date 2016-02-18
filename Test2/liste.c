@@ -28,28 +28,40 @@ void inserer_debut_l(cell_t **b, s_livre *livre)
   *b = new;
 }
 
-void suppression_l(cell_t **liste, char *titre, char *auteur)
+void suppression_l(cell_t **liste, char *ti, char *a)
 {
   cell_t *actu;
-  cell_t *prec;
+  cell_t *cell;
   actu = *liste;
   /* cas particulier premier elem de la liste */
-  if (actu->data->titre == titre || actu->data->auteur == auteur){
-    *liste = actu->suivant;
-    free(actu);
+   if ((strcmp(actu->data->titre,ti) + strcasecmp(actu->data->auteur,a)) == 0){
+       *liste = actu->suivant;
+       free(actu);
   }
   else{
     /* cherche la première occurence du couple (titre,auteur) */
-    while((actu->suivant->data->titre != titre ||actu->suivant->data->auteur != auteur) && actu->suivant != NULL ){
+    while( ((strcmp(actu->data->titre,ti) + strcasecmp(actu->data->auteur,a)) != 0) && actu->suivant != NULL && actu->suivant->suivant != NULL){
       actu = actu->suivant;
     }
-  /* le if ne fait pas partie du while car sinon notre fonction supprimerait tous les ouvrages portant le titre donné et non pas un seul ouvrage */
-    if ((actu->suivant)->data->titre == titre){
-      prec = actu->suivant;
-      actu->suivant = prec->suivant;
-      free(prec);
+     printf("sortie de la boucle \n");
+    if (actu->suivant != NULL) {
+      /* si on est entre 2 case */
+      if ((strcmp(actu->data->titre,ti) + strcasecmp(actu->data->auteur,a)) == 0){
+      cell = actu->suivant;
+      actu->suivant = cell->suivant;
+      free(cell);
+      }
+    printf("2 em if \n");
+    
+    /* si on est l'avant dernière case */
+    if(actu->suivant->suivant == NULL){
+      if ((strcmp(actu->suivant->data->titre,ti) + strcasecmp(actu->suivant->data->auteur,a)) == 0){
+       free(actu->suivant);
+       actu->suivant = NULL;
+      }
     }
   }
+}
 }
 cell_t* recherche_num_l(cell_t *b, int numero)
 {
@@ -63,18 +75,17 @@ cell_t* recherche_num_l(cell_t *b, int numero)
   return NULL;
 }
 
-void recherche_auteur_l(cell_t **liste_auteur,cell_t *b, char *auteur)
+void recherche_auteur_l(cell_t **liste_auteur,cell_t *b, char *a)
 {
   cell_t *actu;
   actu = b;
   if (actu != NULL){
-  while(actu->suivant != NULL){
-    if(actu->data->auteur == auteur)
+  while(actu  != NULL){
+    if(strcasecmp(actu->data->auteur,a) == 0){
       inserer_debut_l(liste_auteur,actu->data);
-    actu = actu->suivant;
+    }
+      actu = actu->suivant;
   }
-  if(actu->data->auteur == auteur)
-      inserer_debut_l(liste_auteur,actu->data);
   }
 }
 
@@ -84,7 +95,7 @@ int recherche_nb_titre_l(cell_t *b, char *t,char *auteur)
   cell_t *actu;
   actu = b;
   while(actu != NULL){
-    if (actu->data->titre == t && actu->data->auteur == auteur)
+    if (strcmp(actu->data->titre,t) == 0 && strcasecmp(actu->data->auteur,auteur) == 0)
       cpt++;
     actu = actu->suivant;
   }
