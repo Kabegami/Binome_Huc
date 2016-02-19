@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
+#include "entree_sortie.h"
 #ifndef _table_hachageh_
 #define _table_hachageh_
 #include "liste.h"
@@ -26,7 +27,7 @@ void afficher_table(tableHachage t);
 
 cell_t* recherche_doublon_t(tableHachage t);
 
-void suppression_t(tableHachage *t,s_livre *livre);
+void suppression_t(tableHachage *t,char *titre,char *auteur);
 
 cell_t* livre_meme_auteur_t(tableHachage t, char *auteur);
 
@@ -34,7 +35,7 @@ cell_t* recherche_num_t(tableHachage t, int numero);
 
 cell_t* recherche_titre_t(tableHachage t, char *titre);
 
-void insertion_table2(tableHachage *t, cell_t *cel);
+void insertion_table(tableHachage *t, s_livre *livre);
 
 cell_t ** copy_T(tableHachage t, int taille);
 

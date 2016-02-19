@@ -1,9 +1,9 @@
-plot "01_rec_num.txt" using 1:2 with lines
-replot "01_rec_titre.txt" using 1:2 with lines
-replot "01_rec_auteur.txt" using 1:2 with lines
+plot "01_rec_auteur.txt" using 1:2 with lines
+replot "02_rec_auteur.txt" using 1:2 with lines
 set term png
-set output "01_courbes_vitesse.png"
-set size 0.7, 0.7
+set output "00_courbes_vitesse_auteur.png"
+set size 1, 1
 set xlabel ' Nombre de livres '
-set ylabel ' Temps '
+set ylabel ' Temps (s)'
+set title 'Recherche par auteur'
 replot

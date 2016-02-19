@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <ctype.h>
+#include <strings.h>
 #include <time.h>
 #include "biblio.h"
 #include "table_hachage.h"
@@ -27,6 +28,7 @@ int main(){
   Cellule *c;
   char *saisie;
   int numero;
+  int i;
   saisie = (char*)malloc(sizeof(char)*25);
   	
   char *titre;	
@@ -251,8 +253,13 @@ int main(){
     if(choix == 2){
       
       tableHachage t;
-      t = initTableHachage(10);
+      int taille;
+      printf("Saisir la taille de la table de hachage : ");
+      scanf("%d", &taille);
+      t = initTableHachage(taille);
+      
       cell_t *cell;
+      int i;
       
       choix = 0;
       printf("Insérer combien de livres dans la bibliotheque ? ");
@@ -306,7 +313,7 @@ int main(){
 	    printf("Veuillez entrer le titre du livre a rechercher : ");
 	    GetChaine(stdin, 25, saisie);
 	
-	    /*FILE *f22 = fopen("02_rec_titre.txt", "a+");
+	    /* FILE *f22 = fopen("02_rec_titre.txt", "a+");
 
 	    // temps calcul et l'écrit dans un fichier
 	    temps_initial = clock();*/
@@ -314,14 +321,14 @@ int main(){
 	    cell = recherche_titre_t(t, saisie);
 	  
 	    /*temps_final = clock();
-	      temps_cpu = ((double)(temps_final - temps_initial))/CLOCKS_PER_SEC;
+	    temps_cpu = ((double)(temps_final - temps_initial))/CLOCKS_PER_SEC;
 
-	      fprintf(f2, "%d %f \n", nbEntrees, temps_cpu);
-	
-	      temps_initial = 0;
-	      temps_final = 0;
-	      temps_cpu = 0.0;
-	      fclose(f2); */
+	    fprintf(f22, "%d %f \n", nbEntrees, temps_cpu);
+	    
+	    temps_initial = 0;
+	    temps_final = 0;
+	    temps_cpu = 0.0;
+	    fclose(f22);*/
 	
 	    if(cell == NULL)
 	      printf("Livre non trouve\n");
@@ -335,13 +342,14 @@ int main(){
 	    break;
 
 
-	    // A REVOIR //
 	    /* rechercher par auteur, affiche une liste de livres */
 	  case 3:
 	    printf("Veuillez entrer le nom de l'auteur a rechercher : ");
 	    GetChaine(stdin, 25, saisie);
+	    for(i = 0; saisie[i] != '\0'; i++)
+	      saisie[i] = toupper(saisie[i]);
 
-	    /* FILE *f23 = fopen("02_rec_auteur.txt", "a+");
+	    /*FILE *f23 = fopen("02_rec_auteur.txt", "a+");
 
 	    // temps calcul et l'écrit dans un fichier
 	    temps_initial = clock();*/
@@ -349,14 +357,14 @@ int main(){
 	    cell =  livre_meme_auteur_t(t, saisie);
 
 	    /* temps_final = clock();
-	       temps_cpu = ((double)(temps_final - temps_initial))/CLOCKS_PER_SEC;
+	    temps_cpu = ((double)(temps_final - temps_initial))/CLOCKS_PER_SEC;
 
-	       fprintf(f3, "%d %f \n", nbEntrees, temps_cpu);
+	    fprintf(f23, "%d %f \n", nbEntrees, temps_cpu);
 	
-	       temps_initial = 0;
-	       temps_final = 0;
-	       temps_cpu = 0.0;
-	       fclose(f3); */
+	    temps_initial = 0;
+	    temps_final = 0;
+	    temps_cpu = 0.0;
+	    fclose(f23);*/
 	
 	    if(cell == NULL)
 	      printf("Livre non trouve\n");
@@ -380,26 +388,32 @@ int main(){
 	    GetChaine(stdin, 25, auteur);
 
 	    /* convertit le nom de l'auteur en majuscules */
-	    int i;
 	    for(i = 0; auteur[i] != '\0'; i++)
 	      auteur[i] = toupper(auteur[i]);
 
 	    s_livre *ajout;
 	    ajout = (s_livre*)malloc(sizeof(s_livre));
 	    *ajout = init_livre(titre, auteur, (t.nbElem));
-	    
-	    insertion_table(&t,ajout);
+
+	    insertion_table(&t, ajout);
 	    printf("Livre ajoute avec succes.\n");
 	    printf("\n");
 	    break;
 
-	    // A REVOIR //
+
 	    /* supprimer un ouvrage */
 	  case 5:
-	    printf("Veuillez saisir le titre de l'ouvrage a supprimer : ");
-	    GetChaine(stdin, 25, saisie);
-	    //suppression_t(t, saisie);
+	    titre = (char*)malloc(25*sizeof(char));
+	    auteur = (char*)malloc(25*sizeof(char));
 	    
+	    printf("Veuillez saisir le titre de l'ouvrage a supprimer : ");
+	    GetChaine(stdin, 25, titre);
+	    printf("Veuillez saisir l'auteur de l'ouvrage a supprimer : ");
+	    GetChaine(stdin, 25, auteur);
+	    for(i = 0; auteur[i] != '\0'; i++)
+	      auteur[i] = toupper(auteur[i]);
+	    suppression_t(&t, titre,auteur);
+	    printf("Livre supprime avec succes.");
 	    printf("\n");
 	    break;
 

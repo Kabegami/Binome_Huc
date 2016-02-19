@@ -206,27 +206,3 @@ Liste doublon(Liste b)
   }
   return doublon;
 }
-
-/*
-int main(){
-  s_livre l = init_livre("Toto a la plage","Raoul",1);
-  s_livre l2 = init_livre("Billy travaille dans l'administration françaaaaaaaise","Raoul",2);
-  s_livre l3 = init_livre("Toto a la plage","Raoul",3);
-  Liste livres_auteur;
-  Liste d;
-  Cellule *c;
-  Liste b;
-  init_liste(&d);
-  init_liste(&b);
-  inserer_debut(&b,l);
-  inserer_debut(&b,l2);
-  c = rechercher_numero(b,1);
-  livres_auteur = rechercher_livres_auteur(b,"Raoul");
-  suppression(&b,"Toto a la plage");
-  insertion_avant(&b, l, "Billy travaille dans l'administration françaaaaaaaise");
-  inserer_debut(&b,l3);
-  d = doublon(b);
-  afficher_biblio(d);
-  return 0;
-}
-*/

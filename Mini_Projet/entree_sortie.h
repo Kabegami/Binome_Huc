@@ -1,7 +1,8 @@
 #include<stdio.h>
 #include<stdlib.h>
 #include<math.h>
-
+#ifndef entree_sortie_h
+#define entree_sortie_h
 /*LIT LE PROCHAIN CARACTERE NON VIDE */
 char ReadChar(FILE *f);
  
@@ -22,3 +23,4 @@ int GetEntier(FILE *f);
 /* LECTURE ET TRANSFORMATION DE CARACTERES EN ENTIERS REELS */
 double GetReel(FILE *f);
 
+#endif
