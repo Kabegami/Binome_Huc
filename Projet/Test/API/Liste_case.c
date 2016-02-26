@@ -1,4 +1,5 @@
-#include<stdlib.h>
+#include <stdio.h>
+#include <stdlib.h>
 #include "Liste_case.h"
 
  /* Initialise une liste vide */
@@ -47,4 +48,13 @@ void detruit_liste(Liste *L){
   }
 
   *L=NULL;
+}
+
+void affiche_liste(Liste *L, int **M){
+  Elnt_liste *actu;
+  actu = *L;
+  while (actu != NULL) {
+    printf("%d",M[actu->i][actu->j]);
+    actu = actu->suiv;
+  }
 }

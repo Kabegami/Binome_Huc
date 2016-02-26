@@ -4,7 +4,7 @@
 
 #include "API_Grille.h"
 #include "API_Gene_instance.h"
-
+#include "test.h"
  
  
 int main(int argc,char**argv){
@@ -61,7 +61,11 @@ int main(int argc,char**argv){
      A VOUS DE JOUER
 
   */
-
+  Liste *l;
+  int taille = 0;
+  trouve_zone_rec(M,dim,5,6,&taille, l);
+  affiche_liste(l,M);
+  
 
   Grille_attente_touche();
  

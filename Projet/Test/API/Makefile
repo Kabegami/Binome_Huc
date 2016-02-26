@@ -1,5 +1,5 @@
-all : Flood-It.o API_Grille.o API_Gene_instance.o Liste_case.o
-	gcc -o interface Flood-It.o API_Grille.o API_Gene_instance.o Liste_case.o -lSDL
+all : Flood-It.o API_Grille.o API_Gene_instance.o Liste_case.o test.o
+	gcc -o interface Flood-It.o API_Grille.o API_Gene_instance.o Liste_case.o test.o -lSDL
 
 Flood-It.o : Flood-It.c API_Grille.h API_Gene_instance.h
 	gcc -c -lSDL Flood-It.c
@@ -12,3 +12,6 @@ API_Gene_instance.o : API_Gene_instance.c API_Gene_instance.h
 
 Liste_case.o : Liste_case.c Liste_case.h
 	gcc -c -lSDL Liste_case.c
+
+test.o : test.c test.h
+	gcc -c -lSDL test.c
