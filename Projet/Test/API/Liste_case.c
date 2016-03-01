@@ -54,7 +54,8 @@ void affiche_liste(Liste *L, int **M){
   Elnt_liste *actu;
   actu = *L;
   while (actu != NULL) {
-    printf("%d",M[actu->i][actu->j]);
+    printf("(%d, %d)",actu->i, actu->j);
     actu = actu->suiv;
   }
+  printf("\n");
 }

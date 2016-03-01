@@ -44,7 +44,8 @@ int main(int argc,char**argv){
 
   Gene_instance_genere_matrice(dim, nbcl, nivdif, graine, M);
 
-  /* Affichage de la grille */
+
+  //Affichage de la grille
 
   Grille_init(dim,nbcl, 500,&G);
 
@@ -54,18 +55,23 @@ int main(int argc,char**argv){
     for (j=0;j<dim;j++){
       Grille_attribue_couleur_case(G,i,j,M[i][j]);
     }
-
-  Grille_redessine_Grille();
- 
-  /* 
-     A VOUS DE JOUER
-
-  */
-  Liste *l;
-  int taille = 0;
-  trouve_zone_rec(M,dim,5,6,&taille, l);
-  affiche_liste(l,M);
   
+  Grille_redessine_Grille();
+  
+  Liste L;
+  init_liste(&L);
+  int taille = 1;
+  int couleur;
+  printf("dim = %d\n", dim);
+  couleur = M[0][0];
+  printf("Couleur initiale : %d \n",M[0][0]);
+  trouve_zone_rec(M,dim,0,0,&taille, &L);
+  peint(couleur,M,&L);
+  printf("Couleur finale : %d \n",M[0][0]);
+  affiche_liste(&L,M);
+  
+  // A VOUS DE JOUER
+
 
   Grille_attente_touche();
  

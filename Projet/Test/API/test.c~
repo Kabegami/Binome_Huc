@@ -1,4 +1,0 @@
-void trouvezonerec(int **M, int dim, int i, int j, int *taille, Liste *L)
-{
-
-}
