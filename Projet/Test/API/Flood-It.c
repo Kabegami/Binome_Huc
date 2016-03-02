@@ -56,19 +56,25 @@ int main(int argc,char**argv){
       Grille_attribue_couleur_case(G,i,j,M[i][j]);
     }
   
-  Grille_redessine_Grille();
+  // Grille_redessine_Grille();
+  //Grille_attente_touche();
   
   Liste L;
   init_liste(&L);
   int taille = 1;
   int couleur;
+  /*
   printf("dim = %d\n", dim);
   couleur = M[0][0];
   printf("Couleur initiale : %d \n",M[0][0]);
   trouve_zone_rec(M,dim,0,0,&taille, &L);
-  peint(couleur,M,&L);
-  printf("Couleur finale : %d \n",M[0][0]);
+  /* peint(couleur,M,&L);*/
+  /* printf("Couleur finale : %d \n",M[0][0]);
   affiche_liste(&L,M);
+  */
+  sequence_aleatoire_rec(M,G,G->dim,G->nbcl,1);
+    
+  Grille_redessine_Grille();
   
   // A VOUS DE JOUER
 
