@@ -59,3 +59,15 @@ void affiche_liste(Liste *L, int **M){
   }
   printf("\n");
 }
+
+/* retourne un boolean si l element est dans la liste ou non */
+int est_dans_liste(Liste *L, int i,int j)
+{
+  Elnt_liste *actu;
+  actu = *L;
+  while (actu != NULL){
+    if (actu->i == i && actu->j == j)
+      return 1;
+  }
+  return 0;
+}
