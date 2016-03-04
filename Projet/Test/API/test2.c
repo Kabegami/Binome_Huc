@@ -8,7 +8,7 @@
 void trouve_zone_imp(int **M, int dim, int i, int j, int *taille, Liste *L)
 {
   int couleur = M[i][j];
-  Liste *pile;
+  Elnt_liste *pile;
   ajoute_en_tete(L,i,j);
   (*taille)++;
   do {

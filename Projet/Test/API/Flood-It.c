@@ -72,7 +72,7 @@ int main(int argc,char**argv){
   /* printf("Couleur finale : %d \n",M[0][0]);
   affiche_liste(&L,M);
   */
-  sequence_aleatoire_rec(M,G,G->dim,G->nbcl,1);
+  sequence_aleatoire_rec_2(M,G,G->dim,G->nbcl,1);
     
   Grille_redessine_Grille();
   

@@ -138,6 +138,7 @@ int* initialise_tab_couleur(int nb_couleur)
     {
       tab[i] = 0;
     }
+  return tab;
 }
 
 int cpt_couleur(int *tab, int nb_couleur)
@@ -145,43 +146,61 @@ int cpt_couleur(int *tab, int nb_couleur)
   int i;
   int cpt = 0;
   for(i = 0; i < nb_couleur;i++){
+    printf("%d \n",tab[i]);
     /* si tab[i] != 0 est equivalent a tab[i] est vrai */
-    if (tab[i])
+    if (tab[i] != 0)
       cpt++;
   }
   return cpt;
 }
 
-void nb_couleur_initiales(int *tab, int **M, int dim)
+void afficher_tab(int *tab, int taille)
+{
+  int i;
+  for(i = 0;i < taille; i++)
+    printf("%d \n",tab[i]);
+}
+
+void nb_couleur_initiales(int **tab, int **M, int dim)
 {
   int i,j;
+  int valeur;
   for(i = 0; i < dim;i++){
-      for(j = 0; j< dim;j++){
-	tab[M[i][j]]++;
+      for(j = 0; j < dim;j++){
+	valeur = M[i][j];
+	printf("valeur : %d\n", M[i][j]);
+	(*tab)[valeur]++;
+	printf("%d \n",(*tab)[valeur]);
       }
   }
+  printf("%d \n",(*tab)[0]);
+  printf("%d \n",(*tab)[1]);
 }
   
 int sequence_aleatoire_rec_2(int **M, Grille *G, int dim, int aff){
   int *tab = initialise_tab_couleur(G->nbcl);
-  nb_couleur_initiales(tab,M,G->dim);
+  nb_couleur_initiales(&tab,M,G->dim);
+  afficher_tab(tab,G->nbcl);
   int nbCoups = 0;
   srand(time(NULL));
  /* On definit Zsg, la zone contenant la case situee en haut a gauche */
   Liste L;
   init_liste(&L);
-  int taille = 1;
+  int taille = 0;
   int new_couleur;
   int couleur = M[0][0];
   int nbcl = G->nbcl;
   trouve_zone_rec(M, dim, 0, 0, &taille, &L);
-  printf("Couleur Zsg : %d \n",couleur);
+  printf("Couleur initiale : %d \n",couleur);
   affiche_liste(&L,M);
 
   /* selectionne une couleur tant que la grille contient plus d'une couleur  */
   do{
     /* pb avec le rand car ce en changant la taille de nbcl, on n est pas sur que la couleur supprime du rand soit celle desire */
-    new_couleur = (int)(rand()%(nbcl));
+    do{
+    new_couleur = (int)(rand()%(G->nbcl));
+    }
+    while(tab[new_couleur] == 0);
 
     /* si la couleur selectionnee est differente de la couleur de Zsg */
     if(new_couleur != couleur){
