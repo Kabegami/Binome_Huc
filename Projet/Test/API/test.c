@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <time.h>
 #include "test.h"
+#include "Liste_case.h"
 
 /* fonction recursive, qui definit la zone de la couleur de la case i,j en parametre qui  met la couleur a -1 dans les cases deja visitees pour eviter une boucle infinie et qui remet la bonne couleur a la fin */
 void trouve_zone_rec(int **M, int dim, int i, int j, int *taille, Liste *L)
@@ -61,17 +62,6 @@ void peint(Grille *G, int couleur, int **M, Liste *L)
   }
 }
 
-/* test */
-int nb_couleur_grille(int *tab, int taille)
-{
-  int i;
-  int cpt = 0;
-  for (i = 0; i < taille; i++){
-    if (tab[i])
-      cpt++;
-  }
-  return cpt;
-}
 
 /*test*/
 
@@ -146,8 +136,6 @@ int cpt_couleur(int *tab, int nb_couleur)
   int i;
   int cpt = 0;
   for(i = 0; i < nb_couleur;i++){
-    printf("%d \n",tab[i]);
-    /* si tab[i] != 0 est equivalent a tab[i] est vrai */
     if (tab[i] != 0)
       cpt++;
   }
@@ -168,13 +156,9 @@ void nb_couleur_initiales(int **tab, int **M, int dim)
   for(i = 0; i < dim;i++){
       for(j = 0; j < dim;j++){
 	valeur = M[i][j];
-	printf("valeur : %d\n", M[i][j]);
 	(*tab)[valeur]++;
-	printf("%d \n",(*tab)[valeur]);
       }
   }
-  printf("%d \n",(*tab)[0]);
-  printf("%d \n",(*tab)[1]);
 }
   
 int sequence_aleatoire_rec_2(int **M, Grille *G, int dim, int aff){
@@ -192,7 +176,6 @@ int sequence_aleatoire_rec_2(int **M, Grille *G, int dim, int aff){
   int nbcl = G->nbcl;
   trouve_zone_rec(M, dim, 0, 0, &taille, &L);
   printf("Couleur initiale : %d \n",couleur);
-  affiche_liste(&L,M);
 
   /* selectionne une couleur tant que la grille contient plus d'une couleur  */
   do{
@@ -224,8 +207,8 @@ int sequence_aleatoire_rec_2(int **M, Grille *G, int dim, int aff){
       /* Pour la decrementation, je propose de dire que notre fonction s arrete quand notre zone partant de 0,0 est de taille = dim*dim */
       printf("nbcl = %d\n", nbcl);
       if(aff == 1){
-      Grille_redessine_Grille();
       Grille_attente_touche();
+      Grille_redessine_Grille();
       }
     }
   }while(nbcl != 1);

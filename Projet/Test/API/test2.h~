@@ -1,0 +1,7 @@
+#include <time.h>
+#include <stdio.h>
+#include <stdlib.h>
+
+void trouve_zone_imp(int **M,int dim, int i, int j, int *taille, Liste *L);
+
+void sequence_aleatoire_imp(int **M,Grille *G,int dim, int aff);
