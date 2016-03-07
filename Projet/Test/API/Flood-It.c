@@ -75,7 +75,7 @@ int main(int argc,char**argv){
   */
 
   /*sequence_aleatoire_rec_2(M,G,G->dim,1);*/
-  
+ 
   sequence_aleatoire_imp(M,G,G->dim,1);
   
   Grille_redessine_Grille();

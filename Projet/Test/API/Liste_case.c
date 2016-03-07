@@ -1,3 +1,4 @@
+
 #include <stdio.h>
 #include <stdlib.h>
 #include "Liste_case.h"
@@ -70,4 +71,31 @@ int est_dans_liste(Liste *L, int i,int j)
       return 1;
   }
   return 0;
+}
+
+void suppression_el(Liste (*L), int i,int j)
+{
+  Elnt_liste *temp;
+  /* premier elem */
+  if ((*L)->i == i && (*L)->j == i){
+    temp = (*L);
+    free((*L));
+    (*L) = temp->suiv;
+  }
+  while((*L)->suiv->suiv != NULL  &&(*L)->suiv != NULL && (*L)->suiv->i != i || (*L)->suiv->j != j){
+    (*L) = (*L)->suiv;
+  }
+  /* dernier elem */
+  if ((*L)->suiv->suiv == NULL && (*L)->suiv->suiv->i == i && (*L)->suiv->suiv->j == j)
+    {
+      free((*L)->suiv->suiv);
+      (*L)->suiv->suiv = NULL;
+    }
+  /* cas general */
+  if((*L)->suiv->i == i && (*L)->suiv->j == j)
+    {
+      temp = (*L)->suiv;
+      free((*L)->suiv);
+      (*L)->suiv = temp->suiv;
+    }
 }

@@ -31,4 +31,6 @@ void affiche_liste(Liste *L, int **M);
 
 int est_dans_liste(Liste *L, int i, int j);
 
+void suppression_el(Liste *L, int i, int j);
+
 #endif

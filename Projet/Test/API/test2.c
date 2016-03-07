@@ -8,40 +8,45 @@
 void trouve_zone_imp(int **M, int dim, int i, int j, int *taille, Liste *L)
 {
   int couleur = M[i][j];
-  Liste *pile;
-  ajoute_en_tete(L,i,j);
-  (*taille)++;
+  Liste *pile = (Liste *)malloc(sizeof(Liste));
+  int trash1,trash2;
+  init_liste(pile);
+  ajoute_en_tete(pile,i,j);
+  affiche_liste(pile,M);
+  M[i][j] = -1;
+  (*taille) = 0;
   do {
-    M[(*pile)->i][(*pile)->j] = -1;
     ajoute_en_tete(L,(*pile)->i,(*pile)->j);
+    (*taille)++;
+    enleve_en_tete(pile,&trash1,&trash2);
     /* case de droite */
-    if(i != (dim-1) && M[((*L)->i)+1][(*L)->j] == couleur)
+    if((*L)->i != (dim-1) && M[(*L)->i+1][(*L)->j] == couleur)
     {
-      M[(*pile)->i][(*pile)->j] = -1;
-      ajoute_en_tete(pile,i+1,j);
+      M[(*L)->i+1][(*L)->j] = -1;
+      ajoute_en_tete(pile,(*L)->i+1,(*L)->j);
     }
     /* case du bas */
-    if (j != (dim-1) && M[(*L)->i][(*L)->j+1] == couleur)
+    if ((*L)->j != (dim-1) && M[(*L)->i][(*L)->j+1] == couleur)
       {
-	M[(*pile)->i][(*pile)->j] = -1;
-	ajoute_en_tete(pile,i,j+1);
+	M[(*L)->i][(*L)->j+1] = -1;
+	ajoute_en_tete(pile,(*L)->i,(*L)->j+1);
       }
     
     /* case de gauche */
-    if (i != 0 && M[(*L)->i-1][(*L)->j] == couleur)
+    if ((*L)->i != 0 && M[(*L)->i-1][(*L)->j] == couleur)
       {
-	M[(*pile)->i][(*pile)->j] = -1;
-	ajoute_en_tete(pile,i-1,j);
+	M[(*L)->i-1][(*L)->j] = -1;
+	ajoute_en_tete(pile,(*L)->i-1,(*L)->j);
       }
 
     /* case du haut */
-    if(j != 0 && M[(*L)->i][(*L)->j-1] == couleur)
+    if((*L)->j != 0 && M[(*L)->i][(*L)->j-1] == couleur)
       {
-	M[(*pile)->i][(*pile)->j] = -1;
-	ajoute_en_tete(pile,i,j-1);
+	M[(*L)->i][(*L)->j-1] = -1;
+	ajoute_en_tete(pile,(*L)->i,(*L)->j-1);
       }
   }
-  while ((*L)->i != (*pile)->i && (*L)->j !=(*pile)->j);
+  while(!test_liste_vide(pile));
 }
 
 int sequence_aleatoire_imp(int **M, Grille *G, int dim, int aff){
