@@ -12,7 +12,7 @@ void trouve_zone_imp(int **M, int dim, int i, int j, int *taille, Liste *L)
   int trash1,trash2;
   init_liste(pile);
   ajoute_en_tete(pile,i,j);
-  affiche_liste(pile,M);
+  //affiche_liste(pile,M);
   M[i][j] = -1;
   (*taille) = 0;
   do {
@@ -52,7 +52,7 @@ void trouve_zone_imp(int **M, int dim, int i, int j, int *taille, Liste *L)
 int sequence_aleatoire_imp(int **M, Grille *G, int dim, int aff){
   int *tab = initialise_tab_couleur(G->nbcl);
   nb_couleur_initiales(&tab,M,G->dim);
-  afficher_tab(tab,G->nbcl);
+  //afficher_tab(tab,G->nbcl);
   int nbCoups = 0;
   srand(time(NULL));
  /* On definit Zsg, la zone contenant la case situee en haut a gauche */
@@ -63,7 +63,7 @@ int sequence_aleatoire_imp(int **M, Grille *G, int dim, int aff){
   int couleur = M[0][0];
   int nbcl = G->nbcl;
   trouve_zone_imp(M, dim, 0, 0, &taille, &L);
-  printf("Couleur initiale : %d \n",couleur);
+   printf("Couleur initiale : %d \n",couleur);
 
   /* selectionne une couleur tant que la grille contient plus d'une couleur  */
   do{
@@ -82,25 +82,26 @@ int sequence_aleatoire_imp(int **M, Grille *G, int dim, int aff){
       /* on peint toute les cases avec la nouvelle couleur, puis on effectue une nouvelle recherche afin de voir si notre zone possede de nouvelles cases */ 
       detruit_liste(&L);
       taille = 0;
-      printf("Couleur Zsg : %d\n", couleur);
+      //printf("Couleur Zsg : %d\n", couleur);
       // printf("Couleur initiale : %d \n", M[i][j]);
       trouve_zone_imp(M,dim,0,0,&taille,&L);
       peint(G,couleur,M,&L);
       // printf("Couleur finale : %d \n",M[i][j]);
-      printf("taille = %d \n",taille);
-      affiche_liste(&L,M);
+      //printf("taille = %d \n",taille);
+      //affiche_liste(&L,M);
       nbcl = cpt_couleur(tab,G->nbcl);
       nbCoups++;
       //nbcl--;
       /* Pour la decrementation, je propose de dire que notre fonction s arrete quand notre zone partant de 0,0 est de taille = dim*dim */
-      printf("nbcl = %d\n", nbcl);
+      //printf("nbcl = %d\n", nbcl);
       if(aff == 1){
-      Grille_attente_touche();
+	// Grille_attente_touche();
       Grille_redessine_Grille();
       }
     }
   }while(nbcl != 1);
-  
+
+  printf("Couleur finale : %d\n", couleur);
   printf("nbCoups = %d\n", nbCoups);
   return nbCoups;
 }

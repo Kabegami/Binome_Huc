@@ -1,0 +1,119 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+#include "version_rapide.h"
+
+S_Zsg init_zsg(int dim, int nbcl, Liste Lzsg, Liste *B, int **App)
+{
+  S_Zsg zone;
+  zone.dim = dim;
+  zone.nbcl = nbcl;
+  zone.Lzsg = Lzsg;
+  zone.B = B;
+  zone.App = App;
+  return zone;
+}
+
+/* ajoute la case M[i][j] dans la zone et retourne 0 si la case n est pas en bordure */
+int ajoute_zsg(int **M, S_Zsg *zone, int i, int j)
+{
+  int couleur;
+  if (zone->App[i][j] < 0)
+    return 1;
+  couleur = M[i][j];
+  ajoute_en_tete(&(zone->Lzsg),i,j);
+  suppression_el(&(zone->B[couleur]),i,j);
+  return 0;
+}
+
+int ajoute_bordure(int **M, S_Zsg *zone, int i, int j)
+{
+  int couleur;
+  couleur = M[i][j];
+  if (zone->App[i][j] != couleur)
+    return 1;
+  ajoute_en_tete(&(zone->B[couleur]),i,j);
+  suppression_el(&(zone->Lzsg),i,j);
+  return 0;
+}
+
+int appartient_zsg(int **M, S_Zsg *zone, int i, int j)
+{
+  return (est_dans_liste(&(zone->Lzsg),i,j));
+}
+
+int appartient_bordure(int **M, S_Zsg *zone, int i, int j)
+{
+  return (est_dans_liste(&(zone->B[M[i][j]]),i,j));
+}
+
+int agrandit_Zsg(int **M, S_Zsg *zone, int cl, int k, int l)
+{
+  
+  do{
+
+    /* case de droite */
+    if(k != (zone->dim-1) && M[k+1][l] == cl){
+      if(!(appartient_zsg(M, zone, k+1, l)))
+	ajoute_zsg(M, zone, k, l);
+    }
+    if(k != (zone->dim-1) && M[k+1][l] != cl){
+      if(!(appartient_bordure(M, zone, k+1, l)))
+	ajoute_bordure(M, zone, k+1, l);
+    }
+
+    /* case du bas */
+    if(l != (zone->dim-1) && M[k][l+1] == cl){
+      if(!(appartient_zsg(M, zone, k, l+1)))
+	ajoute_zsg(M, zone, k, l+1);
+    }
+    if(l != (zone->dim-1) && M[k][l+1] != cl){
+      if(!(appartient_bordure(M, zone, k, l+1)))
+	ajoute_bordure(M, zone, k, l+1);
+    }
+
+
+    /* case de gauche */
+    if(k != 0 && M[k-1][l] == cl){
+      if(!(appartient_zsg(M, zone, k-1, l)))
+	ajoute_zsg(M, zone, k-1, l);
+    }
+    if(k != 0 && M[k-1][l] != cl){
+      if(!(appartient_bordure(M, zone, k-1, l)))
+	ajoute_bordure(M, zone, k-1, l);
+    }
+
+    /* case du haut */
+    if(l != 0 && M[k][l-1] == cl){
+      if(!(appartient_zsg(M, zone, k, l-1)))
+	ajoute_zsg(M, zone, k, l-1);
+    }
+    if(l != 0 && M[k][l-1] != cl){
+      if(!(appartient_bordure(M, zone, k, l-1)))
+	ajoute_bordure(M, zone, k, l-1);
+    }
+    
+  }while(); /*<<<<<<-----------------------------------------------------*/
+}
+
+int sequence_aleatoire_rapide(int **M, Grille *G, int aff)
+{
+  /* initialisation de Zsg */
+  Liste Lzsg;
+  init_liste(&Lzsg);
+  Liste *B = (Liste*)malloc((G->nbcl)*sizeof(Liste));
+  int **App = (int**)malloc((G->dim)*sizeof(int*));
+  int i;
+  for (i = 0; i < G->dim; i++){
+    App[i] = malloc((G->dim)*sizeof(int));
+  }
+
+  S_Zsg zone = init_zsg(G->dim, G->nbcl, Lzsg, B, App);
+  int couleur = M[0][0];
+
+  agrandit_zsg(M, zone, couleur, 0, 0);
+  affiche_liste(&(zone.Lzsg), M);
+  affiche_liste(zone.B, M);
+
+  
+}

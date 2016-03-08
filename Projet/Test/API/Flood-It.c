@@ -6,6 +6,7 @@
 #include "API_Gene_instance.h"
 #include "test.h"
 #include "test2.h"
+#include "version_rapide.h"
  
  
 int main(int argc,char**argv){
@@ -43,51 +44,95 @@ int main(int argc,char**argv){
     if (M[i]==0) printf("Pas assez d'espace mémoire disponible\n");
   }
 
-  Gene_instance_genere_matrice(dim, nbcl, nivdif, graine, M);
+  int choix;
+  printf("============Menu==========\n");
+  printf("1 - Version recursive\n");
+  printf("2 - Version imperative\n");
+  printf("3 - Version rapide\n");
 
-
-  //Affichage de la grille
-
-  Grille_init(dim,nbcl, 500,&G);
-
-  Grille_ouvre_fenetre(G);
-
-  for (i=0;i<dim;i++)
-    for (j=0;j<dim;j++){
-      Grille_attribue_couleur_case(G,i,j,M[i][j]);
-    }
+  scanf("%d", &choix);
   
-  // Grille_redessine_Grille();
-  //Grille_attente_touche();
-  
-  Liste L;
-  init_liste(&L);
-  int taille = 1;
-  int couleur;
-  /*
-  printf("dim = %d\n", dim);
-  couleur = M[0][0];
-  printf("Couleur initiale : %d \n",M[0][0]);
-  trouve_zone_rec(M,dim,0,0,&taille, &L);
-  /* peint(couleur,M,&L);*/
-  /* printf("Couleur finale : %d \n",M[0][0]);
-  affiche_liste(&L,M);
-  */
+  switch(choix){
+  case 1:
+    Gene_instance_genere_matrice(dim, nbcl, nivdif, graine, M);
+    //Affichage de la grille
 
-  /*sequence_aleatoire_rec_2(M,G,G->dim,1);*/
+    Grille_init(dim,nbcl, 500,&G);
+
+    Grille_ouvre_fenetre(G);
+
+    for (i=0;i<dim;i++)
+      for (j=0;j<dim;j++){
+	Grille_attribue_couleur_case(G,i,j,M[i][j]);
+      }
+  
+    sequence_aleatoire_rec_2(M,G,G->dim,1);
+    Grille_redessine_Grille();
+    
+    Grille_attente_touche();
  
-  sequence_aleatoire_imp(M,G,G->dim,1);
-  
-  Grille_redessine_Grille();
-  
-  // A VOUS DE JOUER
+    Grille_ferme_fenetre();
 
+    Grille_free(&G);
+    break;
 
-  Grille_attente_touche();
+  case 2:
+    Gene_instance_genere_matrice(dim, nbcl, nivdif, graine, M);
+
+  
+
+    //Affichage de la grille
+
+    Grille_init(dim,nbcl, 500,&G);
+
+    Grille_ouvre_fenetre(G);
+
+    for (i=0;i<dim;i++)
+      for (j=0;j<dim;j++){
+	Grille_attribue_couleur_case(G,i,j,M[i][j]);
+      }
+  
+    sequence_aleatoire_imp(M,G,G->dim,1);
+    
+    Grille_redessine_Grille();
+
+    Grille_attente_touche();
  
-  Grille_ferme_fenetre();
+    Grille_ferme_fenetre();
 
-  Grille_free(&G);
+    Grille_free(&G);
+    break;
+
+  case 3:
+    Gene_instance_genere_matrice(dim, nbcl, nivdif, graine, M);
+  
+    //Affichage de la grille
+
+    Grille_init(dim,nbcl, 500,&G);
+
+    Grille_ouvre_fenetre(G);
+
+    for (i=0;i<dim;i++)
+      for (j=0;j<dim;j++){
+	Grille_attribue_couleur_case(G,i,j,M[i][j]);
+      }
+  
+    sequence_aleatoire_rapide(M,G,1);
+    
+    Grille_redessine_Grille();
+
+    Grille_attente_touche();
+ 
+    Grille_ferme_fenetre();
+
+    Grille_free(&G);
+    
+    break;
+
+  default:
+    printf("Erreur de saisie\n");
+  }
+   
 
   return 0;
 }

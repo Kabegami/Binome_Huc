@@ -48,21 +48,6 @@ void trouve_zone_rec(int **M, int dim, int i, int j, int *taille, Liste *L)
   }
 }
 
-/* on stocke la couleur initiale avant de lancer notre fonction trouve_zone_rec puis apres avoir obtenu la zone on la recolorise a l aide de cette fonction 
-
-   ! Attention ! On ne peut pas appeller peint et recherche_zone dans une fonction reccursive ensemble, mais je n en connais pas la raison */
-void peint(Grille *G, int couleur, int **M, Liste *L)
-{
-  Elnt_liste *actu;
-  actu = *L;
-  while(actu != NULL){
-    M[actu->i][actu->j] = couleur;
-    Grille_attribue_couleur_case(G,actu->i,actu->j,M[actu->i][actu->j]);
-    actu = actu->suiv;
-  }
-}
-
-
 /*test*/
 
 /* joue avec une couleur aleatoire en appelant la fonction trouve_zone_rec et retourne le nombre de coups necessaires pour gagner
@@ -164,7 +149,7 @@ void nb_couleur_initiales(int **tab, int **M, int dim)
 int sequence_aleatoire_rec_2(int **M, Grille *G, int dim, int aff){
   int *tab = initialise_tab_couleur(G->nbcl);
   nb_couleur_initiales(&tab,M,G->dim);
-  afficher_tab(tab,G->nbcl);
+  //afficher_tab(tab,G->nbcl);
   int nbCoups = 0;
   srand(time(NULL));
  /* On definit Zsg, la zone contenant la case situee en haut a gauche */
@@ -194,25 +179,26 @@ int sequence_aleatoire_rec_2(int **M, Grille *G, int dim, int aff){
       /* on peint toute les cases avec la nouvelle couleur, puis on effectue une nouvelle recherche afin de voir si notre zone possede de nouvelles cases */ 
       detruit_liste(&L);
       taille = 0;
-      printf("Couleur Zsg : %d\n", couleur);
+      // printf("Couleur Zsg : %d\n", couleur);
       // printf("Couleur initiale : %d \n", M[i][j]);
       trouve_zone_rec(M,dim,0,0,&taille,&L);
       peint(G,couleur,M,&L);
       // printf("Couleur finale : %d \n",M[i][j]);
-      printf("taille = %d \n",taille);
-      affiche_liste(&L,M);
+      //printf("taille = %d \n",taille);
+      // affiche_liste(&L,M);
       nbcl = cpt_couleur(tab,G->nbcl);
       nbCoups++;
       //nbcl--;
       /* Pour la decrementation, je propose de dire que notre fonction s arrete quand notre zone partant de 0,0 est de taille = dim*dim */
-      printf("nbcl = %d\n", nbcl);
+      // printf("nbcl = %d\n", nbcl);
       if(aff == 1){
-      Grille_attente_touche();
+	//Grille_attente_touche();
       Grille_redessine_Grille();
       }
     }
   }while(nbcl != 1);
-  
+
+  printf("Couleur finale : %d\n", couleur);
   printf("nbCoups = %d\n", nbCoups);
   return nbCoups;
 }

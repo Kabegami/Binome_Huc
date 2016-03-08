@@ -14,7 +14,7 @@ int ajoute_en_tete(Liste *L, int i, int j){
   Elnt_liste *elnt;
   elnt=(Elnt_liste*) malloc(sizeof(Elnt_liste *));
   if (elnt==NULL) 
-    return 0;
+    return 1;
   elnt->suiv=*L;
   elnt->i=i;
   elnt->j=j;
@@ -68,9 +68,9 @@ int est_dans_liste(Liste *L, int i,int j)
   actu = *L;
   while (actu != NULL){
     if (actu->i == i && actu->j == j)
-      return 1;
+      return 0;
   }
-  return 0;
+  return 1;
 }
 
 void suppression_el(Liste (*L), int i,int j)
@@ -98,4 +98,14 @@ void suppression_el(Liste (*L), int i,int j)
       free((*L)->suiv);
       (*L)->suiv = temp->suiv;
     }
+}
+void peint(Grille *G, int couleur, int **M, Liste *L)
+{
+  Elnt_liste *actu;
+  actu = *L;
+  while(actu != NULL){
+    M[actu->i][actu->j] = couleur;
+    Grille_attribue_couleur_case(G,actu->i,actu->j,M[actu->i][actu->j]);
+    actu = actu->suiv;
+  }
 }
