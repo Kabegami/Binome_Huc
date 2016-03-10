@@ -26,6 +26,6 @@ int appartient_zsg(int **M, S_Zsg *zone, int i, int j);
 
 int appartient_bordure(int **M, S_Zsg *zone, int i, int j);
 
-int agrandit_Zsg(int **M, Grille *G, S_Zsg *zone, int cl, int k, int l);
+int agrandit_zsg(int **M, S_Zsg *zone, int cl, int k, int l);
 
 int sequence_aleatoire_rapide(int **M, Grille *G, int aff);

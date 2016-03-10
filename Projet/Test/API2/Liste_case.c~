@@ -68,9 +68,9 @@ int est_dans_liste(Liste *L, int i,int j)
   actu = *L;
   while (actu != NULL){
     if (actu->i == i && actu->j == j)
-      return 0;
+      return 1;
   }
-  return 1;
+  return 0;
 }
 
 void suppression_el(Liste (*L), int i,int j)
@@ -99,13 +99,44 @@ void suppression_el(Liste (*L), int i,int j)
       (*L)->suiv = temp->suiv;
     }
 }
-void peint(Grille *G, int couleur, int **M, Liste *L)
+
+int* initialise_tab_couleur(int nb_couleur)
 {
-  Elnt_liste *actu;
-  actu = *L;
-  while(actu != NULL){
-    M[actu->i][actu->j] = couleur;
-    Grille_attribue_couleur_case(G,actu->i,actu->j,M[actu->i][actu->j]);
-    actu = actu->suiv;
+  int i;
+  int *tab = (int *)malloc(nb_couleur*sizeof(int));
+  for(i = 0; i < nb_couleur;i++)
+    {
+      tab[i] = 0;
+    }
+  return tab;
+}
+
+int cpt_couleur(int *tab, int nb_couleur)
+{
+  int i;
+  int cpt = 0;
+  for(i = 0; i < nb_couleur;i++){
+    if (tab[i] != 0)
+      cpt++;
+  }
+  return cpt;
+}
+
+void afficher_tab(int *tab, int taille)
+{
+  int i;
+  for(i = 0;i < taille; i++)
+    printf("%d \n",tab[i]);
+}
+
+void nb_couleur_initiales(int **tab, int **M, int dim)
+{
+  int i,j;
+  int valeur;
+  for(i = 0; i < dim;i++){
+      for(j = 0; j < dim;j++){
+	valeur = M[i][j];
+	(*tab)[valeur]++;
+      }
   }
 }

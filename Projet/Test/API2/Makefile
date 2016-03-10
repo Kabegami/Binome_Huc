@@ -1,7 +1,7 @@
 all : Flood-It.o API_Grille.o API_Gene_instance.o Liste_case.o test.o test2.o version_rapide.o
 	gcc -o interface Flood-It.o API_Grille.o API_Gene_instance.o Liste_case.o test.o test2.o version_rapide.o -lSDL
 
-Flood-It.o : Flood-It.c API_Grille.h API_Gene_instance.h version_rapide.h test.h test2.h
+Flood-It.o : Flood-It.c API_Grille.h API_Gene_instance.h
 	gcc -c -lSDL Flood-It.c
 
 API_Grille.o : API_Grille.c API_Grille.h

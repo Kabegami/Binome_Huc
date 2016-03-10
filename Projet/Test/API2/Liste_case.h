@@ -1,6 +1,5 @@
 #ifndef __Liste_CASE__
 #define __Liste_CASE__
-#include "API_Grille.h"
 
 /* Liste simplement chainee de case reperee par les coordonnees entiere i,j */
 typedef struct elnt_liste{
@@ -28,12 +27,21 @@ void enleve_en_tete(Liste *L, int *i, int *j);
 /* Detruit tous les elements de la liste */
 void detruit_liste(Liste *L);
 
-void affiche_liste(Liste *L, int **M);
+void affiche_liste(Liste *L);
+
+int cpt_elem(Liste *L);
 
 int est_dans_liste(Liste *L, int i, int j);
 
 void suppression_el(Liste *L, int i, int j);
 
-void peint(Grille *G, int couleur, int **M, Liste *L);
+int* initialise_tab_couleur(int nb_couleur);
+
+int cpt_couleur(int *tab, int nb_couleur);
+
+void afficher_tab(int *tab, int taille);
+
+void nb_couleur_initiales(int **tab, int **M, int dim);
+
 
 #endif
