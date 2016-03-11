@@ -65,8 +65,20 @@ int main(int argc,char**argv){
       for (j=0;j<dim;j++){
 	Grille_attribue_couleur_case(G,i,j,M[i][j]);
       }
-  
+    
+    FILE *f1 = fopen("01_rec.txt", "a+");
+    temps_initial = clock();  
     sequence_aleatoire_rec_2(M,G,G->dim,1);
+    temps_final = clock();
+    temps_cpu = ((double)(temps_final - temps_initial))/CLOCKS_PER_SEC;
+
+    fprintf(f1, "%d %f \n", G->dim, temps_cpu);
+	
+    temps_initial = 0;
+    temps_final = 0;
+    temps_cpu = 0.0;
+    fclose(f1);
+    
     Grille_redessine_Grille();
     
     Grille_attente_touche();
@@ -91,8 +103,19 @@ int main(int argc,char**argv){
       for (j=0;j<dim;j++){
 	Grille_attribue_couleur_case(G,i,j,M[i][j]);
       }
-  
+
+    FILE *f2 = fopen("02_imp.txt", "a+");
+    temps_initial = clock();
     sequence_aleatoire_imp(M,G,G->dim,1);
+    temps_final = clock();
+    temps_cpu = ((double)(temps_final - temps_initial))/CLOCKS_PER_SEC;
+
+    fprintf(f2, "%d %f \n", G->dim, temps_cpu);
+	
+    temps_initial = 0;
+    temps_final = 0;
+    temps_cpu = 0.0;
+    fclose(f2);
     
     Grille_redessine_Grille();
 
@@ -116,8 +139,19 @@ int main(int argc,char**argv){
       for (j=0;j<dim;j++){
 	Grille_attribue_couleur_case(G,i,j,M[i][j]);
       }
-  
+
+    FILE *f3 = fopen("03_rapide.txt", "a+");
+    temps_initial = clock();
     sequence_aleatoire_rapide(M,G,1);
+        temps_final = clock();
+    temps_cpu = ((double)(temps_final - temps_initial))/CLOCKS_PER_SEC;
+
+    fprintf(f3, "%d %f \n", G->dim, temps_cpu);
+	
+    temps_initial = 0;
+    temps_final = 0;
+    temps_cpu = 0.0;
+    fclose(f3);
     
     Grille_redessine_Grille();
 
