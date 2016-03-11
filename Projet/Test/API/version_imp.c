@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
-#include "test2.h"
+#include "version_imp.h"
 
 /* Dans cette fonction, on possede deux liste : L contenant les cases composant la zone et pile qui possede les cases adjacente aux cases entree en zone et ce termine quand le premier element de la pile est egal au premier element de L */
 void trouve_zone_imp(int **M, int dim, int i, int j, int *taille, Liste *L)
@@ -86,7 +86,7 @@ int sequence_aleatoire_imp(int **M, Grille *G, int dim, int aff){
       peint(G,couleur,M,&L);
       // printf("Couleur finale : %d \n",M[i][j]);
       //printf("taille = %d \n",taille);
-      //affiche_liste(&L,M);
+      //affiche_liste(&L);
       nbcl = cpt_couleur(tab,G->nbcl);
       nbCoups++;
       //nbcl--;

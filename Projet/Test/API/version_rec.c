@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
-#include "test.h"
+#include "version_rec.h"
 #include "Liste_case.h"
 
 /* fonction recursive, qui definit la zone de la couleur de la case i,j en parametre qui  met la couleur a -1 dans les cases deja visitees pour eviter une boucle infinie et qui remet la bonne couleur a la fin */
@@ -83,7 +83,7 @@ int sequence_aleatoire_rec(int **M, Grille *G, int dim, int nbcl, int aff){
   int couleur = M[0][0];
   trouve_zone_rec(M, dim, 0, 0, &taille, &L);
   printf("Couleur Zsg : %d \n",couleur);
-  affiche_liste(&L,M);
+  affiche_liste(&L);
 
   /* selectionne une couleur tant que la grille contient plus d'une couleur  */
   do{
@@ -102,7 +102,7 @@ int sequence_aleatoire_rec(int **M, Grille *G, int dim, int nbcl, int aff){
       peint(G,couleur,M,&L);
       // printf("Couleur finale : %d \n",M[i][j]);
       printf("taille = %d \n",taille);
-      affiche_liste(&L,M);
+      affiche_liste(&L);
 
       //nbcl--;
       /* Pour la decrementation, je propose de dire que notre fonction s arrete quand notre zone partant de 0,0 est de taille = dim*dim */

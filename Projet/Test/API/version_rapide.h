@@ -29,3 +29,5 @@ int appartient_bordure(int **M, S_Zsg *zone, int i, int j);
 int agrandit_zsg(int **M, S_Zsg *zone, int cl, int k, int l);
 
 int sequence_aleatoire_rapide(int **M, Grille *G, int aff);
+
+void plus_grd_cl(S_Zsg zone,Grille *G,int *i, int *j);
