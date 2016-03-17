@@ -134,10 +134,11 @@ int sequence_aleatoire_rec_2(int **M, Grille *G, int dim, int aff){
   int taille = 0;
   int new_couleur;
   int couleur = M[0][0];
-  int nbcl = G->nbcl;
+  int nbcl =cpt_couleur(tab,G->nbcl);
+  //printf("nbcl : %d \n",nbcl);
   trouve_zone_rec(M, dim, 0, 0, &taille, &L);
   printf("Couleur initiale : %d \n",couleur);
-
+  //Grille_redessine_Grille();
   /* selectionne une couleur tant que la grille contient plus d'une couleur  */
   do{
     /* pb avec le rand car ce en changant la taille de nbcl, on n est pas sur que la couleur supprime du rand soit celle desire */

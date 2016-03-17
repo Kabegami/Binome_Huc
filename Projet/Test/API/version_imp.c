@@ -60,7 +60,7 @@ int sequence_aleatoire_imp(int **M, Grille *G, int dim, int aff){
   int taille = 0;
   int new_couleur;
   int couleur = M[0][0];
-  int nbcl = G->nbcl;
+  int nbcl = cpt_couleur(tab,G->nbcl);
   trouve_zone_imp(M, dim, 0, 0, &taille, &L);
    printf("Couleur initiale : %d \n",couleur);
 
@@ -93,7 +93,7 @@ int sequence_aleatoire_imp(int **M, Grille *G, int dim, int aff){
       /* Pour la decrementation, je propose de dire que notre fonction s arrete quand notre zone partant de 0,0 est de taille = dim*dim */
       //printf("nbcl = %d\n", nbcl);
       if(aff == 1){
-	// Grille_attente_touche();
+	//Grille_attente_touche();
       Grille_redessine_Grille();
       }
     }

@@ -65,8 +65,10 @@ void plus_grd_cl(S_Zsg zone, Grille *G ,int *i, int *j)
       indice = k;
     }
   }
+  if (max != 0){
   *i = (zone.B[indice])->i;
   *j = (zone.B[indice])->j;
+  }
 }
 
 int appartient_zsg(int **M, S_Zsg *zone, int i, int j)
