@@ -2,7 +2,6 @@
 #include <stdlib.h>
 #include <time.h>
 #include "version_rapide.h"
-#include "test.h"
 
 S_Zsg init_zsg(int dim, int nbcl, Liste Lzsg, Liste *B, int **App)
 {
@@ -15,18 +14,14 @@ S_Zsg init_zsg(int dim, int nbcl, Liste Lzsg, Liste *B, int **App)
   return zone;
 }
 
-/* ajoute la case M[i][j] dans la zone et retourne 0 si la case n est pas en bordure */
+/* ajoute la case M[i][j] dans la zone  */
 int ajoute_zsg(int **M, S_Zsg *zone, int i, int j)
 {
   int couleur;
   int t,t2;
-  //if (zone->App[i][j] < 0)
-  //  return 1;
   couleur = M[i][j];
   ajoute_en_tete(&(zone->Lzsg),i,j);
   zone->App[i][j] = -1;
-  //enleve_en_tete(&(zone->B[couleur],t,t2);
-  //suppression_el(&(zone->B[couleur]),i,j);
   return 1;
 }
 
@@ -34,11 +29,8 @@ int ajoute_bordure(int **M, S_Zsg *zone, int i, int j)
 {
   int couleur;
   couleur = M[i][j];
-  //if (zone->App[i][j] != couleur)
-  //  return 1;
   ajoute_en_tete(&(zone->B[couleur]),i,j);
   zone->App[i][j] = couleur;
-  //  suppression_el(&(zone->Lzsg),i,j);
   return 1;
 }
 
@@ -55,19 +47,21 @@ void afficher_bordure(S_Zsg *zone)
 
 
 /* Il s agit d un algorithme glouton qui renvoit les coordonnes de la premiere case de la bordure de la couleur qui contient le plus de cases */ 
-void plus_grd_cl(S_Zsg zone,int *i, int *j)
+void plus_grd_cl(S_Zsg zone, Grille *G ,int *i, int *j)
 {
   int max = 0;
   int indice;
   int k;
-  for(k = 0; k < zone.dim;k++){
+  for(k = 0; k <G->nbcl ;k++){
     if (cpt_elem(&(zone.B[k])) > max){
       max = cpt_elem(&(zone.B[k]));
       indice = k;
     }
   }
+  if (max != 0){
   *i = (zone.B[indice])->i;
   *j = (zone.B[indice])->j;
+  }
 }
 
 int appartient_zsg(int **M, S_Zsg *zone, int i, int j)
@@ -89,18 +83,13 @@ int agrandit_zsg(int **M, S_Zsg *zone, int cl, int k, int l)
   init_liste(pile);
   init_liste(bordure);
   ajoute_en_tete(pile,k,l);
-  //zone->App[k][l] = -1;
+  
   int taille = 0;
   int couleur;
-  
-  //ajoute_zsg(M, zone, k, l);
-  //printf("(%d, %d) ajouté à zone\n", k, l);
   
   do{
     k = (*pile)->i;
     l = (*pile)->j;
-    //k = (zone->Lzsg)->i;
-    //l = (zone->Lzsg)->j;
     if (!(appartient_zsg(M, zone, k, l))){
 	ajoute_zsg(M, zone, k, l);
 	taille++;
@@ -109,18 +98,15 @@ int agrandit_zsg(int **M, S_Zsg *zone, int cl, int k, int l)
     
     /* case de droite */
     if(k != (zone->dim-1) && zone->App[k+1][l] != -1){
-      //printf("1er if\n");
       if(zone->App[k+1][l] != -1 && M[k+1][l] == cl && !(appartient_zsg(M, zone, k+1, l))){
 	//printf("(%d, %d) ajouté à zone\n", k+1, l);
 	ajoute_en_tete(pile, k+1, l);
-	//ajoute_zsg(M, zone, k+1, l);
-	//taille++;
       }
     
       else{
 	if(M[k+1][l] != cl && !(appartient_bordure(M, zone, k+1, l))){
 	  ajoute_bordure(M, zone, k+1, l);
-	    //printf("(%d, %d) ajouté à bordure\n", k+1, l);
+	  //printf("(%d, %d) ajouté à bordure\n", k+1, l);
 	}
       }
     }
@@ -129,38 +115,31 @@ int agrandit_zsg(int **M, S_Zsg *zone, int cl, int k, int l)
     /* case du bas */
     
     if(l != (zone->dim-1) && zone->App[k][l+1] != -1){
-      //  printf("2eme if\n");
       if(zone->App[k][l+1] != -1 && M[k][l+1] == cl && !(appartient_zsg(M, zone, k, l+1))){
 	//printf("(%d, %d) ajouté à zone\n", k, l+1);
 	ajoute_en_tete(pile, k, l+1);
-	//ajoute_zsg(M, zone, k, l+1);
-	//taille++;
       }
     
       else{
 	if(M[k][l+1] != cl && !(appartient_bordure(M, zone, k, l+1))){
-	  // ajoute_en_tete(bordure, k, l+1);
 	  ajoute_bordure(M, zone, k, l+1);
-	    //printf("(%d, %d) ajouté à bordure\n", k, l+1);
+	  //printf("(%d, %d) ajouté à bordure\n", k, l+1);
 	}
       }
     }
     
     /* case de gauche */
     if(k != 0 && zone->App[k-1][l] != -1){
-      // printf("3eme if\n");
       if(zone->App[k-1][l] != -1 && M[k-1][l] == cl && !(appartient_zsg(M, zone, k-1, l))){
 	//printf("(%d, %d) ajouté à zone\n", k-1, l);
 	ajoute_en_tete(pile, k-1, l);
-	//ajoute_zsg(M, zone, k, l+1);
-	//taille++;
       }
     
       else{
 	if(M[k-1][l] != cl && !(appartient_bordure(M, zone, k-1, l))){
 	  // ajoute_en_tete(bordure, k, l+1);
 	  ajoute_bordure(M, zone, k-1, l);
-	    // printf("(%d, %d) ajouté à bordure\n", k-1, l);
+	  // printf("(%d, %d) ajouté à bordure\n", k-1, l);
 	}
       }
     }
@@ -168,26 +147,21 @@ int agrandit_zsg(int **M, S_Zsg *zone, int cl, int k, int l)
 
     /* case du haut */
     if(l != 0 && zone->App[k][l-1] != -1){
-      //printf("4eme if\n");
       if(zone->App[k][l-1] != -1 && M[k][l-1] == cl && !(appartient_zsg(M, zone, k, l-1))){
 	//printf("(%d, %d) ajouté à zone\n", k, l-1);
 	ajoute_en_tete(pile, k, l-1);
-	//ajoute_zsg(M, zone, k, l-1);
-	//taille++;
       }
     
       else{
 	if(M[k][l-1] != cl && !(appartient_bordure(M, zone, k, l-1))){
 	  //printf("(%d, %d) ajouté à bordure\n", k, l-1);
-	  //ajoute_en_tete(bordure, k, l-1);
 	  ajoute_bordure(M, zone, k, l-1);
 	}
       }
     }
     
-  
-    }while(!test_liste_vide(pile));
-    return taille;
+  }while(!test_liste_vide(pile));
+  return taille;
 }
 
 
@@ -204,6 +178,7 @@ int sequence_aleatoire_rapide(int **M, Grille *G, int aff)
   for (i = 0; i < G->dim; i++){
     App[i] = malloc((G->dim)*sizeof(int));
   }
+  
   for(i = 0; i < G->dim; i++){
     for(j = 0; j < G->dim; j++)
       App[i][j] = -2; 
@@ -211,20 +186,19 @@ int sequence_aleatoire_rapide(int **M, Grille *G, int aff)
 
   for (i = 0; i < G->nbcl; i++)
     init_liste(&B[i]);
+  
   S_Zsg zone = init_zsg(G->dim, G->nbcl, Lzsg, B, App);
   int couleur = M[0][0];
   printf("couleur initiale : %d\n", couleur);
 
   int *tab = initialise_tab_couleur(G->nbcl);
   nb_couleur_initiales(&tab,M,G->dim);
-  //afficher_tab(tab,G->nbcl);
   int new_couleur;
   int nbCoups = 0;
   int nbcl = G->nbcl;
   int taille;
   
   taille = agrandit_zsg(M, &zone, couleur, 0, 0);
-  //printf("taille %d \n",taille);
   //printf("zone : ");
   // affiche_liste(&(zone.Lzsg));
   //afficher_bordure(&zone);
@@ -239,7 +213,7 @@ int sequence_aleatoire_rapide(int **M, Grille *G, int aff)
   Elnt_liste *actu;
 
   do{
-    plus_grd_cl(zone,&k,&l);
+    plus_grd_cl(zone,G,&k,&l);
     couleur = M[k][l];
     actu = B[couleur];
     tab[M[0][0]] -= taille;
@@ -250,16 +224,10 @@ int sequence_aleatoire_rapide(int **M, Grille *G, int aff)
       taille += agrandit_zsg(M,&zone,couleur,actu->i,actu->j);
       actu = actu->suiv;
     }
-    // printf("taille %d \n",taille);
-    //afficher_tab(tab,G->nbcl);
     detruit_liste(&(zone.B[couleur]));
-    //printf("zone :  \n");
-    //affiche_liste(&(zone.Lzsg));
-    // afficher_bordure(&zone);
 
     peint(G,couleur,M,&(zone.Lzsg));
     nbcl = cpt_couleur(tab,G->nbcl);
-    //printf("nbcl = %d\n", nbcl);
     nbCoups++;
       
     if(aff == 1){
@@ -267,7 +235,7 @@ int sequence_aleatoire_rapide(int **M, Grille *G, int aff)
       Grille_redessine_Grille();
     }
     
-  }while(nbcl >1);
+  }while(nbcl > 1);
   
   printf("Couleur finale : %d\n", couleur);
   printf("nbCoups = %d\n", nbCoups);

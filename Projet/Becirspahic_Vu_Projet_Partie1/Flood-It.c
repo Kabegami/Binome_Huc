@@ -4,8 +4,8 @@
 
 #include "API_Grille.h"
 #include "API_Gene_instance.h"
-#include "test.h"
-#include "test2.h"
+#include "version_rec.h"
+#include "version_imp.h"
 #include "version_rapide.h"
  
  
@@ -65,8 +65,9 @@ int main(int argc,char**argv){
       for (j=0;j<dim;j++){
 	Grille_attribue_couleur_case(G,i,j,M[i][j]);
       }
-  
+     
     sequence_aleatoire_rec_2(M,G,G->dim,1);
+    
     Grille_redessine_Grille();
     
     Grille_attente_touche();
@@ -91,7 +92,7 @@ int main(int argc,char**argv){
       for (j=0;j<dim;j++){
 	Grille_attribue_couleur_case(G,i,j,M[i][j]);
       }
-  
+
     sequence_aleatoire_imp(M,G,G->dim,1);
     
     Grille_redessine_Grille();
@@ -116,7 +117,7 @@ int main(int argc,char**argv){
       for (j=0;j<dim;j++){
 	Grille_attribue_couleur_case(G,i,j,M[i][j]);
       }
-  
+
     sequence_aleatoire_rapide(M,G,1);
     
     Grille_redessine_Grille();

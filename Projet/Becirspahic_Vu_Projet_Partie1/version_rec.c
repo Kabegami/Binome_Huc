@@ -48,9 +48,8 @@ void trouve_zone_rec(int **M, int dim, int i, int j, int *taille, Liste *L)
   }
 }
 
-/* on stocke la couleur initiale avant de lancer notre fonction trouve_zone_rec puis apres avoir obtenu la zone on la recolorise a l aide de cette fonction 
+/* on stocke la couleur initiale avant de lancer notre fonction trouve_zone_rec puis apres avoir obtenu la zone on la recolorise a l'aide de cette fonction */
 
-   ! Attention ! On ne peut pas appeller peint et recherche_zone dans une fonction reccursive ensemble, mais je n en connais pas la raison */
 void peint(Grille *G, int couleur, int **M, Liste *L)
 {
   Elnt_liste *actu;
@@ -63,12 +62,13 @@ void peint(Grille *G, int couleur, int **M, Liste *L)
 }
 
 
-/*test*/
-
-/* joue avec une couleur aleatoire en appelant la fonction trouve_zone_rec et retourne le nombre de coups necessaires pour gagner
-aff est un entier indiquant si il faut reafficher la grille ou non
-nbcouleur est le nombre de changement de couleur et notre valeur de retour
+/* 
+   Joue avec une couleur aleatoire en appelant la fonction trouve_zone_rec
+   et retourne le nombre de coups necessaires pour gagner.
+   aff est un entier indiquant si il faut reafficher la grille ou non.
+   ----------N'EST PAS LA VERSION UTILISEE DANS LE MAIN-----------
 */
+
 int sequence_aleatoire_rec(int **M, Grille *G, int dim, int nbcl, int aff){
 
   srand(time(NULL));
@@ -85,7 +85,7 @@ int sequence_aleatoire_rec(int **M, Grille *G, int dim, int nbcl, int aff){
   printf("Couleur Zsg : %d \n",couleur);
   affiche_liste(&L);
 
-  /* selectionne une couleur tant que la grille contient plus d'une couleur  */
+  /* selectionne une couleur tant que taille != dim*dim  */
   do{
     new_couleur = (int)(rand()%(nbcl));
 
@@ -96,22 +96,15 @@ int sequence_aleatoire_rec(int **M, Grille *G, int dim, int nbcl, int aff){
       /* on peint toute les cases avec la nouvelle couleur, puis on effectue une nouvelle recherche afin de voir si notre zone possede de nouvelles cases */ 
       detruit_liste(&L);
       taille = 0;
-      printf("Couleur Zsg : %d\n", couleur);
-      // printf("Couleur initiale : %d \n", M[i][j]);
       trouve_zone_rec(M,dim,0,0,&taille,&L);
       peint(G,couleur,M,&L);
-      // printf("Couleur finale : %d \n",M[i][j]);
-      printf("taille = %d \n",taille);
-      affiche_liste(&L);
+      nbCoups++;
 
-      //nbcl--;
-      /* Pour la decrementation, je propose de dire que notre fonction s arrete quand notre zone partant de 0,0 est de taille = dim*dim */
       printf("nbcl = %d\n", nbcl);
 
       if(aff == 1){
-      Grille_redessine_Grille();
-      Grille_attente_touche();
-      nbCoups++;
+	Grille_redessine_Grille();
+	Grille_attente_touche();
       }
     }
   }while(taille != dim*dim);
@@ -121,13 +114,17 @@ int sequence_aleatoire_rec(int **M, Grille *G, int dim, int nbcl, int aff){
 }
 
 
+/* version qui prend en compte les couleurs actuelles dans la grille */
   
 int sequence_aleatoire_rec_2(int **M, Grille *G, int dim, int aff){
+
+  /* initialisation du tableau de couleurs dans la grille */
   int *tab = initialise_tab_couleur(G->nbcl);
   nb_couleur_initiales(&tab,M,G->dim);
   //afficher_tab(tab,G->nbcl);
   int nbCoups = 0;
   srand(time(NULL));
+  
  /* On definit Zsg, la zone contenant la case situee en haut a gauche */
   Liste L;
   init_liste(&L);
@@ -135,13 +132,12 @@ int sequence_aleatoire_rec_2(int **M, Grille *G, int dim, int aff){
   int new_couleur;
   int couleur = M[0][0];
   int nbcl =cpt_couleur(tab,G->nbcl);
-  //printf("nbcl : %d \n",nbcl);
+
   trouve_zone_rec(M, dim, 0, 0, &taille, &L);
   printf("Couleur initiale : %d \n",couleur);
-  //Grille_redessine_Grille();
+
   /* selectionne une couleur tant que la grille contient plus d'une couleur  */
   do{
-    /* pb avec le rand car ce en changant la taille de nbcl, on n est pas sur que la couleur supprime du rand soit celle desire */
     do{
     new_couleur = (int)(rand()%(G->nbcl));
     }
@@ -156,24 +152,17 @@ int sequence_aleatoire_rec_2(int **M, Grille *G, int dim, int aff){
       /* on peint toute les cases avec la nouvelle couleur, puis on effectue une nouvelle recherche afin de voir si notre zone possede de nouvelles cases */ 
       detruit_liste(&L);
       taille = 0;
-      // printf("Couleur Zsg : %d\n", couleur);
-      // printf("Couleur initiale : %d \n", M[i][j]);
       trouve_zone_rec(M,dim,0,0,&taille,&L);
       peint(G,couleur,M,&L);
-      // printf("Couleur finale : %d \n",M[i][j]);
-      //printf("taille = %d \n",taille);
-      // affiche_liste(&L,M);
       nbcl = cpt_couleur(tab,G->nbcl);
       nbCoups++;
-      //nbcl--;
-      /* Pour la decrementation, je propose de dire que notre fonction s arrete quand notre zone partant de 0,0 est de taille = dim*dim */
-      // printf("nbcl = %d\n", nbcl);
+
       if(aff == 1){
 	//Grille_attente_touche();
-      Grille_redessine_Grille();
+	Grille_redessine_Grille();
       }
     }
-  }while(nbcl != 1);
+  }while(nbcl > 1);
 
   printf("Couleur finale : %d\n", couleur);
   printf("nbCoups = %d\n", nbCoups);
