@@ -1,5 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include "API_Grille.h"
+#include "API_Gene_instance.h"
 #include "Liste_case.h"
 
 typedef struct sommet Sommet;
@@ -25,4 +27,4 @@ typedef struct graphe_zone{
   Cellule_som *som;  /* Liste chainee des sommets du graphe */
   Sommet ***mat;     /* Matrice de pointeurs sur les sommets indiquant
 			a quel sommet appartient une case (i,j) de la grille */
-} Grapĥe_zone;
+}Graphe_zone;

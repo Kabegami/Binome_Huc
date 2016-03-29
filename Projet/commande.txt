@@ -1,0 +1,10 @@
+plot "01_rec_coups.txt" using 1:2 with lines
+replot "02_imp_coups.txt" using 1:2 with lines
+replot "03_rapide_coups.txt" using 1:2 with lines
+set term png
+set output "00_courbes_coups.png"
+set size 1, 1
+set xlabel ' Dimension grille '
+set ylabel ' Nombre de coups'
+set title ' Flood-It'
+replot
