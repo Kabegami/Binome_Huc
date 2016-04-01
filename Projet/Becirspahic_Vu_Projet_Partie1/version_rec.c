@@ -14,33 +14,34 @@ void trouve_zone_rec(int **M, int dim, int i, int j, int *taille, Liste *L)
   Elnt_liste *actu;
   ajoute_en_tete(L,i,j);
   (*taille)++;
-
   while(M[i][j] == couleur){
     M[i][j] = -1;
 
   /* case de droite */
-  if(i != (dim-1) && M[i+1][j] == couleur)
+  if(i < (dim - 1))
     {
+      if( M[i+1][j] == couleur){
       //printf("droite, taille = %d\n", *taille);
       trouve_zone_rec(M,dim,i+1,j,taille,L);
+      }
     }
 
   /* case du bas */
-  if (j != (dim-1) && M[i][j+1] == couleur)
+  if (j < dim -1   && M[i][j+1] == couleur)
     {
       //printf("bas, taille = %d\n", *taille);
       trouve_zone_rec(M,dim,i,j+1,taille,L);
     }
 
   /* case de gauche */
-  if (i != 0 && M[i-1][j] == couleur)
+  if (i > 0 && M[i-1][j] == couleur)
     {
       //printf("gauche, taille = %d\n", *taille);
       trouve_zone_rec(M,dim,i-1,j,taille,L);
     }
 
   /* case du haut */
-  if(j != 0 && M[i][j-1] == couleur)
+  if(j > 0 && M[i][j-1] == couleur)
     {
       //printf("haut, taille = %d\n", *taille);
       trouve_zone_rec(M,dim,i,j-1,taille,L);
@@ -158,7 +159,7 @@ int sequence_aleatoire_rec_2(int **M, Grille *G, int dim, int aff){
       nbCoups++;
 
       if(aff == 1){
-	//Grille_attente_touche();
+	Grille_attente_touche();
 	Grille_redessine_Grille();
       }
     }

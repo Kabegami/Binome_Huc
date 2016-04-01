@@ -151,6 +151,7 @@ int main(int argc,char**argv){
 	Grille_attribue_couleur_case(G,i,j,M[i][j]);
       }
 
+    printf("%d %d \n",dim, G->dim);
     creer_graphe_zone(G, M);
     
     Grille_redessine_Grille();

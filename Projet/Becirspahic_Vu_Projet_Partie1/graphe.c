@@ -2,15 +2,17 @@
 #include <stdlib.h>
 #include "graphe.h"
 
-void ajoute_liste_sommet(Cellule_som *liste,Sommet *s)
+/* Fonction liste sommet
+   ---------------------------------------------------------- */
+
+void ajoute_liste_sommet(Cellule_som **liste,Sommet *s)
 {
-  Cellule_som *actu;
-  if (liste == NULL) 
-    actu->suiv = NULL;
-  else 
-    actu->suiv = liste->suiv;
-  actu->sommet = s;
-  liste = actu;
+  Cellule_som *new;
+  Cellule_som *temp;
+  new = (Cellule_som *)malloc(sizeof(Cellule_som));
+  new->sommet = s;
+  new->suiv = *liste;
+  *liste = new;
 }
 
 void detruire_liste_sommet(Cellule_som *liste, Sommet s)
@@ -38,6 +40,31 @@ int recherche_sommet(Cellule_som *liste, Sommet s)
   return 0;
 }
 
+void affiche_voisin(Sommet *s)
+{
+  Cellule_som *actu = s->sommet_adj;
+  printf("Liste voisin :");
+  while (actu->sommet != NULL){
+    printf("%d ",actu->sommet->num);
+    actu = actu->suiv;
+  }
+}
+
+void affiche_sommet(Cellule_som *liste)
+{
+  Cellule_som *actu = liste;
+  while (actu != NULL){
+    printf("Sommet : %d \n",actu->sommet->num);
+    printf("Zone : ");
+    affiche_liste(&(actu->sommet->cases));
+    affiche_voisin(actu->sommet);
+    actu = actu->suiv;
+  }
+}
+
+/* Fonction sommet
+   --------------------------------------------*/
+
 int adjacent(Sommet *s1, Sommet *s2)
 {
   int i;
@@ -52,19 +79,21 @@ void ajoute_voisin(Sommet *s1, Sommet *s2)
 {
   // on verifie qu il n y a pas de doublon dans la liste
   if (!(adjacent(s1,s2)))
-    ajoute_liste_sommet(s1->sommet_adj, s2);
+    ajoute_liste_sommet(&(s1->sommet_adj), s2);
   // on verifie qu il n y a pas de doublon dans la liste
   if (!(adjacent(s2,s1)))
-    ajoute_liste_sommet(s2->sommet_adj, s1);
+    ajoute_liste_sommet(&(s2->sommet_adj), s1);
 }
 
+/* Init graphe
+   ------------------------------------------------- */
 
-void creer_sommet(Sommet *s, int num, int cl,Liste cases, int nbcase_som, Cellule_som *sommet_adj)
+Sommet* creer_sommet(int num, int cl,Liste l, int nbcase_som, Cellule_som *sommet_adj)
 {
-  s = (Sommet *)malloc(sizeof(Sommet *));
+  Sommet *s = (Sommet *)malloc(sizeof(Sommet));
   s->num = num;
   s->cl = cl;
-  s->cases = cases;
+  s->cases = l;
   s->nbcase_som = nbcase_som;
   s->sommet_adj = sommet_adj;
 }
@@ -72,6 +101,7 @@ void creer_sommet(Sommet *s, int num, int cl,Liste cases, int nbcase_som, Cellul
 void actualise_mat(Graphe_zone *Graphe, Sommet s){
   Elnt_liste *actu = s.cases;
   while (actu != NULL){
+    //printf("Sommet (%d , %d) ",actu->i,actu->j);
     (Graphe->mat)[actu->i][actu->j] = &s;
     actu = actu->suiv;
   }
@@ -97,42 +127,48 @@ void creer_arete(Graphe_zone *Graphe, Grille *G)
   }
 }
 
+
 Graphe_zone* creer_graphe_zone(Grille *G, int **M)
 {
   int i,j;
   int num = 0;
-  Sommet s;
+  Sommet *s =(Sommet *)malloc(sizeof(Sommet));
   Liste L;
+  int taille = 0;
+  int couleur;
   init_liste(&L);
   Graphe_zone *Graphe;
   Graphe = (Graphe_zone*)malloc(sizeof(Graphe_zone*));
   Graphe->nbsom = 0;
   Graphe->som = NULL;
-  Graphe->mat = (Sommet ***)malloc(G->dim*sizeof(Sommet **));
+  Graphe->mat = (Sommet ***)malloc(G->dim*sizeof(Sommet *));
   for(i = 0; i < G->dim; i++){
-    (Graphe->mat)[i] = (Sommet**)malloc(G->dim*sizeof(Sommet**));
+    (Graphe->mat)[i] = (Sommet**)malloc(G->dim*sizeof(Sommet*));
     for(j = 0; j < G->dim; j++){
-      (Graphe->mat)[i][j] = (Sommet*)malloc(G->dim*sizeof(Sommet*));
       (Graphe->mat)[i][j] = NULL;
     }
   }
   for(i = 0; i < G->dim; i++){
     for(j = 0; j < G->dim; j++){
       if ((Graphe->mat)[i][j] == NULL){
-	printf("toto\n");
-	trouve_zone_rec(M,G,i,j,NULL,&L);
-	printf("toto2\n");
-	creer_sommet(&s, num, M[i][j], L,0,NULL);
-	actualise_mat(Graphe,s);
+	couleur = M[i][j];
+	trouve_zone_rec(M,G->dim,i,j,&taille,&L);
+	peint(G,couleur,M,&L);
+	s = creer_sommet(num, M[i][j],L,0,NULL);
+	//affiche_liste(&(s->cases));
+	actualise_mat(Graphe,*s);
+	ajoute_liste_sommet(&(Graphe->som),s);
+	affiche_sommet(Graphe->som);
+	detruit_liste(&L);
+	taille = 0;
       }
     }
   }
 
-  //Elnt_liste *actu = (Graphe->mat)[0][0];
-  for(i = 0; i < G->dim; i++){
-    for(j = 0; j < G->dim; j++){
-      printf("Case (%d,%d) dans sommet num %d  de couleur %d\n",i,j,(Graphe->mat)[i][j]->num, (Graphe->mat)[i][j]->cl);
-    }
-  }
+  creer_arete(Graphe,G);
+  affiche_sommet(Graphe->som);
+  
   return Graphe;
 }
+
+
