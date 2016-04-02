@@ -27,9 +27,7 @@ void enleve_en_tete(Liste *L, int *i, int *j);
 /* Detruit tous les elements de la liste */
 void detruit_liste(Liste *L);
 
-void affiche_liste(Liste *L);
-
-int cpt_elem(Liste *L);
+void affiche_liste(Liste *L, int **M);
 
 int est_dans_liste(Liste *L, int i, int j);
 

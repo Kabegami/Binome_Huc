@@ -51,7 +51,7 @@ void detruit_liste(Liste *L){
   *L=NULL;
 }
 
-void affiche_liste(Liste *L){
+void affiche_liste(Liste *L, int **M){
   Elnt_liste *actu;
   actu = *L;
   while (actu != NULL) {
@@ -59,17 +59,6 @@ void affiche_liste(Liste *L){
     actu = actu->suiv;
   }
   printf("\n");
-}
-
-int cpt_elem(Liste *L){
-  Elnt_liste *actu;
-  int cpt = 0;
-  actu = *L;
-  while (actu != NULL){
-    cpt++;
-    actu = actu->suiv;
-  }
-  return cpt;
 }
 
 /* retourne un boolean si l element est dans la liste ou non */
@@ -84,38 +73,33 @@ int est_dans_liste(Liste *L, int i,int j)
   return 0;
 }
 
-void suppression_el(Liste *L, int i,int j)
+void suppression_el(Liste (*L), int i,int j)
 {
-  printf("debut suppression \n");
   Elnt_liste *temp;
-  Elnt_liste *actu;
-  actu = *L;
   /* premier elem */
-  if (actu != NULL) {
-    if (actu->i == i && actu->j == i){
-      (*L) = actu->suiv;
-      free(actu);
-    }
-    printf("sortie du premier if \n");
-    while( actu->suiv != NULL && (actu->suiv)->suiv != NULL && actu->suiv->i != i || actu->suiv->j != j){
-      actu = actu->suiv;
-    }
-    printf("sortie du while \n");
-    /* dernier elem */
-    if (actu->suiv->suiv == NULL && actu->suiv->suiv->i == i && actu->suiv->suiv->j == j)
-      {
-	free(actu->suiv);
-	(*L)->suiv = NULL;
-      }
-    /* cas general */
-    if(actu->suiv->i == i && actu->suiv->j == j)
-      {
-	temp = actu->suiv;
-	actu->suiv = temp->suiv;
-	free(temp);
-      }
+  if ((*L)->i == i && (*L)->j == i){
+    temp = (*L);
+    free((*L));
+    (*L) = temp->suiv;
   }
+  while((*L)->suiv->suiv != NULL  &&(*L)->suiv != NULL && (*L)->suiv->i != i || (*L)->suiv->j != j){
+    (*L) = (*L)->suiv;
+  }
+  /* dernier elem */
+  if ((*L)->suiv->suiv == NULL && (*L)->suiv->suiv->i == i && (*L)->suiv->suiv->j == j)
+    {
+      free((*L)->suiv->suiv);
+      (*L)->suiv->suiv = NULL;
+    }
+  /* cas general */
+  if((*L)->suiv->i == i && (*L)->suiv->j == j)
+    {
+      temp = (*L)->suiv;
+      free((*L)->suiv);
+      (*L)->suiv = temp->suiv;
+    }
 }
+
 int* initialise_tab_couleur(int nb_couleur)
 {
   int i;

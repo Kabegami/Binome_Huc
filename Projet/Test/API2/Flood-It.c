@@ -4,8 +4,8 @@
 
 #include "API_Grille.h"
 #include "API_Gene_instance.h"
-#include "version_rec.h"
-#include "version_imp.h"
+#include "test.h"
+#include "test2.h"
 #include "version_rapide.h"
  
  
@@ -44,7 +44,6 @@ int main(int argc,char**argv){
     if (M[i]==0) printf("Pas assez d'espace mémoire disponible\n");
   }
 
-  int nbCoups;
   int choix;
   printf("============Menu==========\n");
   printf("1 - Version recursive\n");
@@ -66,9 +65,8 @@ int main(int argc,char**argv){
       for (j=0;j<dim;j++){
 	Grille_attribue_couleur_case(G,i,j,M[i][j]);
       }
-   
-    nbCoups = sequence_aleatoire_rec_2(M,G,G->dim,1);
-    
+  
+    sequence_aleatoire_rec_2(M,G,G->dim,1);
     Grille_redessine_Grille();
     
     Grille_attente_touche();
@@ -81,6 +79,8 @@ int main(int argc,char**argv){
   case 2:
     Gene_instance_genere_matrice(dim, nbcl, nivdif, graine, M);
 
+  
+
     //Affichage de la grille
 
     Grille_init(dim,nbcl, 500,&G);
@@ -91,8 +91,8 @@ int main(int argc,char**argv){
       for (j=0;j<dim;j++){
 	Grille_attribue_couleur_case(G,i,j,M[i][j]);
       }
-
-    nbCoups = sequence_aleatoire_imp(M,G,G->dim,1);
+  
+    sequence_aleatoire_imp(M,G,G->dim,1);
     
     Grille_redessine_Grille();
 
@@ -116,8 +116,8 @@ int main(int argc,char**argv){
       for (j=0;j<dim;j++){
 	Grille_attribue_couleur_case(G,i,j,M[i][j]);
       }
-
-    nbCoups = sequence_aleatoire_rapide(M,G,1);
+  
+    sequence_aleatoire_rapide(M,G,1);
     
     Grille_redessine_Grille();
 
