@@ -159,6 +159,11 @@ int sequence_aleatoire_rec_2(int **M, Grille *G, int dim, int aff){
       nbCoups++;
 
       if(aff == 1){
+      //Grille_attente_touche();
+      Grille_redessine_Grille();
+      }
+      if(aff == 2){
+	affiche_liste(&L);
 	Grille_attente_touche();
 	Grille_redessine_Grille();
       }
@@ -166,7 +171,7 @@ int sequence_aleatoire_rec_2(int **M, Grille *G, int dim, int aff){
   }while(nbcl > 1);
 
   printf("Couleur finale : %d\n", couleur);
-  printf("nbCoups = %d\n", nbCoups);
+  //printf("nbCoups = %d\n", nbCoups);
   return nbCoups;
 }
 

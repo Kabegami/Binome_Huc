@@ -209,6 +209,11 @@ int sequence_aleatoire_rapide(int **M, Grille *G, int aff)
     //Grille_attente_touche();
     Grille_redessine_Grille();
   }
+  if(aff == 2){
+    affiche_liste(&(zone.Lzsg));
+    Grille_attente_touche();
+    Grille_redessine_Grille();
+  }
   
   Elnt_liste *actu;
 
@@ -234,11 +239,16 @@ int sequence_aleatoire_rapide(int **M, Grille *G, int aff)
       //Grille_attente_touche();
       Grille_redessine_Grille();
     }
+    if(aff == 2){
+      affiche_liste(&(zone.Lzsg));
+      Grille_attente_touche();
+      Grille_redessine_Grille();
+    }
     
   }while(nbcl > 1);
   
   printf("Couleur finale : %d\n", couleur);
-  printf("nbCoups = %d\n", nbCoups);
+  //printf("nbCoups = %d\n", nbCoups);
   return nbCoups;
 }
       
