@@ -4,6 +4,8 @@
 #include "API_Gene_instance.h"
 #include "Liste_case.h"
 #include "file.h"
+#ifndef graphe_h
+#define graphe_h
 
 typedef struct sommet Sommet;
 
@@ -40,4 +42,7 @@ typedef struct graphe_bordure{
   int *taille; // tableau de int 
   Cellule_som **liste; /* Liste chainee des sommets par couleur */
   Cellule_som *zsg;    /* Sommet de la Zsg */
+  Sommet **tab; //tableau de pointeurs sur des sommets(qui contient tous les sommets de notre plateau)
 }Graphe_bordure;
+
+#endif

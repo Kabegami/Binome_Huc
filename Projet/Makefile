@@ -23,7 +23,7 @@ version_rapide.o : version_rapide.c version_rapide.h
 	gcc -c -lSDL version_rapide.c
 
 graphe.o : graphe.c graphe.h file.h
-	gcc -c -lSDL graphe.c
+	gcc -c -lSDL graphe.c file.h
 
-file.o : file.c file.h
-	gcc -c file.c
+file.o : file.c file.h graphe.h
+	gcc -c file.c graphe.h

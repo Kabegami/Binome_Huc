@@ -18,10 +18,10 @@ int est_file_vide(File *f)
     return 0;
 }
 
-void enfile(File *f, int i)
+void enfile(File *f, Sommet *s)
 {
   Elem_file *new = (Elem_file *)malloc(sizeof(Elem_file));
-  new->i = i;
+  new->s = s;
   new->suiv = NULL;
   if (est_file_vide(f)){
     new->prec = NULL;
@@ -35,16 +35,30 @@ void enfile(File *f, int i)
   f->nb++;
 }
 
-int defile(File *f)
+Sommet* defile(File *f)
 {
   if (!(est_file_vide(f))){
     Elem_file *tmp = f->debut;
-    int i = f->debut->i;
-    f->debut->suiv->prec = NULL;
-    f->debut = f->debut->suiv;
+    Sommet *s = f->debut->s;
+    if (f->debut->suiv != NULL){
+      f->debut->suiv->prec = NULL;
+      f->debut = f->debut->suiv;
+    }
+    else{
+      f->debut = NULL;
+      f->fin = NULL;
+    }
     f->nb--;
     free(tmp);
-    return i;
+    return s;
   }
-  return -1;
+  return NULL;
+}
+
+void affiche_file(File *f){
+  Elem_file *cour =  f->debut;
+  while (cour != NULL){
+    printf("sommet %d\n", cour->s->num);
+    cour = cour->suiv;
+  }
 }

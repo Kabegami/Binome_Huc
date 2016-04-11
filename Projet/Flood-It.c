@@ -130,7 +130,8 @@ int main(int argc,char**argv){
     case 4:
       temps_initial = clock();
       
-      nbCoups = max_bordure(G, M, aff);
+      // nbCoups = max_bordure(G, M, aff);
+      chemin(G,M,aff);
       
       temps_final = clock();
       temps_cpu = ((double)(temps_final - temps_initial))/CLOCKS_PER_SEC;

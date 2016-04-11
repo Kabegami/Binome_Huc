@@ -1,8 +1,9 @@
 #ifndef FILE_H
 #define FILE_H
+#include "graphe.h"
 
 typedef struct e_file{
-  int i;
+  Sommet *s;
   struct e_file *prec;
   struct e_file *suiv;
 } Elem_file;
@@ -17,9 +18,10 @@ void init_file(File *f);
 
 int est_file_vide(File *f);
 
-void enfile(File *f, int i);
+void enfile(File *f, Sommet* s);
 
-int defile(File *f);
+Sommet* defile(File *f);
 
-
+void affiche_file(File *f);
+  
 #endif

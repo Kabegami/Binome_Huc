@@ -59,8 +59,11 @@ void affiche_sommet(Cellule_som *liste)
     printf("Marque : %d\n",actu->sommet->marque);
     printf("Sommet %d : de couleur %d, taille : %d\n",actu->sommet->num, actu->sommet->cl,actu->sommet->nbcase_som);
     affiche_liste(&(actu->sommet->cases));
+    if (actu->sommet->pere != NULL)
+      printf("Pere : %d, ", actu->sommet->pere->num);
+    printf("distance : %d\n",actu->sommet->distance);
     printf("\n");
-    // affiche_voisin(actu->sommet);
+    affiche_voisin(actu->sommet);
     actu = actu->suiv;
   }
 }
@@ -111,6 +114,8 @@ Sommet* creer_sommet(int num, int cl,Liste l, int nbcase_som,int marque, Cellule
   s->nbcase_som = nbcase_som;
   s->marque = marque;
   s->sommet_adj = sommet_adj;
+  s->pere = NULL;
+  s->distance = -1;
   return s;
 }
 
@@ -192,9 +197,9 @@ Graphe_zone* creer_graphe_zone(Grille *G, int **M)
 	couleur = M[i][j];
 	trouve_zone_rec(M,G->dim,i,j,&taille,&L);
 	peint(G,couleur,M,&L);
-	num++;
 	Graphe->nbsom++;
 	Sommet *s = creer_sommet(num,M[i][j],L,taille,2,NULL);
+	num++;
 	//printf("sommet %d : ",s->num);
 	//affiche_liste(&(s->cases));
 	actualise_mat(Graphe,s);
@@ -225,7 +230,7 @@ void actualise_voisin(Graphe_bordure *bordure, Cellule_som *s)
   }
 }
 
-Graphe_bordure* creer_bordure(Grille *G, Graphe_zone *Graphe)
+Graphe_bordure* creer_bordure(Grille *G, Graphe_zone *Graphe, int tout)
 {
   Graphe_bordure *bordure;
   bordure = (Graphe_bordure*)malloc(sizeof(Graphe_bordure*));
@@ -239,13 +244,30 @@ Graphe_bordure* creer_bordure(Grille *G, Graphe_zone *Graphe)
     (bordure->taille)[i] = 0;
   }
 
+  // initialisation du tableau de sommets
+
+  bordure->tab = (Sommet **)malloc(Graphe->nbsom*sizeof(Sommet *));
+  Cellule_som *actu = Graphe->som;
+  while (actu != NULL){
+    (bordure->tab)[actu->sommet->num] = actu->sommet;
+    actu = actu->suiv;
+  }
   Sommet *zsg = (Graphe->mat)[0][0];
   ajoute_liste_sommet(&(bordure->zsg),zsg);
   zsg->marque = 0;
 
   /* on attribue les bordures de Zsg */
-  //Cellule_som *actu = zsg->sommet_adj;
-  actualise_voisin(bordure,bordure->zsg);
+
+  /* pour le parcours en largeur, toutes les bordures */
+  if (tout == 1){
+    Cellule_som *actu = zsg->sommet_adj;
+    while (actu != NULL){
+      actualise_voisin(bordure,actu);
+      actu = actu->suiv;
+    }
+  }
+  else
+    actualise_voisin(bordure,bordure->zsg);
 
   //affiche_graphe(G, bordure);
   return bordure;
@@ -309,12 +331,111 @@ int bordure_vide(Grille *G, Graphe_bordure *bordure){
   return 1;
 }
 
+int plus_court_chemin(Grille *G,Graphe_zone *Graphe, Graphe_bordure *bordure, Sommet* racine, Sommet **tab){
+  Cellule_som *actu;
+  int *visit = (int*)malloc(Graphe->nbsom*sizeof(int)); /* tableau visites */
+  int *pere = (int*)malloc(Graphe->nbsom*sizeof(int));  /* tableau peres */
+  int i,j,k;
+  Sommet *cour;
+  Sommet *cour_adj;
+  File f;
+  init_file(&f);
+
+  for (i = 0; i < Graphe->nbsom; i++){
+    visit[i] = -1;
+    pere[i] = -1;
+  }
+  visit[racine->num] = 0;
+  enfile(&f,racine);
+
+  while (!(est_file_vide(&f))){
+    cour = defile(&f);
+    k = cour->num;
+    //printf("defile %d\n",k);
+    actu = cour->sommet_adj;
+      while (actu != NULL){
+	cour_adj = actu->sommet;
+	j = actu->sommet->num;
+	if (visit[j] == -1){
+	  visit[j] = visit[k] + 1;
+	  pere[j] = k;
+	  enfile(&f,cour_adj);
+	  //printf("enfile %d\n",j);
+	}
+	actu = actu->suiv;
+      }
+      //affiche_file(&f);
+  }
+  
+  printf("sommet | pere | visite\n");
+  for (i = 0; i < Graphe->nbsom; i++){
+    printf("%d       ",i);
+    if (pere[i] != -1)
+      tab[i]->pere = tab[pere[i]];
+    tab[i]->distance = visit[i];
+    printf("%d     ",pere[i]);
+    printf("%d\n",visit[i]);
+  }
+  return visit[Graphe->nbsom-1];
+}
+
+int chemin(Grille *G, int **M, int aff){
+  Graphe_zone *Graphe = creer_graphe_zone(G, M);
+  Graphe_bordure *bordure = creer_bordure(G, Graphe, 1);
+  int min;
+  int i = 0;
+  int j;
+  min = plus_court_chemin(G,Graphe, bordure, (Graphe->mat)[0][0],bordure->tab);
+  //tableau contenant le chemin
+  int *chemin = (int *)malloc((min+1)*sizeof(int));
+  int *temp = (int *)malloc((min+1)*sizeof(int));
+  printf("min = %d\n", min);
+  // affiche_graphe(G, bordure);
+  Sommet *actu = (bordure->tab)[Graphe->nbsom -1];
+  while (actu->pere != NULL){
+    chemin[i] = actu->num;
+    printf("Sommet nb : %d \n",actu->num);
+    actu = actu->pere;
+    i++;
+  }
+  i++;
+  chemin[i] = actu->num;
+  printf("Sommet nb : %d \n",actu->num);
+ 
+  for(i = min; i >= 0; i--)
+    temp[min - i] = chemin[i];
+  chemin = temp;
+  for(i = 0; i < min; i++){
+      printf("couleur %d\n", bordure->tab[chemin[i+1]]->cl);
+      printf("sommet de la couleur %d \n", bordure->tab[chemin[i+1]]->num);
+      Grille_attente_touche();
+      for(j = 0; j < i+1;j++)
+	peint(G, bordure->tab[chemin[i+1]]->cl,M,&(bordure->tab[chemin[j]]->cases));
+      //Grille_attente_touche();
+      Grille_redessine_Grille(); 
+    }
+
+  /*
+  for(i = min; i > 0;i--){
+    printf("couleur %d\n", bordure->tab[chemin[i-1]]->cl);
+    Grille_attente_touche();
+    for(j = min; j > i;j--)
+	peint(G, bordure->tab[chemin[i-1]]->cl,M,&(bordure->tab[chemin[j]]->cases)); 
+    Grille_redessine_Grille();
+    }
+  */
+  //Grille_redessine_Grille();
+  return 0;
+}
+
 int max_bordure(Grille *G, int **M, int aff){
   Graphe_zone *Graphe = creer_graphe_zone(G, M);
-  Graphe_bordure *bordure = creer_bordure(G, Graphe);
+  Graphe_bordure *bordure = creer_bordure(G, Graphe, 0);
   int max_cl;
   int nbCoups = 0;
   int cl_init = bordure->zsg->sommet->cl;
+  affiche_graphe(G, bordure);
+  //plus_court_chemin(G,Graphe, bordure, (Graphe->mat)[0][0]);
 
   if(aff == 1){
     //Grille_attente_touche();
@@ -325,7 +446,7 @@ int max_bordure(Grille *G, int **M, int aff){
     Grille_attente_touche();
     Grille_redessine_Grille();
   }
-  
+ 
   while(!(bordure_vide(G,bordure))){
     max_cl = max_couleur(G, bordure);
     actualise_bordure(max_cl, Graphe, bordure);
@@ -340,38 +461,10 @@ int max_bordure(Grille *G, int **M, int aff){
       Grille_attente_touche();
       Grille_redessine_Grille();
     }
-  }
+    }
   printf("Couleur initiale : %d\n", cl_init);
   printf("Couleur finale : %d\n", bordure->zsg->sommet->cl);
   return nbCoups;
 }
 
-int plus_court_chemin(Grille *G,Graphe_zone *Graphe, Graphe_bordure *bordure, int racine){
-  Cellule_som *actu;
-  int *visit = (int*)malloc(Graphe->nbsom*sizeof(int)); /* tableau visites */
-  int *pere = (int*)malloc(Graphe->nbsom*sizeof(int));  /* tableau peres */
-  int i,j,k;
-  File f;
-  init_file(&f);
 
-  for (i = 0; i < Graphe->nbsom; i++)
-    visit[i] = -1;
-  visit[racine] = 0;
-  enfile(&f,racine);
-
-  while (!(est_file_vide(&f))){
-    k = defile(&f);
-    /* on part du sommet numero k */
-    actu = (bordure->zsg->sommet->sommet_adj); /* faux, a corriger --------------- */
-      while (actu != NULL){
-	j = actu->sommet->num;
-	if (visit[j] == -1){
-	  visit[j] = visit[k] + 1;
-	  pere[j] = k;
-	  enfile(&f,j);
-	}
-	actu = actu->suiv;
-      }
-  }
-  return 0;
-}
