@@ -7,7 +7,7 @@
 #include "version_rec.h"
 #include "version_imp.h"
 #include "version_rapide.h"
-#include "graphe.h"
+#include "strategies.h"
  
  
 int main(int argc,char**argv){
@@ -48,25 +48,33 @@ int main(int argc,char**argv){
   
   
   int choix, aff, nbCoups;
+  int fin = 0;
 
+  do{
+    printf("----------------------Menu----------------------\n");
+    printf("0 - SANS affichage graphique\n");
+    printf("1 - AVEC affichage graphique\n");
+    printf("3 - Quitter\n\n");
+    printf("Note: si la dimension entrée est inférieure à 6\non peut visualiser les étapes du jeu et le graphe\nau format texte.\n");
+
+    printf("Choix : ");
+    scanf("%d", &aff);
+  } while (aff != 0 && aff != 1 && aff != 3);
   
-  printf("===========Menu==========\n");
-  printf("1 - AVEC affichage graphique\n");
-  printf("2 - SANS affichage graphique\n");
-  printf("Note: si la dimension entrée est inférieure à 6\non peut visualiser les étapes du jeu et le graphe au format texte.\n");
-
-  scanf("%d", &aff);
+  if (aff == 3) return 0;
   if (dim < 6) aff = 2;
-  
-  printf("===========Menu==========\n");
+
+  printf("\n----------------------Menu----------------------\n");
   printf("1 - Version recursive\n");
   printf("2 - Version imperative\n");
   printf("3 - Version rapide\n");
   printf("4 - Max-bordure\n");
+  printf("5 - Parcours en largeur\n");
 
+  printf("Strategie : ");
   scanf("%d", &choix);
+  printf("\n-------------------------------------------------\n");
   
-
     Gene_instance_genere_matrice(dim, nbcl, nivdif, graine, M);
     //Affichage de la grille
 
@@ -86,7 +94,7 @@ int main(int argc,char**argv){
       
       temps_final = clock();
       temps_cpu = ((double)(temps_final - temps_initial))/CLOCKS_PER_SEC;
-      printf("Nombre de coups : %d \nTemps CPU: %f \n", nbCoups, temps_cpu);
+      printf("Nombre de coups:%d\nTemps CPU:%f\n", nbCoups, temps_cpu);
 
       temps_initial = 0;
       temps_final = 0;
@@ -101,7 +109,7 @@ int main(int argc,char**argv){
       
       temps_final = clock();
       temps_cpu = ((double)(temps_final - temps_initial))/CLOCKS_PER_SEC;
-      printf("Nombre de coups : %d \nTemps CPU: %f \n", nbCoups, temps_cpu);
+      printf("Nombre de coups:%d\nTemps CPU:%f\n", nbCoups, temps_cpu);
 
       temps_initial = 0;
       temps_final = 0;
@@ -119,7 +127,7 @@ int main(int argc,char**argv){
       
       temps_final = clock();
       temps_cpu = ((double)(temps_final - temps_initial))/CLOCKS_PER_SEC;
-      printf("Nombre de coups : %d \nTemps CPU: %f \n", nbCoups, temps_cpu);
+      printf("Nombre de coups:%d\nTemps CPU:%f\n", nbCoups, temps_cpu);
 
       temps_initial = 0;
       temps_final = 0;
@@ -130,12 +138,11 @@ int main(int argc,char**argv){
     case 4:
       temps_initial = clock();
       
-      // nbCoups = max_bordure(G, M, aff);
-      chemin(G,M,aff);
+      nbCoups = max_bordure(G, M, aff);
       
       temps_final = clock();
       temps_cpu = ((double)(temps_final - temps_initial))/CLOCKS_PER_SEC;
-      printf("Nombre de coups : %d \nTemps CPU: %f \n", nbCoups, temps_cpu);
+      printf("Nombre de coups:%d\nTemps CPU:%f\n", nbCoups, temps_cpu);
 
       temps_initial = 0;
       temps_final = 0;
@@ -143,6 +150,20 @@ int main(int argc,char**argv){
 
       break;
 
+    case 5:
+      temps_initial = clock();
+      
+      nbCoups = chemin(G,M,aff);
+      
+      temps_final = clock();
+      temps_cpu = ((double)(temps_final - temps_initial))/CLOCKS_PER_SEC;
+      printf("Nombre de coups:%d\nTemps CPU:%f\n", nbCoups, temps_cpu);
+
+      temps_initial = 0;
+      temps_final = 0;
+      temps_cpu = 0.0;
+
+      break;
     default:
       printf("Erreur de saisie\n");
       return 1;
@@ -150,8 +171,9 @@ int main(int argc,char**argv){
     }
     
     Grille_redessine_Grille();
-    
-    Grille_attente_touche();
+
+    if (aff != 0)
+      Grille_attente_touche();
  
     Grille_ferme_fenetre();
 
