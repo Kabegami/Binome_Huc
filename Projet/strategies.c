@@ -118,7 +118,7 @@ int chemin(Grille *G, int **M, int aff){
   /* for (i = 0; i <= min; i++)
      printf("chemin [%d] : %d\n", i, chemin[i]);*/
   
-  for(i = 0; i <= min; i++){
+  for(i = 0; i < min; i++){
     if(aff == 1){
       //Grille_attente_touche();
       Grille_redessine_Grille();
