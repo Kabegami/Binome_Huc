@@ -38,13 +38,32 @@ typedef struct graphe_zone{
 }Graphe_zone;
 
 
-typedef struct graphe_bordure{
+typedef struct{
   int *taille; // tableau des tailles par couleur dans la bordure
   Cellule_som **liste; /* Liste chainee des sommets par couleur */
   Cellule_som *zsg;    /* Sommet de la Zsg */
   Sommet **tab; //tableau de pointeurs sur des sommets(qui contient tous les sommets de notre grille)
 }Graphe_bordure;
 
+//Test autre bordure
+//---------------------------------------------------------------------------------------
+typedef struct liste_int{
+  int valeur;
+  struct liste_int *suiv;
+}Liste_int;
+
+typedef struct {
+  Liste_int *sommets;
+  int taille;
+}Case;
+  
+
+typedef struct {
+  Case *tab; // tableau des tailles par couleur dans la bordure
+  Sommet **grille;//tableau de pointeurs sur des sommets(qui contient tous les sommets de notre grille)
+}Bordure;
+
+//--------------------------------------------------------------------------------------
 void ajoute_liste_sommet(Cellule_som **liste,Sommet *s);
 
 void detruire_liste_sommet(Cellule_som *liste);

@@ -333,3 +333,91 @@ int bordure_vide(Grille *G, Graphe_bordure *bordure){
   return 1;
 }
 
+/* Essai optimisation max Bordure
+   ------------------------------------------------------ */
+
+void ajoute_liste_int(Liste_int **L, int valeur)
+{
+  Liste_int *new;
+  new = (Liste_int *)malloc(sizeof(Liste_int));
+  new->valeur = valeur;
+  new->suiv = *L;
+  *L = new;
+}
+
+
+Bordure * init_Bordure(Graphe_zone *G,Grille *Grille){
+  int i;
+  Bordure *b = (Bordure *)malloc(sizeof(Bordure));
+ 
+  b->tab = (Case *)malloc(Grille->nbcl*sizeof(Case));
+  for(i = 0; i < Grille->nbcl;i++){
+    b->tab[i].taille = 0;
+    b->tab[i].sommets = NULL;
+  }
+  
+  b->grille =  (Sommet **)malloc(G->nbsom*sizeof(Sommet *));
+  Cellule_som *actu = G->som;
+  while (actu != NULL){
+    (b->grille)[actu->sommet->num] = actu->sommet;
+    if (actu->sommet->marque == 1){
+      b->tab[actu->sommet->cl].taille += actu->sommet->nbcase_som;
+      ajoute_liste_int(&(b->tab[actu->sommet->cl].sommets),actu->sommet->num);
+    }
+    actu = actu->suiv;
+  }
+}
+
+int max(Case *tab,  int taille)
+{
+  int i;
+  int max = 0;
+  for(i = 0; i < taille; i++){
+    if (tab[i].taille > tab[max].taille)
+      max = i;
+  }
+  return max;
+}
+
+int est_vide(Case *tab, int taille)
+{
+  int i;
+  for(i = 0; i < taille;i++){
+    if(tab[i].taille != 0)
+      return 1;
+  }
+  return 0;
+}
+
+void ajoute_voisin_2(Sommet ***grille, Case *tab, int nb)
+{
+  //si on n'a pas encore rencontrer cette case, on l'ajoute a la bordure
+  if(*grille[nb]->marque == 2){
+    tab[(*grille[nb])->cl]->taille += (*grille)[nb]->taille;
+    ajoute_liste_int(tab[(*grille)[nb]->cl]->sommets,(*grille)[nb]->num);
+    (*grille)[nb]->marque = 1;
+  }
+}
+
+void iteration_max_Bordure(Bordure **b,Grille *Grille, Graphe *G)
+{
+  int cl = max(b->tab,Grille->nbcl);
+  int i;
+  liste_int actu = (*b)->tab[cl]->sommets;
+  while (actu != NULL){
+    // on ajoute les voisin
+    ajoute_voisin_2( &((*b)->grille), (*b)->tab,actu->valeur);
+  }
+  //on ajoute le sommet a la zone
+  (*b)->grille[actu->valeur]->marque = 0;
+  // on retire la couleur de tab
+  (*b)->tab[grille[cl]->cl]->taille = 0;
+  (*b)->tab[grille[cl]->cl]->sommets = NULL;
+  }
+}
+
+void max_bordure(Bordure **b, Grille *Grille, Graphe *G){
+  while (! est_vide(*b->tab)){
+    iteration_max_Bordure(b,Grille,G);
+  }
+}
