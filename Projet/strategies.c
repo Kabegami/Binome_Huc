@@ -57,6 +57,7 @@ int max_bordure(Grille *G, int **M, int aff){
   int max_cl;
   int nbCoups = 0;
   int cl_init = bordure->zsg->sommet->cl;
+  int taille = 1;
 
   if(aff == 1){
     //Grille_attente_touche();
@@ -68,9 +69,10 @@ int max_bordure(Grille *G, int **M, int aff){
     Grille_redessine_Grille();
   }
  
-  while(!(bordure_vide(G,bordure))){
+  while(taille < Graphe->nbsom){
+    //printf("taille : %d, nbsom : %d \n",taille,Graphe->nbsom);
     max_cl = max_couleur(G, bordure);
-    actualise_bordure(max_cl, Graphe, bordure);
+    actualise_bordure(max_cl, Graphe, bordure,&taille);
     peint_zsg(G, max_cl, bordure);
     nbCoups++;
     if(aff == 1){
@@ -95,6 +97,7 @@ int chemin(Grille *G, int **M, int aff){
   int min, max_cl, nbCoups;
   int i;
   int j;
+  int taille = 1;
   min = plus_court_chemin(G,Graphe, bordure, (Graphe->mat)[0][0],bordure->tab);
   i = min;
   //tableau contenant le chemin
@@ -132,7 +135,7 @@ int chemin(Grille *G, int **M, int aff){
 	peint(G, bordure->tab[chemin[i+1]]->cl,M,&(bordure->tab[chemin[j]]->cases));
 	}*/
       ajoute_liste_sommet(&(bordure->zsg),bordure->tab[chemin[i+1]]);
-      actualise_bordure(bordure->tab[chemin[i+1]]->cl,Graphe,bordure);
+      actualise_bordure(bordure->tab[chemin[i+1]]->cl,Graphe,bordure,&taille);
       peint_zsg(G,bordure->tab[chemin[i+1]]->cl,bordure);
       nbCoups++;
     }
@@ -144,7 +147,7 @@ int chemin(Grille *G, int **M, int aff){
 
   while(!(bordure_vide(G,bordure))){
     max_cl = max_couleur(G, bordure);
-    actualise_bordure(max_cl, Graphe, bordure);
+    actualise_bordure(max_cl, Graphe, bordure,&taille);
     peint_zsg(G, max_cl, bordure);
     nbCoups++;
     if(aff == 1){

@@ -8,6 +8,7 @@
 #include "version_imp.h"
 #include "version_rapide.h"
 #include "strategies.h"
+#include "graphe.h"
  
  
 int main(int argc,char**argv){
@@ -70,6 +71,7 @@ int main(int argc,char**argv){
   printf("3 - Version rapide\n");
   printf("4 - Max-bordure\n");
   printf("5 - Parcours en largeur\n");
+  printf("6 - Max-Bordure bis \n");
 
   printf("Strategie : ");
   scanf("%d", &choix);
@@ -164,11 +166,26 @@ int main(int argc,char**argv){
       temps_cpu = 0.0;
 
       break;
+
+    case 6:
+      temps_initial = clock();
+      nbCoups = Max_bordure3(G,M,aff);
+      temps_final = clock();
+      temps_cpu = ((double)(temps_final - temps_initial))/CLOCKS_PER_SEC;
+      printf("Nombre de coups:%d\nTemps CPU:%f\n", nbCoups, temps_cpu);
+
+      temps_initial = 0;
+      temps_final = 0;
+      temps_cpu = 0.0;
+
+      break;
+	
     default:
       printf("Erreur de saisie\n");
       return 1;
       break;
     }
+
     
     Grille_redessine_Grille();
 

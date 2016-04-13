@@ -63,6 +63,15 @@ typedef struct {
   Sommet **grille;//tableau de pointeurs sur des sommets(qui contient tous les sommets de notre grille)
 }Bordure;
 
+
+//Bordure3
+
+typedef struct{
+  Cellule_som *som;
+  int taille;
+}Case2;
+
+
 //--------------------------------------------------------------------------------------
 void ajoute_liste_sommet(Cellule_som **liste,Sommet *s);
 
@@ -94,12 +103,23 @@ void actualise_voisin(Graphe_bordure *bordure, Cellule_som *s);
 
 Graphe_bordure* creer_bordure(Grille *G, Graphe_zone *Graphe, int tout);
 
-void actualise_bordure(int cl, Graphe_zone *Graphe, Graphe_bordure *bordure);
+void actualise_bordure(int cl, Graphe_zone *Graphe, Graphe_bordure *bordure, int *taille);
 
 void peint_zsg(Grille *G, int cl, Graphe_bordure *bordure);
 
 int max_couleur(Grille *G, Graphe_bordure *bordure);
 
 int bordure_vide(Grille *G, Graphe_bordure *bordure);
+
+Case2* creer_bordure3(Grille *Grille, Graphe_zone *Graphe);
+
+void ajoute_bordure3(Case2 **b, Sommet *s);
+
+int max(Case2 *b, int nbcl);
+
+int bordure3_vide(Case2 *b, int nbcl);
+
+int Max_bordure3(Grille *G, int **M, int aff);
+   
   
 #endif

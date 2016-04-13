@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "graphe.h"
+#include "version_rec.h"
 
 /* Fonction liste sommet
    ---------------------------------------------------------- */
@@ -272,7 +273,7 @@ Graphe_bordure* creer_bordure(Grille *G, Graphe_zone *Graphe, int tout)
   return bordure;
 }
 
-void actualise_bordure(int cl, Graphe_zone *Graphe, Graphe_bordure *bordure)
+void actualise_bordure(int cl, Graphe_zone *Graphe, Graphe_bordure *bordure, int *taille)
 {
   Cellule_som *actu = (bordure->liste)[cl];
   Cellule_som *tmp;
@@ -285,6 +286,7 @@ void actualise_bordure(int cl, Graphe_zone *Graphe, Graphe_bordure *bordure)
     /* on ajoute les sommets dans la liste de la nouvelle couleur
        et on les supprime dans la liste de l'ancienne couleur*/
     ajoute_liste_sommet(&(bordure->zsg),actu->sommet);
+    (*taille)++;
     actualise_voisin(bordure, actu);
     (bordure->liste)[cl] = NULL;
     //tmp = actu;
@@ -335,7 +337,7 @@ int bordure_vide(Grille *G, Graphe_bordure *bordure){
 
 /* Essai optimisation max Bordure
    ------------------------------------------------------ */
-
+/*
 void ajoute_liste_int(Liste_int **L, int valeur)
 {
   Liste_int *new;
@@ -421,3 +423,150 @@ void max_bordure(Bordure **b, Grille *Grille, Graphe *G){
     iteration_max_Bordure(b,Grille,G);
   }
 }
+*/
+
+// Test Bordure 3
+/*
+Case2 * init_Bordure3(int nbcl)
+{
+  Case2 *b = (Case2*)malloc(nbcl*sizeof(Case2));
+  int i;
+  for(i = 0; i < nbcl; i++){
+    b[i].taille = 0;
+    b[i].som = NULL;
+  }
+  return b;
+}
+*/
+
+Case2* creer_bordure3(Grille *Grille, Graphe_zone *Graphe)
+{
+
+  Case2 *b = (Case2*)malloc(Grille->nbcl*sizeof(Case2));
+  int i;
+  for(i = 0; i < Grille->nbcl; i++){
+    b[i].taille = 0;
+    b[i].som = NULL;
+  }
+  Cellule_som *actu;
+  actu = Graphe->som;
+  //printf("%d \n",actu->sommet->num);
+  //printf("%d \n",actu->sommet->marque);
+  while(actu != NULL){
+    //c'est le if qui pose probleme
+    if (actu->sommet->marque == 1){
+      //on ajoute le nombre de case a la couleur
+      //printf("nb case sommet : %d \n",actu->sommet->nbcase_som);
+      b[actu->sommet->cl].taille += actu->sommet->nbcase_som;
+      //printf("nb case enregistre : %d \n",b[actu->sommet->cl].taille);
+      ajoute_liste_sommet(&(b[actu->sommet->cl].som),actu->sommet);
+    }
+    actu = actu->suiv;
+  }
+return b;
+}
+
+//prend un sommet, verifie si on peut l'ajouter et le cas echeant modifie sont etats
+void ajoute_bordure3(Case2 **b, Sommet *s)
+{
+  if (s->marque == 2){
+    s->marque = 1;
+    (*b)[s->cl].taille += s->nbcase_som;
+    ajoute_liste_sommet(&((*b)[s->cl].som), s);
+  }
+}
+
+
+int max(Case2 *b, int nbcl)
+{
+  int i;
+  int max = 0;
+  for(i = 0; i < nbcl; i++){
+    if (b[i].taille > b[max].taille)
+      max = i;
+  }
+  return max;
+}
+
+int bordure3_vide(Case2 *b, int nbcl)
+{
+  int i = 0;
+  for(i = 0; i < nbcl;i++){
+    if (b[i].taille != 0)
+      return 0;
+  }
+  return 1;
+}
+
+void affiche_bordure(Case2 *b, int nbcl)
+{
+  int i;
+  for(i = 0; i < nbcl; i++){
+    printf("cl : %d, taille : %d \n",i,b[i].taille); 
+  }
+}
+
+int Max_bordure3(Grille *G, int **M, int aff)
+{
+  int cpt = 0;
+  Graphe_zone *Graphe = creer_graphe_zone(G,M);
+  //declaration de la zone initiale
+  Cellule_som *zone = NULL;
+  ajoute_liste_sommet(&zone,(Graphe->mat)[0][0]);
+  zone->sommet->marque = 0;
+  Cellule_som *temp;
+  int taille = 1;
+  temp = zone->sommet->sommet_adj;
+  while (temp != NULL){
+    temp->sommet->marque = 1;
+    temp = temp->suiv;
+  }
+  int nbcl = G->nbcl;
+  Case2 *b = creer_bordure3(G,Graphe);
+  //affiche_bordure(b,nbcl);
+  
+  while (taille < Graphe->nbsom){
+    int cl = max(b,nbcl);
+    Cellule_som *voisin;
+    Cellule_som *sup;
+    //on peint notre zone initiale en cl
+    temp = zone;
+    while (temp !=  NULL){
+      peint(G,cl,M,&(temp->sommet->cases));
+      temp = temp->suiv;
+    }
+    //on affiche les resultats obtenus
+    if(aff == 1){
+      Grille_redessine_Grille();
+    }
+    if(aff == 2){
+      Grille_attente_touche();
+      Grille_redessine_Grille();
+      }
+      
+    //temp va servir a parcours notre liste de sommets
+    temp = (b[cl].som);
+    //on ajoute les voisin de notre case
+    while (temp != NULL){
+      //on ajoute le sommet a notre zone
+      taille++;
+      temp->sommet->marque = 0;
+      ajoute_liste_sommet(&(zone),temp->sommet);
+      voisin = temp->sommet->sommet_adj;
+      while (voisin != NULL){
+	ajoute_bordure3(&b,voisin->sommet);
+	voisin = voisin->suiv;
+      }
+      // on supprime notre liste chainee petit a petit
+    temp = temp->suiv;
+    }
+    //on retire les sommets de la couleur de la bordure
+    b[cl].taille = 0;
+    b[cl].som = NULL;
+    cpt++;
+  }
+  return cpt;
+}
+
+
+
