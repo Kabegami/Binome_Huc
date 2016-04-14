@@ -27,6 +27,7 @@ struct sommet{
 		    du parcours en largeur */
   Sommet* pere;  /* Pere du sommet dans l’arborescence du parcours
 		    en largeur */
+  int nbvoisin;
 };
 
 
@@ -110,6 +111,8 @@ void peint_zsg(Grille *G, int cl, Graphe_bordure *bordure);
 int max_couleur(Grille *G, Graphe_bordure *bordure);
 
 int bordure_vide(Grille *G, Graphe_bordure *bordure);
+
+int max_voisin(Grille *G, Graphe_bordure *bordure);
 
 Case2* creer_bordure3(Grille *Grille, Graphe_zone *Graphe);
 

@@ -135,20 +135,28 @@ void creer_arete(Graphe_zone *Graphe, Grille *G)
     for(j = 0; j < G->dim;j++){
       s = (Graphe->mat)[i][j];
       if(i != (G->dim) -1 && (s != ((Graphe->mat)[i+1][j]))){
-	if(!(est_arete(s,(Graphe->mat)[i+1][j])))
+	if(!(est_arete(s,(Graphe->mat)[i+1][j]))){
+	  ((Graphe->mat)[i+1][j])->nbvoisin++;
 	  ajoute_voisin(s,(Graphe->mat)[i+1][j]);
+	}
       }
       if(i != 0 && (s != ((Graphe->mat)[i-1][j]))){
-	if(!(est_arete(s,(Graphe->mat)[i-1][j])))
+	if(!(est_arete(s,(Graphe->mat)[i-1][j]))){
+	  ((Graphe->mat)[i-1][j])->nbvoisin++;
 	  ajoute_voisin(s,(Graphe->mat)[i-1][j]);
+	}
       }
       if(j != (G->dim) -1 && (s != ((Graphe->mat)[i][j+1]))){
-	if(!(est_arete(s,(Graphe->mat)[i][j+1])))
+	if(!(est_arete(s,(Graphe->mat)[i][j+1]))){
+	  ((Graphe->mat)[i][j+1])->nbvoisin++;
 	  ajoute_voisin(s,(Graphe->mat)[i][j+1]);
+	}
       }
       if(j != 0 && (s != ((Graphe->mat)[i][j-1]))){
-	if(!(est_arete(s,(Graphe->mat)[i][j-1])))
+	if(!(est_arete(s,(Graphe->mat)[i][j-1]))){
+	  ((Graphe->mat)[i][j-1])->nbvoisin++;
 	  ajoute_voisin(s,(Graphe->mat)[i][j-1]);
+	}
       }
     }
   }
@@ -313,6 +321,27 @@ int max_couleur(Grille *G, Graphe_bordure *bordure){
   return max_cl;
 }
 
+int max_voisin(Grille *G, Graphe_bordure *bordure){
+  int max_cl = 0;
+  int max = 0;
+  int cpt;
+  int i;
+  Cellule_som *actu;
+  for(i = 0; i < G->nbcl;i++){
+    actu = bordure->liste[i];
+    while(actu != NULL){
+      cpt = cpt + actu->sommet->nbvoisin;
+      actu = actu->suiv;
+    }
+    if(cpt > max){
+      max = cpt;
+      max_cl = i;
+    }
+    cpt = 0; 
+  }
+  return max_cl;
+}
+
 int bordure_vide(Grille *G, Graphe_bordure *bordure){
   int i;
   for (i = 0; i < G->nbcl; i++)
@@ -322,109 +351,6 @@ int bordure_vide(Grille *G, Graphe_bordure *bordure){
   return 1;
 }
 
-/* Essai optimisation max Bordure
-   ------------------------------------------------------ */
-/*
-void ajoute_liste_int(Liste_int **L, int valeur)
-{
-  Liste_int *new;
-  new = (Liste_int *)malloc(sizeof(Liste_int));
-  new->valeur = valeur;
-  new->suiv = *L;
-  *L = new;
-}
-
-
-Bordure * init_Bordure(Graphe_zone *G,Grille *Grille){
-  int i;
-  Bordure *b = (Bordure *)malloc(sizeof(Bordure));
- 
-  b->tab = (Case *)malloc(Grille->nbcl*sizeof(Case));
-  for(i = 0; i < Grille->nbcl;i++){
-    b->tab[i].taille = 0;
-    b->tab[i].sommets = NULL;
-  }
-  
-  b->grille =  (Sommet **)malloc(G->nbsom*sizeof(Sommet *));
-  Cellule_som *actu = G->som;
-  while (actu != NULL){
-    (b->grille)[actu->sommet->num] = actu->sommet;
-    if (actu->sommet->marque == 1){
-      b->tab[actu->sommet->cl].taille += actu->sommet->nbcase_som;
-      ajoute_liste_int(&(b->tab[actu->sommet->cl].sommets),actu->sommet->num);
-    }
-    actu = actu->suiv;
-  }
-}
-
-int max(Case *tab,  int taille)
-{
-  int i;
-  int max = 0;
-  for(i = 0; i < taille; i++){
-    if (tab[i].taille > tab[max].taille)
-      max = i;
-  }
-  return max;
-}
-
-int est_vide(Case *tab, int taille)
-{
-  int i;
-  for(i = 0; i < taille;i++){
-    if(tab[i].taille != 0)
-      return 1;
-  }
-  return 0;
-}
-
-void ajoute_voisin_2(Sommet ***grille, Case *tab, int nb)
-{
-  //si on n'a pas encore rencontrer cette case, on l'ajoute a la bordure
-  if(*grille[nb]->marque == 2){
-    tab[(*grille[nb])->cl]->taille += (*grille)[nb]->taille;
-    ajoute_liste_int(tab[(*grille)[nb]->cl]->sommets,(*grille)[nb]->num);
-    (*grille)[nb]->marque = 1;
-  }
-}
-
-void iteration_max_Bordure(Bordure **b,Grille *Grille, Graphe *G)
-{
-  int cl = max(b->tab,Grille->nbcl);
-  int i;
-  liste_int actu = (*b)->tab[cl]->sommets;
-  while (actu != NULL){
-    // on ajoute les voisin
-    ajoute_voisin_2( &((*b)->grille), (*b)->tab,actu->valeur);
-  }
-  //on ajoute le sommet a la zone
-  (*b)->grille[actu->valeur]->marque = 0;
-  // on retire la couleur de tab
-  (*b)->tab[grille[cl]->cl]->taille = 0;
-  (*b)->tab[grille[cl]->cl]->sommets = NULL;
-  }
-}
-
-void max_bordure(Bordure **b, Grille *Grille, Graphe *G){
-  while (! est_vide(*b->tab)){
-    iteration_max_Bordure(b,Grille,G);
-  }
-}
-*/
-
-// Test Bordure 3
-/*
-Case2 * init_Bordure3(int nbcl)
-{
-  Case2 *b = (Case2*)malloc(nbcl*sizeof(Case2));
-  int i;
-  for(i = 0; i < nbcl; i++){
-    b[i].taille = 0;
-    b[i].som = NULL;
-  }
-  return b;
-}
-*/
 
 Case2* creer_bordure3(Grille *Grille, Graphe_zone *Graphe)
 {

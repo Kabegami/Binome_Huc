@@ -90,6 +90,47 @@ int max_bordure(Grille *G, int **M, int aff){
 }
 
 
+
+int max_voisin_bordure(Grille *G, int **M, int aff){
+  Graphe_zone *Graphe = creer_graphe_zone(G, M);
+  Graphe_bordure *bordure = creer_bordure(G, Graphe, 0);
+
+  int max_cl;
+  int nbCoups = 0;
+  int cl_init = bordure->zsg->sommet->cl;
+  int taille = 1;
+
+  if(aff == 1){
+    //Grille_attente_touche();
+    Grille_redessine_Grille();
+  }
+  if(aff == 2){
+    affiche_graphe(G, bordure);
+    Grille_attente_touche();
+    Grille_redessine_Grille();
+  }
+ 
+  while(taille < Graphe->nbsom){
+    max_cl = max_voisin(G, bordure);
+    actualise_bordure(max_cl, Graphe, bordure,&taille);
+    peint_zsg(G, max_cl, bordure);
+    nbCoups++;
+    if(aff == 1){
+      //Grille_attente_touche();
+      Grille_redessine_Grille();
+    }
+    if(aff == 2){
+      affiche_graphe(G, bordure);
+      Grille_attente_touche();
+      Grille_redessine_Grille();
+    }
+  }
+  printf("Couleur initiale : %d\n", cl_init);
+  printf("Couleur finale : %d\n", bordure->zsg->sommet->cl);
+  return nbCoups;
+}
+
+
 int chemin(Grille *G, int **M, int aff){
   Graphe_zone *Graphe = creer_graphe_zone(G, M);
   Graphe_bordure *bordure = creer_bordure(G, Graphe, 1);
@@ -131,7 +172,7 @@ int chemin(Grille *G, int **M, int aff){
   Grille_attente_touche();
 
   while(!(bordure_vide(G,bordure))){
-    max_cl = max_couleur(G, bordure);
+    max_cl = max_voisin(G, bordure);
     actualise_bordure(max_cl, Graphe, bordure,&taille);
     peint_zsg(G, max_cl, bordure);
     nbCoups++;
@@ -192,13 +233,16 @@ int max_esperance(Grille *G, int **M, int aff)
   int nbCoups = 0;
   int i;
   int j;
-  int taille = 1;/*
-  for(i = 0; i < G->dim/20;i++){
+  int taille = 1;
+  /*
+  for(i = 0; i < G->dim/20.0;i++){
     max_cl = max_couleur(G, bordure);
-  nbCoups += parcour_chemin(G,M,aff,&Graphe,bordure->liste[max_cl]->sommet,&bordure);
+    nbCoups += parcour_chemin(G,M,aff,&Graphe,bordure->liste[max_cl]->sommet,&bordure);
   }
-		 */
+  */
+  //affiche_graphe(G,bordure);
   nbCoups = parcour_chemin(G,M,aff,&Graphe,(Graphe->mat)[0][0],&bordure);
+  //affiche_graphe(G,bordure);
   while(!(bordure_vide(G,bordure))){
     max_cl = max_couleur(G, bordure);
     actualise_bordure(max_cl, Graphe, bordure,&taille);
