@@ -71,7 +71,7 @@ int main(int argc,char**argv){
   printf("3 - Version rapide\n");
   printf("4 - Max-bordure\n");
   printf("5 - Parcours en largeur\n");
-  printf("6 - Max-Bordure bis \n");
+  printf("6 - Essai strat perso \n");
 
   printf("Strategie : ");
   scanf("%d", &choix);
@@ -169,7 +169,7 @@ int main(int argc,char**argv){
 
     case 6:
       temps_initial = clock();
-      nbCoups = max_voisin_bordure(G,M,aff);
+      nbCoups = chemin2(G,M,aff);
       temps_final = clock();
       temps_cpu = ((double)(temps_final - temps_initial))/CLOCKS_PER_SEC;
       printf("Nombre de coups:%d\nTemps CPU:%f\n", nbCoups, temps_cpu);
