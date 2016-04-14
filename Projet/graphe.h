@@ -46,32 +46,6 @@ typedef struct{
   Sommet **tab; //tableau de pointeurs sur des sommets(qui contient tous les sommets de notre grille)
 }Graphe_bordure;
 
-//Test autre bordure
-//---------------------------------------------------------------------------------------
-typedef struct liste_int{
-  int valeur;
-  struct liste_int *suiv;
-}Liste_int;
-
-typedef struct {
-  Liste_int *sommets;
-  int taille;
-}Case;
-  
-
-typedef struct {
-  Case *tab; // tableau des tailles par couleur dans la bordure
-  Sommet **grille;//tableau de pointeurs sur des sommets(qui contient tous les sommets de notre grille)
-}Bordure;
-
-
-//Bordure3
-
-typedef struct{
-  Cellule_som *som;
-  int taille;
-}Case2;
-
 
 //--------------------------------------------------------------------------------------
 void ajoute_liste_sommet(Cellule_som **liste,Sommet *s);
@@ -113,16 +87,6 @@ int max_couleur(Grille *G, Graphe_bordure *bordure);
 int bordure_vide(Grille *G, Graphe_bordure *bordure);
 
 int max_voisin(Grille *G, Graphe_bordure *bordure);
-
-Case2* creer_bordure3(Grille *Grille, Graphe_zone *Graphe);
-
-void ajoute_bordure3(Case2 **b, Sommet *s);
-
-int max(Case2 *b, int nbcl);
-
-int bordure3_vide(Case2 *b, int nbcl);
-
-int Max_bordure3(Grille *G, int **M, int aff);
    
   
 #endif
