@@ -1,0 +1,13 @@
+plot "01_rec" using 1:2 with lines
+replot "02_imp" using 1:2 with lines
+replot "03_rapide" using 1:2 with lines
+replot "04_maxbordure" using 1:2 with lines
+replot "05_diagonale" using 1:2 with lines
+set term png
+set output "00_difficulte.png"
+set size 1, 1
+set xlabel ' Difficulté '
+set ylabel ' Coups '
+set title ' Nombre de coups en fonction de la difficulté'
+set key on inside left top
+replot

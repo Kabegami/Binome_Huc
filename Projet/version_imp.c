@@ -52,7 +52,6 @@ int sequence_aleatoire_imp(int **M, Grille *G, int dim, int aff){
   /* initialisation du tableau de couleurs dans la grille */
   int *tab = initialise_tab_couleur(G->nbcl);
   nb_couleur_initiales(&tab,M,G->dim);
-  //afficher_tab(tab,G->nbcl);
   int nbCoups = 0;
   srand(time(NULL));
   

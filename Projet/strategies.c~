@@ -148,15 +148,11 @@ int chemin(Grille *G, int **M, int aff){
   return nbCoups;
 }
 
-int parcour_chemin(Grille *G, int **M, int aff, Graphe_zone **Graphe,Sommet *depart, Graphe_bordure **bordure){
-  int min, max_cl, nbCoups = 0;
-  int i;
-  int j;
-  int taille = 1;
-  min = plus_court_chemin(G,*Graphe, *bordure, depart,(*bordure)->tab);
+int parcour_chemin(Grille *G, int **M, int aff){
+  int min = plus_court_chemin(G,Graphe, bordure, (Graphe->mat)[0][0],bordure->tab);
   i = min;
   int *chemin = (int *)malloc((min+1)*sizeof(int));
-  Sommet *actu = ((*bordure)->tab)[(*Graphe)->nbsom -1];
+  Sommet *actu = (bordure->tab)[Graphe->nbsom -1];
   while (actu->pere != NULL){
     chemin[i] = actu->num;
     actu = actu->pere;
@@ -170,48 +166,23 @@ int parcour_chemin(Grille *G, int **M, int aff, Graphe_zone **Graphe,Sommet *dep
       Grille_redessine_Grille();
     }
     if(aff == 2){
-      affiche_graphe(G, *bordure);
+      affiche_graphe(G, bordure);
       Grille_attente_touche();
       Grille_redessine_Grille();
     }
-    ajoute_liste_sommet(&((*bordure)->zsg),(*bordure)->tab[chemin[i+1]]);
-    actualise_bordure((*bordure)->tab[chemin[i+1]]->cl,*Graphe,*bordure,&taille);
-    peint_zsg(G,(*bordure)->tab[chemin[i+1]]->cl,*bordure);
-    nbCoups++;
+      ajoute_liste_sommet(&(bordure->zsg),bordure->tab[chemin[i+1]]);
+      actualise_bordure(bordure->tab[chemin[i+1]]->cl,Graphe,bordure,&taille);
+      peint_zsg(G,bordure->tab[chemin[i+1]]->cl,bordure);
+      nbCoups++;
     }
-  return nbCoups;
 
 }
-
 
 int max_esperance(Grille *G, int **M, int aff)
 {
   Graphe_zone *Graphe = creer_graphe_zone(G, M);
   Graphe_bordure *bordure = creer_bordure(G, Graphe, 1);
-  int min, max_cl;
-  int nbCoups = 0;
+  int min, max_cl, nbCoups;
   int i;
-  int j;
-  int taille = 1;/*
-  for(i = 0; i < G->dim/20;i++){
-    max_cl = max_couleur(G, bordure);
-  nbCoups += parcour_chemin(G,M,aff,&Graphe,bordure->liste[max_cl]->sommet,&bordure);
-  }
-		 */
-  nbCoups = parcour_chemin(G,M,aff,&Graphe,(Graphe->mat)[0][0],&bordure);
-  while(!(bordure_vide(G,bordure))){
-    max_cl = max_couleur(G, bordure);
-    actualise_bordure(max_cl, Graphe, bordure,&taille);
-    peint_zsg(G, max_cl, bordure);
-    nbCoups++;
-  }
-    if(aff == 1){
-      Grille_redessine_Grille();
-    }
-    if(aff == 2){
-      affiche_graphe(G, bordure);
-      Grille_attente_touche();
-      Grille_redessine_Grille();
-    }
-  return nbCoups;
-}     
+  int taille = 1;
+}

@@ -1,0 +1,13 @@
+plot "01_rec_cpu.txt" using 1:2 with lines
+replot "02_imp_cpu.txt" using 1:2 with lines
+replot "03_rapide_cpu.txt" using 1:2 with lines
+replot "04_maxbordure_cpu.txt" using 1:2 with lines
+replot "05_diagonale_cpu.txt" using 1:2 with lines
+set term png
+set output "00_courbes.png"
+set size 1, 1
+set xlabel ' Dimension grille '
+set ylabel ' Temps (s)'
+set title ' Flood-It'
+set key on inside left top
+replot

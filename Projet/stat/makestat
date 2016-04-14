@@ -1,0 +1,10 @@
+plot "diagonale_bis" using 1:2 with lines
+replot "rapide_bis" using 1:2 with lines
+set term png
+set output "00_diagonale_et_rapide"
+set size 1, 1
+set xlabel ' Dimension grille '
+set ylabel ' Nombre de Coups '
+set title ' Comparaison version_rapide et diagonale avec grandes dimensions'
+set key on inside left top
+replot

@@ -197,13 +197,7 @@ int sequence_aleatoire_rapide(int **M, Grille *G, int aff)
   int nbCoups = 0;
   int nbcl = G->nbcl;
   int taille;
-  
   taille = agrandit_zsg(M, &zone, couleur, 0, 0);
-  //printf("zone : ");
-  // affiche_liste(&(zone.Lzsg));
-  //afficher_bordure(&zone);
-  //printf("Fin de la zone initiale \n");
-  // printf("---------------------------------- \n");
 
   if(aff == 1){
     //Grille_attente_touche();
@@ -225,7 +219,6 @@ int sequence_aleatoire_rapide(int **M, Grille *G, int aff)
     tab[couleur] += taille;
     
     while(actu != NULL){
-      //printf("%d, %d \n",actu->i,actu->j);
       taille += agrandit_zsg(M,&zone,couleur,actu->i,actu->j);
       actu = actu->suiv;
     }

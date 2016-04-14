@@ -169,7 +169,7 @@ int main(int argc,char**argv){
 
     case 6:
       temps_initial = clock();
-      nbCoups = max_esperance(G,M,aff);
+      nbCoups = Max_bordure3(G,M,aff);
       temps_final = clock();
       temps_cpu = ((double)(temps_final - temps_initial))/CLOCKS_PER_SEC;
       printf("Nombre de coups:%d\nTemps CPU:%f\n", nbCoups, temps_cpu);

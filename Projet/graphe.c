@@ -122,11 +122,9 @@ Sommet* creer_sommet(int num, int cl,Liste l, int nbcase_som,int marque, Cellule
 void actualise_mat(Graphe_zone *Graphe, Sommet *s){
   Elnt_liste *actu = s->cases;
   while (actu != NULL){
-    // printf("Sommet (%d , %d)",actu->i,actu->j);
     (Graphe->mat)[actu->i][actu->j] = s;
     actu = actu->suiv;
   }
-  //printf("\n");
 }
 
 void creer_arete(Graphe_zone *Graphe, Grille *G)
@@ -200,19 +198,13 @@ Graphe_zone* creer_graphe_zone(Grille *G, int **M)
 	Graphe->nbsom++;
 	Sommet *s = creer_sommet(num,M[i][j],L,taille,2,NULL);
 	num++;
-	//printf("sommet %d : ",s->num);
-	//affiche_liste(&(s->cases));
 	actualise_mat(Graphe,s);
 	ajoute_liste_sommet(&(Graphe->som),s);
-	//detruit_liste(&L);
 	taille = 0;
       }
     }
   }
   creer_arete(Graphe,G);
-  // affiche_sommet(Graphe->som);
-  //printf("-------------\n");
-  
   return Graphe;
 }
 
@@ -221,7 +213,6 @@ void actualise_voisin(Graphe_bordure *bordure, Cellule_som *s)
   Cellule_som *actu = s->sommet->sommet_adj;
   while (actu != NULL){
     if (actu->sommet->marque == 2){
-      //ajoute_liste_sommet(&(bordure->zsg->sommet->sommet_adj),actu->sommet);
       ajoute_liste_sommet(&((bordure->liste)[actu->sommet->cl]),actu->sommet);
       (bordure->taille)[actu->sommet->cl] += actu->sommet->nbcase_som;
       actu->sommet->marque = 1;
@@ -284,16 +275,13 @@ void actualise_bordure(int cl, Graphe_zone *Graphe, Graphe_bordure *bordure, int
   while (actu != NULL){
     actu->sommet->marque = 0;
     /* on ajoute les sommets dans la liste de la nouvelle couleur
-       et on les supprime dans la liste de l'ancienne couleur*/
+       et on les supprime dans la liste de l'ancienne couleur */
     ajoute_liste_sommet(&(bordure->zsg),actu->sommet);
     (*taille)++;
     actualise_voisin(bordure, actu);
     (bordure->liste)[cl] = NULL;
-    //tmp = actu;
     actu = actu->suiv;
-    //free(tmp);
   }
-  //(bordure->liste)[bordure->zsg->sommet->cl] = NULL;
 }
 
 void peint_zsg(Grille *G, int cl, Graphe_bordure *bordure)
@@ -329,7 +317,6 @@ int bordure_vide(Grille *G, Graphe_bordure *bordure){
   int i;
   for (i = 0; i < G->nbcl; i++)
     if ((bordure->taille)[i] != 0){
-      //affiche_sommet((bordure->liste)[i]);
       return 0;
     }	        
   return 1;

@@ -8,9 +8,6 @@
 void trouve_zone_rec(int **M, int dim, int i, int j, int *taille, Liste *L)
 {
   int couleur = M[i][j];
-  //printf("couleur = %d\n", M[i][j]);
-  //printf("%d\n", M[i][j]);
-  //printf("%d\n", M[i+1][j]);
   Elnt_liste *actu;
   ajoute_en_tete(L,i,j);
   (*taille)++;
@@ -122,7 +119,6 @@ int sequence_aleatoire_rec_2(int **M, Grille *G, int dim, int aff){
   /* initialisation du tableau de couleurs dans la grille */
   int *tab = initialise_tab_couleur(G->nbcl);
   nb_couleur_initiales(&tab,M,G->dim);
-  //afficher_tab(tab,G->nbcl);
   int nbCoups = 0;
   srand(time(NULL));
   
